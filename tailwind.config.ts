@@ -10,10 +10,14 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "hero" : "url('/hero.png')"
       },
     },
+    colors: {
+      'gold-0' : '#ECDB85',
+      'black' : '#171615'
+    }
   },
   plugins: [],
 };
