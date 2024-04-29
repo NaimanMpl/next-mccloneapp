@@ -1,9 +1,12 @@
-'use client';
 import React from 'react';
 
-const RegisterButton = () => {
+interface RegisterButtonProps {
+  loading: boolean
+}
+
+const RegisterButton = ({ loading }: RegisterButtonProps) => {
   return (
-    <button type='submit' className='w-full bg-gold-0 rounded-sm py-1 font-medium'>S'inscrire</button>
+    <button disabled={loading} type='submit' className='mt-10 w-full bg-gold-0 rounded-lg py-2 font-bold'>S'inscrire</button>
   )
 }
 
