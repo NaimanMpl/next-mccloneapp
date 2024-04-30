@@ -19,7 +19,7 @@ const FormInput = ({ placeholder, type, name, errorDialog, id, label } : FormInp
       <input className='py-2 text-md border-solid border-b border-gray bg-transparent outline-none text-neutral-50 placeholder-gray font-medium' type={type} name={name} id={id} placeholder={placeholder} />
       {errorDialog.length > 0 && <span className='text-sm text-red-500 font-medium'>{errorDialog}</span>}
     </div>
-  )
+  );
 }
 
 export default FormInput

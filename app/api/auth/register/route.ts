@@ -1,7 +1,7 @@
+import UserController from '@/app/controllers/user.controller';
 import { RegisterFormData } from '@/app/hooks/useRegisterForm';
 import logger from '@/app/utils/logger';
 import { Prisma } from '@prisma/client';
-import UserController from './user.controller';
 
 export async function GET(request: Request) {
   const userController = new UserController();

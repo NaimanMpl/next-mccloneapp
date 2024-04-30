@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { registerUser } from "../services/api.service.";
+import { registerUser } from "../services/authservice";
 import logger from "../utils/logger";
+
 
 export interface RegisterFormData {
   username: string,
@@ -25,6 +26,11 @@ export const useRegisterForm = () => {
   const [ error, setError ] = useState('');
   const [ loading, setLoading ] = useState(false);
 
+  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const { name, value } = e.target;
+    setFormData({...formData, [name]: value});
+  }
+
   const validateForm = () => {
     const { username, email, password, confirmPassword } = formData;
     
@@ -43,23 +49,23 @@ export const useRegisterForm = () => {
     }
 
     if (email.length === 0) {
-      errors.email = "Veuillez renseigner une adresse mail.";
+      errors.email = 'Veuillez renseigner une adresse mail.';
       valid = false;
     }
 
     if (password.length === 0) {
-      errors.password = "Veuillez renseigner un mot de passe.";
+      errors.password = 'Veuillez renseigner un mot de passe.';
       valid = false;
     }
 
     if (confirmPassword.length === 0) {
-      errors.confirmPassword = "Veuillez confirmer votre mot de passe.";
+      errors.confirmPassword = 'Veuillez confirmer votre mot de passe.';
       valid = false;
     }
 
     if (confirmPassword !== password) {
-      errors.password = "Les 2 mots de passes doivent être identiques.";
-      errors.confirmPassword = "Les 2 mots de passes doivent être identiques.";
+      errors.password = 'Les 2 mots de passes doivent être identiques.';
+      errors.confirmPassword = 'Les 2 mots de passes doivent être identiques.';
       valid = false;
     }
 
@@ -92,5 +98,5 @@ export const useRegisterForm = () => {
     }
   }
 
-  return { formData, setFormData, handleSubmit, loading, error, inputErrors }
+  return { formData, setFormData, handleSubmit, handleChange, loading, error, inputErrors }
 }

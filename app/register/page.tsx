@@ -1,17 +1,25 @@
-import React from 'react'
-import FormComponent from '../components/forms/FormComponent'
-import FormInput from '../components/forms/FormInput'
-import RegisterForm from '../components/forms/RegisterForm'
-import RegisterButton from '../components/RegisterButton'
-import { useRegisterForm } from '../hooks/useRegisterForm'
+'use client';
+import React from 'react';
+import Button from '../components/Button';
+import FormComponent from '../components/forms/FormComponent';
+import FormInput from '../components/forms/FormInput';
+import { useRegisterForm } from '../hooks/useRegisterForm';
 
 const RegisterPage = () => {
 
+  const { formData, setFormData, handleSubmit, handleChange, loading, error, inputErrors } = useRegisterForm();
+
   return (
     <div className='h-screen bg-black flex items-center justify-center'>
-        <RegisterForm />
+      <FormComponent onChange={handleChange} onSubmit={handleSubmit} errorMsg={error} title="Inscription">
+        <FormInput type='text' errorDialog={inputErrors.username} label="Nom d'utilisateur" id='username' name='username' placeholder='John' />
+        <FormInput type='text' errorDialog={inputErrors.email} label='Adresse mail' id='email' name='email' placeholder='johndoe@domain.com' />
+        <FormInput type='password' errorDialog={inputErrors.password} label='Mot de passe' id='password' name='password' placeholder='•••••••••••••' />
+        <FormInput type='password' errorDialog={inputErrors.confirmPassword} label='Confirmation de mot de passe' id='confirmPassword' name='confirmPassword' placeholder='•••••••••••••' />
+        <Button label="S'inscrire" loading={loading} />
+      </FormComponent>
     </div>
-  )
+  );
 }
 
 export default RegisterPage
