@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { loginUser } from "../services/authservice";
 
@@ -62,7 +62,7 @@ export const useLoginForm = () => {
 
     try {
       await loginUser(formData);
-      router.push('/');
+      setLoading(false);
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
