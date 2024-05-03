@@ -1,5 +1,6 @@
 import { LoginFormData } from "../hooks/useLoginForm";
 import { RegisterFormData } from "../hooks/useRegisterForm";
+import { UserPayload } from "../models/user.model";
 
 export const registerUser = async (formData: RegisterFormData) => {
   const request = await fetch(
@@ -36,4 +37,16 @@ export const loginUser = async (formData: LoginFormData) => {
   }
 
   return response;
+}
+
+export const getCurrentUser = async (): Promise<UserPayload | null> => {
+  const res = await fetch('http://localhost:3000/api/auth/me', {
+    method: 'GET',
+  });
+
+  if (!res.ok) {
+    return null;
+  }
+
+  return res.json();
 }
