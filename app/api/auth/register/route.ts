@@ -4,12 +4,6 @@ import { generateAccessToken, generateRefreshToken, getTokenCookie } from '@/app
 import logger from '@/app/utils/logger';
 import { Prisma } from '@prisma/client';
 
-export async function GET(request: Request) {
-  const userController = new UserController();
-  userController.getUsers();
-  return new Response('Ok');
-}
-
 export async function POST(request: Request) {
   const user: RegisterFormData = await request.json();
   
@@ -33,10 +27,20 @@ export async function POST(request: Request) {
 
   try {
   
-    const userController = new UserController();
-    await userController.createUser(user);
+    const res = await fetch(process.env.AUTH_SERVER + '/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(user)
+    })
+    const data = await res.json();
 
-    const payload = { username: user.username, email: user.email };
+    if (!res.ok) {
+      return new Response(JSON.stringify({ message: data.message }), { status: res.status });
+    }
+
+    const payload = { id: data.id, username: data.username, email: data.email };
 
     const accessToken = await generateAccessToken(payload);
     const refreshToken = await generateRefreshToken(payload);
@@ -44,21 +48,14 @@ export async function POST(request: Request) {
     const accessTokenCookie = getTokenCookie('accessToken', accessToken);
     const refreshTokenCookie = getTokenCookie('refreshToken', refreshToken);
 
-    const response = new Response(JSON.stringify({ username: user.username, email: user.email }), { status: 200 });
+    const response = new Response(JSON.stringify({ user: payload, message: 'Registered' }), { status: 200 });
     response.headers.append('Set-Cookie', accessTokenCookie);
     response.headers.append('Set-Cookie', refreshTokenCookie);
 
     return response;
 
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      logger.error(`[Prisma] ${e.message}`);
-    } else if (e instanceof Error) {
-      logger.error(e.message);
-    } else {
-      logger.error(e);
-    }
-
-    return new Response(JSON.stringify({ error: 'Une erreur est survenue.'}), { status: 500 });
+    logger.error(e);
+    return new Response(JSON.stringify({ message: 'Une erreur est survenue.'}), { status: 500 });
   }
 }

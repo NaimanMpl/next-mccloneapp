@@ -13,7 +13,7 @@ export const registerUser = async (formData: RegisterFormData) => {
   );
 
   const response = await request.json();
-
+  console.log(response)
   if (!response.ok) {
     throw new Error(response.message);
   }
