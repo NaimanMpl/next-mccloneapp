@@ -6,27 +6,29 @@ interface TimerProps {
   initialDate: Date
 }
 
+const calculateDateDifference = (date: Date) => {
+  const diffInMilliseconds = Math.abs(new Date().getTime() - date.getTime());
+      
+  const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24))
+  const diffInHours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const diffInMinutes = Math.floor((diffInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  const diffInSeconds = Math.floor((diffInMilliseconds % (1000 * 60)) / 1000);
+
+  return {
+    diffInDays: diffInDays,
+    diffInHours: diffInHours,
+    diffInMinutes: diffInMinutes,
+    diffInSeconds: diffInSeconds
+  }
+}
+
 const Timer = ({ initialDate }: TimerProps) => {
 
-  const [ timer, setTimer ] = useState({
-    diffInDays: 0,
-    diffInHours: 0,
-    diffInMinutes: 0,
-  });
+  const [ timer, setTimer ] = useState(calculateDateDifference(initialDate));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const diffInMilliseconds = Math.abs(new Date().getTime() - initialDate.getTime());
-      
-      const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24))
-      const diffInHours = Math.floor((diffInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const diffInMinutes = Math.floor((diffInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
-
-      setTimer({
-        diffInDays: diffInDays,
-        diffInHours: diffInHours,
-        diffInMinutes: diffInMinutes
-      })
+      setTimer(calculateDateDifference(initialDate))
     }, 1000);
 
     return () => { clearInterval(interval) }
