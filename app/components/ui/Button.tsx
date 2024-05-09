@@ -5,14 +5,16 @@ interface ButtonProps {
   backgroundColor: string,
   color: string,
   fullWidth?: boolean,
-  loading: boolean
+  loading?: boolean,
+  submit?: boolean
 }
 
-const Button = ({ backgroundColor, color, loading, label, fullWidth = true }: ButtonProps) => {
+const Button = ({ backgroundColor, color, loading = false, label, fullWidth = true, submit = true }: ButtonProps) => {
+  const textColor = `text-${color}`;
   return (
     <button
-      type='submit'
-      className={`mt-4 ${fullWidth ? 'w-full' : 'px-10'} bg-${backgroundColor} rounded-lg py-2 font-bold text-${color}`}
+      type={submit ? 'submit' : undefined}
+      className={`mt-4 ${fullWidth ? 'w-full' : 'px-10'} ${backgroundColor} rounded-md py-2 font-semibold ${textColor}`}
       disabled={loading}
     >
       {label}

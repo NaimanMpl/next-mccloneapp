@@ -14,7 +14,7 @@ const LoginForm = () => {
       <FormComponent title='Se connecter' errorMsg={error} onChange={handleChange} onSubmit={handleSubmit}>
         <FormInput type='text' name='email' id='email' label='Adresse mail' placeholder='johndoe@domain.com' errorDialog={inputError.email} />
         <FormInput type='password' name='password' id='password' label='Mot de passe' placeholder='•••••••••••••' errorDialog={inputError.password} />
-        <Button backgroundColor='gold-0' color='black' label="Connexion" loading={loading} />
+        <Button backgroundColor='bg-gold-0' color='black' label="Connexion" loading={loading} />
       </FormComponent>
     </div>
   );

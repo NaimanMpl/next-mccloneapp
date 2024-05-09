@@ -1,8 +1,9 @@
-import React from 'react'
-import DashboardHeader from '../components/dashboard/DashboardHeader'
-import DashboardUserCard from '../components/dashboard/DashboardUserCard'
-import DashboardUserInfos from '../components/dashboard/DashboardUserInfos'
-import Button from '../components/ui/Button'
+import React from 'react';
+import DashboardHeader from '../components/dashboard/DashboardHeader';
+import DashboardUserCard from '../components/dashboard/DashboardUserCard';
+import DashboardUserInfos from '../components/dashboard/DashboardUserInfos';
+import Curve from '../components/layout/Curve';
+import Button from '../components/ui/Button';
 
 const Dahsboard = () => {
   return (
@@ -15,7 +16,7 @@ const Dahsboard = () => {
         <div className='flex items-start'>
           <DashboardUserInfos />
           <div className='ml-20 mt-5'>
-            <Button backgroundColor='gold-0' color='black' label='Éditer' loading={false} fullWidth={false} />
+            <Button backgroundColor='bg-gold-0' color='black' label='Éditer' loading={false} fullWidth={false} />
           </div>
         </div>
       </div>

@@ -5,10 +5,6 @@ import { isAuthenticated } from './app/lib/auth';
 
 export async function middleware(request: NextRequest) {
 
-  if (request.nextUrl.pathname.startsWith('/play')) {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-
   if (request.nextUrl.pathname.startsWith('/login')) {
     const clientCookies = cookies();
     if (await isAuthenticated(request, clientCookies) !== null) {

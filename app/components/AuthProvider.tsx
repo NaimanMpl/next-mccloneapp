@@ -9,20 +9,15 @@ interface Props {
   children: ReactNode
 }
 
-interface AuthPayload {
-  user: UserPayload,
-  loggedIn: boolean
+export interface AuthPayload {
+  user: UserPayload | null, // Modifier ici pour accepter null
 }
 
 export const useAuth = () => { useContext(AuthContext); }
 
 export const AuthProvider = ({ children }: Props) => {
   
-  const [ user, setUser ] = useState<UserPayload>({
-    email: '',
-    name: ''
-  });
-  const [ logged, setLogged ] = useState(false);
+  const [ payload, setPayload ] = useState<AuthPayload>({ user: null });
 
   useEffect(() => {
     (async () => {
@@ -30,12 +25,12 @@ export const AuthProvider = ({ children }: Props) => {
 
       if (currentUser == null) return;
 
-      setUser({ email: currentUser.email, name: currentUser.name });
+      setPayload({ user: { email: currentUser.email, name: currentUser.name } });
     })();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: user, loggedIn: logged }}>
+    <AuthContext.Provider value={{ user: payload.user }}>
       {children}
     </AuthContext.Provider>
   )

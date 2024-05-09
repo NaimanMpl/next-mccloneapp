@@ -1,5 +1,5 @@
 import { ServerInfo } from "@prisma/client";
-import Image from "next/image";
+import { GetServerSideProps } from "next";
 import Header from "./components/Header";
 import ServerInfoCard from "./components/home/ServerInfoCard";
 import ServerInfosContainer from "./components/home/ServerInfosContainer";
@@ -8,9 +8,9 @@ import PlayButton from "./components/PlayButton";
 
 export default async function Home() {
 
-  const serverOpenDate = new Date(2024, 3, 3);
   const res = await fetch('http://localhost:3000/api/server/infos', { method: 'GET' });
-  const serverInfo:ServerInfo = await res.json();
+  const serverInfo: ServerInfo = await res.json();
+  const serverOpenDate = new Date(2024, 3, 3);
   const statusDict = {
     'ONLINE' : 'En ligne',
     'OFFLINE' : 'Hors ligne',
@@ -21,8 +21,8 @@ export default async function Home() {
     <div className="h-screen bg-hero bg-cover bg-no-repeat relative">
       <Header />
       <main className="absolute center bottom-0 w-full">
-        <div className="flex flex-col gap-12 items-center w-full pb-16">
-          <h1 className="text-white text-6xl font-bold text-center">A Minecraft Clone made with love {"<3"}</h1>
+        <div className="flex flex-col gap-12 items-center w-full pb-32">
+          <h1 className="text-white text-6xl font-bold text-center w-5/12">A Minecraft Clone made with love {"<3"}</h1>
           <ServerInfosContainer>
             <ServerInfoCard title="Etat du serveur" status={serverInfo.status} label={statusDict[serverInfo.status]} />
             <ServerInfoCard title="Date d'ouverture" status={serverInfo.status} label="3 avril 2024" />
