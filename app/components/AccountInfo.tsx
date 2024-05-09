@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useContext, useEffect } from 'react';
 import { AuthContext, useAuth } from './AuthProvider';
 
@@ -12,7 +13,7 @@ const AccountInfo = () => {
       {user != null && 
         <div className='flex gap-2 items-center'>
           <Image className='rounded-full' width='30' height='30' src='/default-pp.png' alt='Profile Icon' />
-          <span>{user.name}</span>
+          <Link href='/dashboard'>{user.name}</Link>
         </div>
       }
     </>

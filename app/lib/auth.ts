@@ -42,6 +42,7 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
 
   try {
     const { payload } = await jwtVerify(accessToken.value, accessTokenKey, { algorithms: ['HS256'] });
+    console.log(await jwtVerify(accessToken.value, accessTokenKey, { algorithms: ['HS256'] }))
     const user: UserPayload = { email: payload.email as string, name: payload.name as string };
 
     return new Promise(resolve => resolve({ email: user.email, name: user.name }));
@@ -52,6 +53,7 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
       return null;
     }
 
+    console.log(await jwtVerify(refreshToken.value, refreshTokenKey, { algorithms: ['HS256'] }))
     const { payload } = await jwtVerify(refreshToken.value, refreshTokenKey, { algorithms: ['HS256'] });
 
     if (!payload) {

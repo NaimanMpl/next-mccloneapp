@@ -34,6 +34,7 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify(user)
     })
+    
     const data = await res.json();
 
     if (!res.ok) {
