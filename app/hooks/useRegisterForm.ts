@@ -88,7 +88,7 @@ export const useRegisterForm = () => {
       setLoading(false);
     } catch (e) {
       if (e instanceof Error) {
-        setError(e.message);
+        setError(e.message ? e.message : 'Le serveur a rencontré un problème.');
         logger.error(e.message);
       } else {
         setError('Le serveur a rencontré un problème.');

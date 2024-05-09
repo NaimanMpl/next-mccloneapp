@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { useRegisterForm } from '../../hooks/useRegisterForm';
 
 interface FormInputProps {
   type: 'email' | 'password' | 'text',
@@ -16,7 +15,7 @@ const FormInput = ({ placeholder, type, name, errorDialog, id, label } : FormInp
   return (
     <div className='flex flex-col gap-2'>
       <label className='text-neutral-50 font-semibold text-sm' htmlFor={name}>{label}</label>
-      <input className='py-2 text-md border-solid border-b border-gray bg-transparent outline-none text-neutral-50 placeholder-gray font-medium' type={type} name={name} id={id} placeholder={placeholder} />
+      <input className='py-2 text-md border-solid border-b border-gray bg-transparent outline-none text-neutral-50 placeholder-gray font-medium focus:border-gold-0 focus:transition-all' type={type} name={name} id={id} placeholder={placeholder} />
       {errorDialog.length > 0 && <span className='text-sm text-red-500 font-medium'>{errorDialog}</span>}
     </div>
   );
