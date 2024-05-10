@@ -8,7 +8,7 @@ import AccountInfoParagraph from '../components/account/AccountInfoParagraph';
 import AccountInput from '../components/account/AccountInput';
 import AccountPageWrapper from '../components/account/AccountPageWrapper';
 import Header from '../components/Header';
-import Button from '../components/ui/Button';
+import Button from '../components/ui/OldButton';
 
 const Dahsboard = async () => {
 

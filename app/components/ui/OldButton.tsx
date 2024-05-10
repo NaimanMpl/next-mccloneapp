@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface ButtonProps {
+interface OldButtonProps {
   label: string,
   backgroundColor: string,
   color: string,
@@ -9,7 +9,7 @@ interface ButtonProps {
   submit?: boolean
 }
 
-const Button = ({ backgroundColor, color, loading = false, label, fullWidth = true, submit = true }: ButtonProps) => {
+const OldButton = ({ backgroundColor, color, loading = false, label, fullWidth = true, submit = true }: OldButtonProps) => {
   const textColor = `text-${color}`;
   return (
     <button
@@ -22,4 +22,4 @@ const Button = ({ backgroundColor, color, loading = false, label, fullWidth = tr
   )
 }
 
-export default Button;
+export default OldButton;

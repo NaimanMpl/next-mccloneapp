@@ -3,7 +3,7 @@ import { uploadFile } from '@/app/api/upload/upload.action';
 import { url } from 'inspector';
 import Image from 'next/image';
 import React, { FormEventHandler, useState } from 'react';
-import Button from '../ui/Button';
+import Button from '../ui/OldButton';
 import AccountInfoButton from './AccountInfoButton';
 import AccountInfoCard from './AccountInfoCard';
 import AccountInfoParagraph from './AccountInfoParagraph';

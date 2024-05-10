@@ -2,7 +2,7 @@
 import React from 'react';
 import FormComponent from '../components/forms/FormComponent';
 import FormInput from '../components/forms/FormInput';
-import Button from '../components/ui/Button';
+import Button from '../components/ui/OldButton';
 import { useLoginForm } from '../hooks/useLoginForm';
 
 const LoginForm = () => {
