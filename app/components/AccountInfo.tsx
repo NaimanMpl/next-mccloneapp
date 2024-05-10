@@ -13,7 +13,7 @@ const AccountInfo = ({ name }: AccountInfoProps) => {
     <>
       <div className='flex gap-2 items-center'>
         <Image className='rounded-full' width='30' height='30' src='/default-pp.png' alt='Profile Icon' />
-        <Link className='font-semibold' href='/dashboard'>{name}</Link>
+        <Link className='font-semibold' href='/account'>{name}</Link>
       </div>
     </>
   )

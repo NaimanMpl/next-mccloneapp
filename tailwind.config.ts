@@ -17,7 +17,8 @@ const config: Config = {
       colors: {
         'gold-0' : '#ECDB85',
         'black' : '#171615',
-        'gray' : '#64625E'
+        'gray' : '#64625E',
+        'gray-500' : '#181817'
       },
       spacing: {
         '100' : '30rem'

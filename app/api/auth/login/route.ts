@@ -17,37 +17,40 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ message: 'Veuillez remplir tout les champs.' }), { status: 400 });
   }
 
-  const prisma = new PrismaClient();
-  const user = await prisma.users.findUnique({
-    where: { email: email }
-  });
+  try {
+    const prisma = new PrismaClient();
+    const user = await prisma.users.findUnique({
+      where: { email: email }
+    });
+    if (user === null || user === undefined) {
+      return new Response(JSON.stringify({ message: 'Email ou mot de passe incorrect.' }), { status: 400 });
+    }
+  
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return new Response(JSON.stringify({ message: 'Email ou mot de passe incorrect.' }), { status: 400 });
+    }
+  
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  
+    if (!emailRegex.test(user.email)) {
+      return new Response(JSON.stringify({ error: 'Email ou mot de passe incorrect.'}), { status: 400 });
+    }
+  
+    const payload: UserPayload = { email: user.email, name: user.name };
+  
+    const accessToken = await generateAccessToken(payload);
+    const refreshToken = await generateRefreshToken(payload);
+  
+    const accessTokenCookie = getTokenCookie('accessToken', accessToken);
+    const refreshTokenCookie = getTokenCookie('refreshToken', refreshToken);
+  
+    const response = new Response(JSON.stringify({ message: 'Authenticated' }), { status: 200 });
+    response.headers.append('Set-Cookie', accessTokenCookie);
+    response.headers.append('Set-Cookie', refreshTokenCookie);
 
-  if (user === null || user === undefined) {
-    return new Response(JSON.stringify({ message: 'Email ou mot de passe incorrect.' }), { status: 400 });
+    return response;
+  } catch (e) {
+    return new Response(JSON.stringify({ message: 'Une erreur est survenue.' }), { status: 500 });
   }
-
-  const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) {
-    return new Response(JSON.stringify({ message: 'Email ou mot de passe incorrect.' }), { status: 400 });
-  }
-
-  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
-  if (!emailRegex.test(user.email)) {
-    return new Response(JSON.stringify({ error: 'Email ou mot de passe incorrect.'}), { status: 400 });
-  }
-
-  const payload: UserPayload = { email: user.email, name: user.name };
-
-  const accessToken = await generateAccessToken(payload);
-  const refreshToken = await generateRefreshToken(payload);
-
-  const accessTokenCookie = getTokenCookie('accessToken', accessToken);
-  const refreshTokenCookie = getTokenCookie('refreshToken', refreshToken);
-
-  const response = new Response(JSON.stringify({ message: 'Authenticated' }), { status: 200 });
-  response.headers.append('Set-Cookie', accessTokenCookie);
-  response.headers.append('Set-Cookie', refreshTokenCookie);
-
-  return response;
 }
