@@ -1,5 +1,5 @@
-import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { z } from "zod";
 import { loginUser } from "../services/authservice";
 
 export interface LoginFormData {
@@ -9,59 +9,19 @@ export interface LoginFormData {
 
 export const useLoginForm = () => {
   
-  const [ formData, setFormData ] = useState<LoginFormData>({
-    email: '',
-    password: ''
+  const formSchema = z.object({
+    email: z.string(),
+    password: z.string()
   });
-  const router = useRouter();
   const [ error, setError ] = useState('');
-  const [ inputError, setInputError ] = useState<LoginFormData>({
-    email: '',
-    password: ''
-  });
 
   const [ loading, setLoading ] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value});
-  }
-
-  const validateForm = () => {
-
-    const { email, password } = formData;
-    let valid = true;
-    const errors: LoginFormData = {
-      email: '',
-      password: '',
-    };
-
-    if (email.length === 0) {
-      errors.email = 'Veuillez renseigner une adresse mail';
-      valid = false;
-    }
-
-    if (password.length === 0) {
-      errors.password = 'Veuillez renseigner un mot de passe';
-      valid = false;
-    }
-
-    setInputError(errors);
-
-    return valid;
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const validForm = validateForm();
-
-    if (!validForm) {
-      return;
-    }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
     try {
-      await loginUser(formData);
+      setLoading(true);
+      await loginUser(values as LoginFormData);
       setLoading(false);
     } catch (e) {
       if (e instanceof Error) {
@@ -73,6 +33,6 @@ export const useLoginForm = () => {
     }
   }
 
-  return { formData, inputError, setFormData, handleChange, handleSubmit, loading, error }
+  return { formSchema, onSubmit, loading, error }
 
 }

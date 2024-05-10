@@ -8,7 +8,7 @@ interface AccountPageWrapper {
 
 const AccountPageWrapper = ({ children }: AccountPageWrapper) => {
   return (
-    <div className='bg-black text-neutral-50'>
+    <div>
       <Header />
       <div className='border-l-transparent border-r-transparent border border-solid border-neutral-700 px-80 py-10'>
         <h1 className='text-3xl font-semibold'>Paramètres du compte</h1>

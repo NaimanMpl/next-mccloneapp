@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { AuthProvider } from "./components/AuthProvider";
 import Header from "./components/Header";
@@ -19,11 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="dark" lang="en">
-      <body className={inter.className + ' bg-background'}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

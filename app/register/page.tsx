@@ -27,16 +27,6 @@ const RegisterPage = () => {
     }
   });
 
-  /*
-  <FormComponent onChange={handleChange} onSubmit={handleSubmit} errorMsg={error} title="Inscription">
-    <FormInput type='text' errorDialog={inputErrors.username} label="Nom d'utilisateur" id='username' name='username' placeholder='John' />
-    <FormInput type='text' errorDialog={inputErrors.email} label='Adresse mail' id='email' name='email' placeholder='johndoe@domain.com' />
-    <FormInput type='password' errorDialog={inputErrors.password} label='Mot de passe' id='password' name='password' placeholder='•••••••••••••' />
-    <FormInput type='password' errorDialog={inputErrors.confirmPassword} label='Confirmation de mot de passe' id='confirmPassword' name='confirmPassword' placeholder='•••••••••••••' />
-    <Button backgroundColor='bg-gold-0' color='black' label="S'inscrire" loading={loading} />
-  </FormComponent>
-  */
-
   return (
     <div className='h-screen flex items-center justify-center'>
       <Card className='mx-auto max-w-md'>

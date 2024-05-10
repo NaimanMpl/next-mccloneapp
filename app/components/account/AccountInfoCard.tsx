@@ -12,10 +12,10 @@ interface AccountInfoCardProps {
   button?: ReactNode
 }
 
-const AccountInfoCard = ({ title, children, img, tip, borderColor = 'border-neutral-700', tipBgColor = 'bg-transparent', button }: AccountInfoCardProps) => {
+const AccountInfoCard = ({ title, children, img, tip, borderColor = 'border-neutral-700', tipBgColor = 'bg-card', button }: AccountInfoCardProps) => {
   return (
     <div>
-      <div className={`bg-black flex justify-between w-full gap-10 px-6 py-7 border border-solid ${borderColor} rounded-t-md`}>
+      <div className={`bg-card flex justify-between w-full gap-10 px-6 py-7 border border-solid ${borderColor} rounded-t-md`}>
         <div className=''>
           <h2 className='text-xl font-semibold pb-4'>{title}</h2>
           {children}
@@ -23,7 +23,7 @@ const AccountInfoCard = ({ title, children, img, tip, borderColor = 'border-neut
         {img && <img className='rounded-full w-24 h-24' src={img} alt='' />}
       </div>
       <div className={`${tipBgColor} relative px-6 py-4 border w-full border-solid ${borderColor} border-t-transparent rounded-b-md ${tipBgColor} `}>
-        <AccountInfoParagraph color='text-neutral-400'>{tip}</AccountInfoParagraph>
+        <AccountInfoParagraph color={tipBgColor.includes('destructive') ? 'text-muted-destructive' : 'text-muted-foreground'}>{tip}</AccountInfoParagraph>
         <div className='absolute right-6 top-1/2 -translate-y-1/2'>
           {button}
         </div>

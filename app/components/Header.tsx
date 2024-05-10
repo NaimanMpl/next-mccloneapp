@@ -1,9 +1,9 @@
-import { GetServerSideProps } from 'next';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { UserPayload } from '../models/user.model';
 import AccountInfo from './AccountInfo';
+import ToggleTheme from './header/ToggleTheme';
 
 async function Header() {
 
@@ -21,7 +21,7 @@ async function Header() {
         <Image src='/logo.png' alt='Minecraft Clone' width='150' height='100' />
       </Link>
       <nav>
-        <ul className='flex gap-6 items-center text-neutral-50'>
+        <ul className='flex gap-6 items-center'>
           <li>
             <Link className='font-medium' href="/about">
               A propos
@@ -42,6 +42,9 @@ async function Header() {
             </li>
           </>
           }
+          <li>
+            <ToggleTheme />
+          </li>
         </ul>
       </nav>
     </header>

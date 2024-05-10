@@ -1,22 +1,73 @@
 'use client';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Label } from '@radix-ui/react-label';
+import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
 import React from 'react';
-import FormComponent from '../components/forms/FormComponent';
-import FormInput from '../components/forms/FormInput';
-import Button from '../components/ui/OldButton';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import FormWrapper from '../components/forms/FormWrapper';
 import { useLoginForm } from '../hooks/useLoginForm';
 
 const LoginForm = () => {
 
-  const { formData, setFormData, handleChange, handleSubmit, inputError, loading, error } = useLoginForm();
-
+  const { formSchema, onSubmit, loading, error } = useLoginForm();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  })
+  
   return (
-    <div className='h-screen bg-black flex items-center justify-center'>
-      <FormComponent title='Se connecter' errorMsg={error} onChange={handleChange} onSubmit={handleSubmit}>
-        <FormInput type='text' name='email' id='email' label='Adresse mail' placeholder='johndoe@domain.com' errorDialog={inputError.email} />
-        <FormInput type='password' name='password' id='password' label='Mot de passe' placeholder='•••••••••••••' errorDialog={inputError.password} />
-        <Button backgroundColor='bg-gold-0' color='black' label="Connexion" loading={loading} />
-      </FormComponent>
-    </div>
+    <FormWrapper title='Se connecter' description='Entrez votre adresse mail et votre mot de passe pour accéder à votre compte' error={error}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem className='flex flex-col'>
+                <Label htmlFor='email'>Nom d'utilisateur</Label>
+                <FormControl>
+                  <Input placeholder="john.doe" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='password'
+            render={({ field }) => (
+              <FormItem className='flex flex-col'>
+                <Label htmlFor='password'>Adresse mail</Label>
+                <FormControl>
+                  <Input placeholder="john.doe@domain.com" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className='flex flex-col gap-2'>
+            <Button disabled={loading} className='w-full' type='submit'>
+              {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+              S'inscrire
+            </Button>
+            <div className='mt-4 text-center text-sm'>
+              Pas encore de compte ? {" "}
+              <Link href='/register' className='underline'>
+                S'inscrire
+              </Link>
+            </div>
+          </div>
+        </form>
+      </Form>
+    </FormWrapper>
   );
 }
 
