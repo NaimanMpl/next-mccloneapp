@@ -14,7 +14,7 @@ const Button = ({ backgroundColor, color, loading = false, label, fullWidth = tr
   return (
     <button
       type={submit ? 'submit' : undefined}
-      className={`mt-4 ${fullWidth ? 'w-full' : 'px-10'} ${backgroundColor} rounded-md py-2 font-semibold ${textColor}`}
+      className={`${fullWidth ? 'w-full' : 'px-10'} ${backgroundColor} rounded-md py-2 font-semibold ${textColor}`}
       disabled={loading}
     >
       {label}

@@ -4,6 +4,9 @@ import { url } from 'inspector';
 import Image from 'next/image';
 import React, { FormEventHandler, useState } from 'react';
 import Button from '../ui/Button';
+import AccountInfoButton from './AccountInfoButton';
+import AccountInfoCard from './AccountInfoCard';
+import AccountInfoParagraph from './AccountInfoParagraph';
 
 const SkinUploadForm = () => {
 
@@ -19,11 +22,22 @@ const SkinUploadForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="file" name="file" id="file" />
-      {imageUrl ? <img src={imageUrl} alt='Skin' /> : null}
-      <Button label='Upload' backgroundColor='bg-gold-0' color='black' submit fullWidth={false} />
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <AccountInfoCard 
+          title='Changer de skin' 
+          img='/default-pp.png' 
+          tip="Le fichier ne peut dépasser 1 mo"
+          button={<AccountInfoButton text='Upload' />}
+        >
+          <AccountInfoParagraph>Le skin est utilisé dans le jeu pour modifier l'aspect visuel de votre personnage</AccountInfoParagraph>
+          <div className='mt-4'>
+            <label className='inline-block bg-neutral-950 text-neutral-50 font-semibold px-4 py-2 rounded-md cursor-pointer' htmlFor="file">Télécharger un fichier</label>
+            <input className='hidden' type="file" name="file" id="file" />
+          </div>
+        </AccountInfoCard>
+      </form>
+    </>
   )
 }
 
