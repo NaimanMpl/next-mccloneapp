@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { z } from "zod";
 import { loginUser } from "../services/authservice";
@@ -14,8 +15,8 @@ export const useLoginForm = () => {
     password: z.string()
   });
   const [ error, setError ] = useState('');
-
   const [ loading, setLoading ] = useState(false);
+  const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
 

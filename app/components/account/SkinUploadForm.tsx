@@ -1,9 +1,11 @@
 'use client';
 import { uploadFile } from '@/app/api/upload/upload.action';
+import { uploadSkin } from '@/app/services/userservice';
+import logger from '@/app/utils/logger';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from 'react';
-import { AuthContext } from '../AuthProvider';
+import { AuthContext, AuthPayload } from '../AuthProvider';
 import AccountInfoCard from './AccountInfoCard';
 import AccountInfoParagraph from './AccountInfoParagraph';
 import SkinFileCard from './SkinFileCard';
@@ -12,12 +14,16 @@ const SkinUploadForm = () => {
 
   const [filename, setFilename] = useState('');
   const { toast } = useToast();
-  const { user } : any = useContext(AuthContext);
+  const { user, setUser }: AuthPayload = useContext(AuthContext);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+
+    if (!user) {
+      return;
+    }
 
     if (filename.length === 0) {
       toast({ title: 'Uh-oh !', description: 'Veuillez renseigner un fichier', variant: 'destructive' })
@@ -25,10 +31,12 @@ const SkinUploadForm = () => {
     }
 
     try {
-      await uploadFile('skins', formData);
+      const skinUrl = await uploadFile('skins', formData);
+      setUser({ ...user, skin: skinUrl });
       setFilename('');
       toast({ title: 'Succès', description: 'Votre skin a été mis à jour', variant: 'success' })
     } catch (e) {
+      logger.error(e)
       toast({ title: 'Uh-oh ! Un problème est survenu', description: 'Impossible de traiter votre requête', variant: 'destructive' })
     }
 
@@ -47,7 +55,7 @@ const SkinUploadForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <AccountInfoCard 
+        <AccountInfoCard
           title='Changer de skin' 
           img={user?.skin}
           tip="Le fichier ne peut dépasser 1 mo"

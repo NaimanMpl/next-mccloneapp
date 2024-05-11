@@ -2,6 +2,7 @@ import cookie from 'cookie';
 import { jwtVerify, SignJWT } from 'jose';
 import { JWSSignatureVerificationFailed } from 'jose/errors';
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 import { resolve } from 'path';
 import { User, UserPayload } from '../models/user.model';
@@ -33,6 +34,26 @@ export const getTokenCookie = (name: string, token: string): string => {
     sameSite: 'strict',
     path: '/'
   });
+}
+
+
+export const updateTokens = async (payload: UserPayload) => {
+  const accessToken = await generateAccessToken(payload);
+  const refreshToken = await generateRefreshToken(payload);
+  
+  cookies().set('accessToken', accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    path: '/'
+  })
+
+  cookies().set('refreshToken', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    path: '/'
+  })
 }
 
 const isUserPayload = (object: any): object is UserPayload => {
