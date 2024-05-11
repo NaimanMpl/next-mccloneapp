@@ -1,9 +1,8 @@
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { AuthProvider } from "./components/AuthProvider";
-import Header from "./components/Header";
-import PageAnimatePresence from "./components/HOC/PageAnimatePresence";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,6 +30,7 @@ export default function RootLayout({
             {children}
           </AuthProvider>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

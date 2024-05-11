@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: Props) => {
 
       if (currentUser == null) return;
 
-      setPayload({ user: { email: currentUser.email, name: currentUser.name } });
+      setPayload({ user: { email: currentUser.email, name: currentUser.name, id: currentUser.id, skin: currentUser.skin } });
     })();
   }, []);
 

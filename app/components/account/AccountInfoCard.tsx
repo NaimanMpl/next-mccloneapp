@@ -15,7 +15,7 @@ interface AccountInfoCardProps {
 const AccountInfoCard = ({ title, children, img, tip, borderColor = 'border-neutral-700', tipBgColor = 'bg-card', button }: AccountInfoCardProps) => {
   return (
     <div>
-      <div className={`bg-card flex justify-between w-full gap-10 px-6 py-7 border border-solid ${borderColor} rounded-t-md`}>
+      <div className={`relative bg-card flex justify-between w-full gap-10 px-6 py-7 border border-solid ${borderColor} rounded-t-md`}>
         <div className=''>
           <h2 className='text-xl font-semibold pb-4'>{title}</h2>
           {children}

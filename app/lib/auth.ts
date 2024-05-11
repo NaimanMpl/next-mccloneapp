@@ -4,7 +4,7 @@ import { JWSSignatureVerificationFailed } from 'jose/errors';
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { NextRequest } from 'next/server';
 import { resolve } from 'path';
-import { UserPayload } from '../models/user.model';
+import { User, UserPayload } from '../models/user.model';
 import logger from '../utils/logger';
 
 const accessTokenKey = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
@@ -35,6 +35,18 @@ export const getTokenCookie = (name: string, token: string): string => {
   });
 }
 
+const isUserPayload = (object: any): object is UserPayload => {
+  const keys: (keyof UserPayload)[] = ['id', 'email', 'name', 'skin'];
+
+  for (const key of keys) {
+    if (!(key in object)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyRequestCookies): Promise<UserPayload | null> => {
   const accessToken = cookies.get('accessToken');
 
@@ -44,9 +56,23 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
 
   try {
     const { payload } = await jwtVerify(accessToken.value, accessTokenKey, { algorithms: ['HS256'] });
-    const user: UserPayload = { email: payload.email as string, name: payload.name as string };
+    
+    if (!payload) {
+      return null;
+    }
 
-    return new Promise(resolve => resolve({ email: user.email, name: user.name }));
+    if (!isUserPayload(payload)) {
+      return null;
+    }
+
+    const user: UserPayload = { 
+      id: payload.id as string, 
+      email: payload.email as string, 
+      name: payload.name as string, 
+      skin: payload.skin as string 
+    };
+
+    return new Promise(resolve => resolve({ id: user.id, email: user.email, name: user.name, skin: user.skin }));
   } catch (e) {
     const refreshToken = cookies.get('refreshToken');
     
@@ -60,15 +86,24 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
       if (!payload) {
         return null;
       }
+
+      if (!isUserPayload(payload)) {
+        return null;
+      }
   
       const newAccessToken = await generateAccessToken(payload);
       const accessTokenCookie = getTokenCookie('accessToken', newAccessToken);
   
       request.headers.append('Set-Cookie', accessTokenCookie);
       
-      const user: UserPayload = { email: payload.email as string, name: payload.name as string };
+      const user: UserPayload = { 
+        id: payload.id as string, 
+        email: payload.email as string, 
+        name: payload.name as string, 
+        skin: payload.skin as string 
+      };
   
-      return new Promise(resolve => resolve({ email: user.email, name: user.name }));
+      return new Promise(resolve => resolve({ id: user.id, email: user.email, name: user.name, skin: user.skin }));
     } catch (e) {
       if (!(e instanceof JWSSignatureVerificationFailed)) {
         logger.error(e);

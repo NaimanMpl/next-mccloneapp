@@ -20,8 +20,10 @@ export async function POST(request: Request) {
   try {
     const prisma = new PrismaClient();
     const user = await prisma.users.findUnique({
-      where: { email: email }
+      where: { email: email },
+      include: { skin: true }
     });
+
     if (user === null || user === undefined) {
       return new Response(JSON.stringify({ message: 'Email ou mot de passe incorrect.' }), { status: 400 });
     }
@@ -37,7 +39,7 @@ export async function POST(request: Request) {
       return new Response(JSON.stringify({ error: 'Email ou mot de passe incorrect.'}), { status: 400 });
     }
   
-    const payload: UserPayload = { email: user.email, name: user.name };
+    const payload: UserPayload = { id: user.id, email: user.email, name: user.name, skin: user.skin!.link };
   
     const accessToken = await generateAccessToken(payload);
     const refreshToken = await generateRefreshToken(payload);

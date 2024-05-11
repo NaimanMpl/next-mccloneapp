@@ -6,6 +6,8 @@ export interface User {
 }
 
 export interface UserPayload {
+  id: string,
   name: string,
-  email: string
+  email: string,
+  skin: string
 }

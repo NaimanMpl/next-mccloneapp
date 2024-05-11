@@ -32,9 +32,9 @@ const LoginForm = () => {
             name='email'
             render={({ field }) => (
               <FormItem className='flex flex-col'>
-                <Label htmlFor='email'>Nom d'utilisateur</Label>
+                <Label htmlFor='email'>Adresse mail</Label>
                 <FormControl>
-                  <Input placeholder="john.doe" {...field} />
+                  <Input placeholder="john.doe@domain.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -45,9 +45,9 @@ const LoginForm = () => {
             name='password'
             render={({ field }) => (
               <FormItem className='flex flex-col'>
-                <Label htmlFor='password'>Adresse mail</Label>
+                <Label htmlFor='password'>Mot de passe</Label>
                 <FormControl>
-                  <Input placeholder="john.doe@domain.com" {...field} />
+                  <Input type='password' placeholder="•••••••••••••" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -56,7 +56,7 @@ const LoginForm = () => {
           <div className='flex flex-col gap-2'>
             <Button disabled={loading} className='w-full' type='submit'>
               {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
-              S'inscrire
+              Connexion
             </Button>
             <div className='mt-4 text-center text-sm'>
               Pas encore de compte ? {" "}
