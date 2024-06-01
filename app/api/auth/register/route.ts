@@ -1,8 +1,10 @@
 import UserController from '@/app/controllers/user.controller';
 import { RegisterFormData } from '@/app/hooks/useRegisterForm';
 import { generateAccessToken, generateRefreshToken, getTokenCookie } from '@/app/lib/auth';
+import { registerUser } from '@/app/services/authservice';
 import logger from '@/app/utils/logger';
 import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export async function POST(request: Request) {
   const user: RegisterFormData = await request.json();
@@ -26,22 +28,11 @@ export async function POST(request: Request) {
   }
 
   try {
-  
-    const res = await fetch(process.env.AUTH_SERVER + '/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type' : 'application/json',
-      },
-      body: JSON.stringify(user)
-    })
     
-    const data = await res.json();
+    const userController = new UserController();
+    const userData = await userController.createUser(user);
 
-    if (!res.ok) {
-      return new Response(JSON.stringify({ message: data.message }), { status: res.status });
-    }
-
-    const payload = { id: data.id, username: data.username, email: data.email };
+    const payload = { id: userData.id, username: userData.name, email: userData.email };
 
     const accessToken = await generateAccessToken(payload);
     const refreshToken = await generateRefreshToken(payload);
@@ -57,6 +48,11 @@ export async function POST(request: Request) {
 
   } catch (e) {
     logger.error(e);
+
+    if (e instanceof PrismaClientKnownRequestError) {
+      return new Response(JSON.stringify({ message: 'Une erreur est survenue.'}), { status: 400 });
+    }
+
     return new Response(JSON.stringify({ message: 'Une erreur est survenue.'}), { status: 500 });
   }
 }

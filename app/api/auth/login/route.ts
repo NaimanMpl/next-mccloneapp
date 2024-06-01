@@ -1,6 +1,7 @@
 import { LoginFormData } from "@/app/hooks/useLoginForm";
 import { generateAccessToken, generateRefreshToken, getTokenCookie } from "@/app/lib/auth";
 import { UserPayload } from "@/app/models/user.model";
+import logger from "@/app/utils/logger";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
 
@@ -53,6 +54,7 @@ export async function POST(request: Request) {
 
     return response;
   } catch (e) {
+    logger.error(e);
     return new Response(JSON.stringify({ message: 'Une erreur est survenue.' }), { status: 500 });
   }
 }
