@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  mysqldb:
+    image: mariadb:10.5.8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
+    volumes:
+      - /usr/local/docker/mysql/data:/var/lib/mysql
+    networks:
+      - mysql-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.1.1
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysqldb
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - '8000:80'
+    networks:
+      - mysql-network
+networks:
+  mysql-network:
+    driver: bridge
