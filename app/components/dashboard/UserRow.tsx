@@ -1,10 +1,10 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { TableCell, TableRow } from '@/components/ui/table'
-import { MoreHorizontal, TrashIcon } from 'lucide-react'
+import { ChevronDown, MoreHorizontal, TrashIcon } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
 
 interface UserRowProps {
   id: string,
@@ -37,12 +37,34 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
         <p>{id}</p>
       </TableCell>
       <TableCell>
-        <Badge variant={role === 'Administrateur' ? 'destructive' : 'secondary'}>
-          {role}
-        </Badge>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              aria-haspopup="true"
+              size="icon"
+              variant="ghost"
+              className='hover:bg-transparent'
+            >
+              <Badge 
+                className='flex items-center gap-1'
+                variant={role === 'Administrateur' ? 'destructive' : 'secondary'}
+              >
+                {role}
+                <ChevronDown className='w-4 h-4'/>
+              </Badge>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <Badge variant={role !== 'Administrateur' ? 'destructive' : 'secondary'}>
+                {role === 'Joueur' ? 'Administrateur' : 'Joueur'}
+              </Badge>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </TableCell>
       <TableCell>
-        <p>{admin ? 'Administrateur' : 'Utilisateur'}</p>
+        <Checkbox defaultChecked={admin} />
       </TableCell>
       <TableCell>
         <p>{new Date(createdAt).toLocaleDateString()}</p>
@@ -61,7 +83,7 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
           <DropdownMenuContent>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem className='flex gap-2'>
-              <TrashIcon color='hsl(0 62.8% 30.6%)' size='20px' />
+              <TrashIcon className='text-destructive w-5 h-5' />
               <span className='text-destructive'>Supprimer</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
