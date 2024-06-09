@@ -57,7 +57,7 @@ export const updateTokens = async (payload: UserPayload) => {
 }
 
 const isUserPayload = (object: any): object is UserPayload => {
-  const keys: (keyof UserPayload)[] = ['id', 'email', 'name', 'skin'];
+  const keys: (keyof UserPayload)[] = ['id', 'email', 'name', 'skin', 'role'];
 
   for (const key of keys) {
     if (!(key in object)) {
@@ -90,10 +90,11 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
       id: payload.id as string, 
       email: payload.email as string, 
       name: payload.name as string, 
-      skin: payload.skin as string 
+      skin: payload.skin as string,
+      role: payload.role
     };
 
-    return new Promise(resolve => resolve({ id: user.id, email: user.email, name: user.name, skin: user.skin }));
+    return new Promise(resolve => resolve({ ...user }));
   } catch (e) {
     const refreshToken = cookies.get('refreshToken');
     
@@ -121,10 +122,11 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
         id: payload.id as string, 
         email: payload.email as string, 
         name: payload.name as string, 
-        skin: payload.skin as string 
+        skin: payload.skin as string,
+        role: payload.role
       };
   
-      return new Promise(resolve => resolve({ id: user.id, email: user.email, name: user.name, skin: user.skin }));
+      return new Promise(resolve => resolve({ ...user }));
     } catch (e) {
       if (!(e instanceof JWSSignatureVerificationFailed)) {
         logger.error(e);

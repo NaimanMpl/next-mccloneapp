@@ -1,3 +1,5 @@
+import { Users } from "@prisma/client";
+
 export const uploadSkin = async (formData: FormData, filename: string) => {
   const res = await fetch(
     '/api/user/skin/upload', 
@@ -11,4 +13,19 @@ export const uploadSkin = async (formData: FormData, filename: string) => {
     throw new Error(data.message);
   }
   return data;
+}
+
+export const getUsers = async (): Promise<Users[]> => {
+  const res = await fetch(
+    '/api/users',
+    {
+      method: 'GET'
+    }
+  );
+  if (!res.ok) {
+    return [];
+  }
+
+  const users = await res.json();
+  return users;
 }

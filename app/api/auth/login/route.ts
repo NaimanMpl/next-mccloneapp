@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     const prisma = new PrismaClient();
     const user = await prisma.users.findUnique({
       where: { email: email },
-      include: { skin: true }
+      include: { skin: true, role: true }
     });
 
     if (user === null || user === undefined) {
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
       return new Response(JSON.stringify({ error: 'Email ou mot de passe incorrect.'}), { status: 400 });
     }
   
-    const payload: UserPayload = { id: user.id, email: user.email, name: user.name, skin: user.skin!.link };
+    const payload: UserPayload = { id: user.id, email: user.email, name: user.name, skin: user.skin!.link, role: user.role };
   
     const accessToken = await generateAccessToken(payload);
     const refreshToken = await generateRefreshToken(payload);

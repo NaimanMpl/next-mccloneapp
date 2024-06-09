@@ -5,9 +5,16 @@ export interface User {
   createdAt: string
 }
 
+export interface Role {
+  id: number,
+  name: string,
+  score: number
+}
+
 export interface UserPayload {
   id: string,
   name: string,
   email: string,
-  skin: string
+  skin: string,
+  role: Role
 }

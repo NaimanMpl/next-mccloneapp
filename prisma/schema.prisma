@@ -20,7 +20,10 @@ model Users {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+  admin     Boolean  @default(false)
   skin      Skin?
+  roleId    Int      @default(1)
+  role      Role     @relation(fields: [roleId], references: [id])
 }
 
 model Skin {
@@ -41,4 +44,17 @@ model ServerInfo {
   status        ServerStatus
   ip            String
   onlinePlayers Int
+}
+
+model Role {
+  id    Int     @id @default(autoincrement())
+  name  String
+  score Int
+  Users Users[]
+}
+
+model Permission {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  score Int
 }

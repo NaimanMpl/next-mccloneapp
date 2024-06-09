@@ -23,12 +23,18 @@ export default class UserController {
             create: {
                 link: process.env.DEFAULT_SKIN_URL!,
             }
+          },
+          role: {
+            create: {
+              name: 'PLAYER',
+              score: 0            
+            }
           }
         }
       });
 
-      return user;
       logger.trace(`User ${userFormData.username} (${userFormData.email}) has been created successfully`);
+      return user;
     } catch(e) {
       throw e;
     } finally {
