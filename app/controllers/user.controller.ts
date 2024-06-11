@@ -24,12 +24,7 @@ export default class UserController {
                 link: process.env.DEFAULT_SKIN_URL!,
             }
           },
-          role: {
-            create: {
-              name: 'PLAYER',
-              score: 0            
-            }
-          }
+          roleId: 1
         }
       });
 

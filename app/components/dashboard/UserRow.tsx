@@ -1,10 +1,13 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { TableCell, TableRow } from '@/components/ui/table'
-import { ChevronDown, MoreHorizontal, TrashIcon } from 'lucide-react'
+import { DialogTitle } from '@mui/material'
+import { ChevronDown, Circle, Edit, MoreHorizontal, TrashIcon } from 'lucide-react'
 import Image from 'next/image'
+import EditUserDialog from './EditUserDialog'
 
 interface UserRowProps {
   id: string,
@@ -15,15 +18,15 @@ interface UserRowProps {
   createdAt: Date
 }
 
+const roleCircleColors = {
+  'Joueur' : 'bg-neutral-50',
+  'Administrateur' : 'bg-red-500'
+}
+
 const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
 
-  const badgeVariants = {
-    'Administrateur' : 'destructive',
-    'Joueur' : 'secondary'
-  }
-
   return (
-    <TableRow>
+    <TableRow className='cursor-pointer'>
       <TableCell>
         <div className='flex gap-4'>
           <Image className='rounded w-10' src='/default-pp.png' alt='Minecraft Clone' width='150' height='100' />
@@ -39,20 +42,13 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              aria-haspopup="true"
-              size="icon"
-              variant="ghost"
-              className='hover:bg-transparent'
+            <Badge 
+              className='gap-2 flex items-center w-fit'
+              variant={role.toLowerCase()}
             >
-              <Badge 
-                className='flex items-center gap-1'
-                variant={role === 'Administrateur' ? 'destructive' : 'secondary'}
-              >
-                {role}
-                <ChevronDown className='w-4 h-4'/>
-              </Badge>
-            </Button>
+              <div className={`w-2 h-2 ${roleCircleColors[role]} rounded-full`}></div>
+              {role}
+            </Badge>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
@@ -69,26 +65,33 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
       <TableCell>
         <p>{new Date(createdAt).toLocaleDateString()}</p>
       </TableCell>
-      <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              aria-haspopup="true"
-              size="icon"
-              variant="ghost"
-            >
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem className='flex gap-2'>
-              <TrashIcon className='text-destructive w-5 h-5' />
-              <span className='text-destructive'>Supprimer</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </TableCell>
+      <Dialog>
+        <TableCell>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                aria-haspopup="true"
+                size="icon"
+                variant="ghost"
+              >
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DialogTrigger asChild>
+                  <DropdownMenuItem>
+                    Éditer
+                  </DropdownMenuItem>
+                </DialogTrigger>
+              <DropdownMenuItem className='flex gap-2'>
+                <span className='text-destructive'>Supprimer</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <EditUserDialog id={id} name={name} email={email} />
+        </TableCell>
+      </Dialog>
     </TableRow>
   )
 }
