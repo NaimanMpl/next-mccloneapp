@@ -1,6 +1,7 @@
 import UserController from '@/app/controllers/user.controller';
 import { RegisterFormData } from '@/app/hooks/useRegisterForm';
 import { generateAccessToken, generateRefreshToken, getTokenCookie } from '@/app/lib/auth';
+import userMiddleware from '@/app/middlewares/user.middleware';
 import { registerUser } from '@/app/services/authservice';
 import logger from '@/app/utils/logger';
 import { Prisma } from '@prisma/client';
@@ -8,25 +9,12 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export async function POST(request: Request) {
   const user: RegisterFormData = await request.json();
+  const error = userMiddleware.handleRegister(user);
   
-  if (!user.username || !user.email || !user.password || !user.confirmPassword) {
-    return new Response(JSON.stringify({ error: 'Veuillez renseigner tout les champs.' }), { status: 400 });
+  if (error) {
+    return error;
   }
-
-  if (user.username.length === 0 || user.email.length === 0 || user.password.length === 0 || user.confirmPassword.length === 0) {
-    return new Response(JSON.stringify({ error: 'Veuillez renseigner tout les champs.' }), { status: 400 });
-  }
-
-  if (user.password !== user.confirmPassword) {
-    return new Response(JSON.stringify({ error: 'Les 2 mots de passes doivent être identiques.' }), { status: 400 });
-  }
-
-  const emailRegex = /^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/;
-
-  if (!emailRegex.test(user.email)) {
-    return new Response(JSON.stringify({ error: 'Veuillez renseigner une adresse email valide !'}), { status: 400 });
-  }
-
+  
   try {
     
     const userController = new UserController();

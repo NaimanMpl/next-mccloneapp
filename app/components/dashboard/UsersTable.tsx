@@ -3,10 +3,12 @@ import { useUsers } from '@/app/contexts/UsersContext';
 import { RoleEnum } from '@/app/models/role.model';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ListFilter, Plus, Search } from 'lucide-react';
+import AddUserDialog from './AddUserDialog';
 import UserRow from './UserRow';
 
 const UsersTable = () => {
@@ -24,10 +26,15 @@ const UsersTable = () => {
         </CardHeader>
         <CardContent>
           <div className='flex justify-end gap-2 pb-4'>
-            <Button className='mr-auto flex gap-2'>
-              <Plus className='w-5 h-5' />
-              Ajouter un utilisateur
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className='mr-auto flex gap-2'>
+                  <Plus className='w-5 h-5' />
+                  Ajouter un utilisateur
+                </Button>
+              </DialogTrigger>
+              <AddUserDialog />
+            </Dialog>
             <div className='relative lg:w-96'>
               <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
               <Input className='pl-8' placeholder='Rechercher' />

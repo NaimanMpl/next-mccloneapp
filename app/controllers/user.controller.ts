@@ -2,7 +2,7 @@ import { RegisterFormData } from "@/app/hooks/useRegisterForm";
 import logger from "@/app/utils/logger";
 import bcrypt from 'bcrypt';
 import prisma from "../lib/db";
-import { EditUserFormData } from "../models/formsdata.model";
+import { AddUserFormData, EditUserFormData } from "../models/formsdata.model";
 import { RoleEnum, RolesDict } from "../models/role.model";
 export default class UserController {
   
@@ -66,6 +66,37 @@ export default class UserController {
       return user;
     } catch (err) {
       throw err;
+    }
+  }
+
+  public addUser = async (formData: AddUserFormData) => {
+    try {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(formData.password, salt);
+
+      const user = await prisma.users.create({
+        data: {
+          email: formData.email,
+          name: formData.username,
+          password: hashedPassword,
+          admin: formData.admin,
+          roleId: RolesDict[formData.role],
+          skin: {
+            create: {
+                link: process.env.DEFAULT_SKIN_URL!,
+            }
+          }
+        },
+        include: {
+          role: true,
+          skin: true
+        }
+      });
+
+      return user;
+    } catch (e) {
+      logger.error(e);
+      throw e;
     }
   }
 

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useUsers } from '../contexts/UsersContext';
+import { RoleEnum } from '../models/role.model';
 import { updateUser } from '../services/userservice';
 
 interface EditUserFormProps {
@@ -19,6 +20,7 @@ interface EditUserFormProps {
 export const useEditUserForm = ({ userId, defaultValues }: EditUserFormProps) => {
   
   const [ isAdmin, setIsAdmin ] = useState(defaultValues.admin);
+  const [ currentRole, setCurrentRole ] = useState<RoleEnum>(defaultValues.userRole as RoleEnum);
   const { setUsers } = useUsers();
 
   const FormSchema = z.object({
@@ -41,7 +43,7 @@ export const useEditUserForm = ({ userId, defaultValues }: EditUserFormProps) =>
   
     setLoading(true);
     try {
-      const updatedUser = await updateUser(userId, email, name, userRole, admin);
+      const updatedUser = await updateUser(userId, email, name, currentRole, admin);
 
       setUsers(users => users.map((user) => { return user.id === userId ? updatedUser : user }));
       toast({ title: 'Succès', description: `L'utilisateur ${updatedUser.name} a été mis à jour`, variant: 'success' });
@@ -52,5 +54,5 @@ export const useEditUserForm = ({ userId, defaultValues }: EditUserFormProps) =>
     setLoading(false);
   }
 
-  return { form, isAdmin, setIsAdmin, FormSchema, loading, onSubmit };
+  return { form, isAdmin, currentRole, setCurrentRole, setIsAdmin, FormSchema, loading, onSubmit };
 }
