@@ -112,7 +112,7 @@ const UsersTable = () => {
   )
 }
 
-const UsersTableHead = () => {
+export const UsersTableHead = () => {
   return (
     <TableRow>
       <TableHead>Utilisateur</TableHead>
