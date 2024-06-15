@@ -1,6 +1,7 @@
 'use client';
 import { useUsers } from '@/app/contexts/UsersContext';
 import { RoleEnum } from '@/app/models/role.model';
+import { User } from '@/app/models/user.model';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
@@ -8,12 +9,35 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ListFilter, Plus, Search } from 'lucide-react';
+import { FormEventHandler, useEffect, useState } from 'react';
 import AddUserDialog from './AddUserDialog';
 import UserRow from './UserRow';
 
 const UsersTable = () => {
 
   const { users } = useUsers();
+  const [ searchValue, setSearchValue ] = useState<string>('');
+  const [ currentUsers, setCurrentUsers ] = useState<User[]>(users);
+
+  const updateCurrentUsers = (value: string) => {
+    if (!value || value.length === 0) {
+      setCurrentUsers(users);
+      return;
+    }
+
+    setCurrentUsers(users.filter(user => user.name.includes(value) || user.email.includes(value)));
+  }
+
+  const handleSearchChange: FormEventHandler<HTMLInputElement> = (e) => {
+    const value = e.currentTarget.value;
+
+    setSearchValue(value);
+    updateCurrentUsers(value);
+  }
+
+  useEffect(() => {
+    updateCurrentUsers(searchValue);
+  }, [users]);
 
   return (
     <div className='mt-8'>
@@ -37,7 +61,7 @@ const UsersTable = () => {
             </Dialog>
             <div className='relative lg:w-96'>
               <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
-              <Input className='pl-8' placeholder='Rechercher' />
+              <Input className='pl-8' placeholder='Rechercher' onChangeCapture={handleSearchChange} />
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -67,7 +91,7 @@ const UsersTable = () => {
               <UsersTableHead />
             </TableHeader>
             <TableBody>
-              {users.map(user => {
+              {currentUsers.map(user => {
                 return (
                   <UserRow 
                     key={user.id} 
