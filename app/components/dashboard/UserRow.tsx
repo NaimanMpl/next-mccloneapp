@@ -6,6 +6,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { TableCell, TableRow } from '@/components/ui/table'
 import { MoreHorizontal } from 'lucide-react'
 import Image from 'next/image'
+import { useState } from 'react'
+import DeleteAccontDialog from '../account/DeleteAccontDialog'
+import DeleteUserDialog from './DeleteUserDialog'
 import EditUserDialog from './EditUserDialog'
 import RoleBadge from './RoleBadge'
 
@@ -19,6 +22,9 @@ interface UserRowProps {
 }
 
 const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
+
+  const [ isEditDialogOpen, setIsEditDialogOpen ] = useState(false);
+  const [ isDeleteDialogOpen, setIsDeleteDialogOpen ] = useState(false);
 
   return (
     <TableRow className='cursor-pointer'>
@@ -51,33 +57,40 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
       <TableCell>
         <p>{new Date(createdAt).toLocaleDateString()}</p>
       </TableCell>
-      <Dialog>
-        <TableCell>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                aria-haspopup="true"
-                size="icon"
-                variant="ghost"
-              >
-                <MoreHorizontal />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DialogTrigger asChild>
-                  <DropdownMenuItem>
-                    Éditer
-                  </DropdownMenuItem>
-                </DialogTrigger>
-              <DropdownMenuItem className='flex gap-2'>
-                <span className='text-destructive'>Supprimer</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <TableCell>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              aria-haspopup="true"
+              size="icon"
+              variant="ghost"
+            >
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => setIsEditDialogOpen(true)}>
+              Éditer
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setIsDeleteDialogOpen(true)} className='text-destructive'>
+              Supprimer
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Dialog 
+          open={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+        >
           <EditUserDialog id={id} userRole={role} name={name} email={email} admin={admin} />
-        </TableCell>
-      </Dialog>
+        </Dialog>
+        <Dialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setIsDeleteDialogOpen}
+        >
+          <DeleteUserDialog userId={id} username={name} />
+        </Dialog>
+      </TableCell>
     </TableRow>
   )
 }

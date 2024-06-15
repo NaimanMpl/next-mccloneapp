@@ -71,3 +71,18 @@ export const addUser = async (formData: AddUserFormData): Promise<User> => {
   const data = await res.json();
   return data.user;
 }
+
+export const deleteUser = async (userId: string): Promise<{ id: string, name: string }> => {
+  const res = await fetch(
+    `/api/users?id=${userId}`,
+    {
+      method: 'DELETE',
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Oops.. Un problème est survenue');
+  }
+  const data = await res.json();
+  return data.user;
+}

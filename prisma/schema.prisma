@@ -23,13 +23,13 @@ model Users {
   admin     Boolean  @default(false)
   skin      Skin?
   roleId    Int      @default(1)
-  role      Role     @relation(fields: [roleId], references: [id])
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
 }
 
 model Skin {
   id     Int    @id @default(autoincrement())
   link   String
-  user   Users  @relation(fields: [userId], references: [id])
+  user   Users  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 }
 

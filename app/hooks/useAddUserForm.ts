@@ -43,7 +43,7 @@ export const useAddUserForm = () => {
       const newUser = await addUser({...values, role: currentRole} as AddUserFormData);
 
       setUsers(users => [...users, newUser]);
-      toast({ title: 'Succès', description: `L'utilistateur ${newUser.name} fait désormais partie du club !`, variant: 'success' });
+      toast({ title: 'Succès', description: `L'utilistateur ${newUser.name} fait désormais partie du club !`, variant: 'default' });
     } catch (e) {
       const message = (e as Error).message;
       toast({ title: 'Uh-oh', description: message, variant: 'destructive' });

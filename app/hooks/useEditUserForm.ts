@@ -46,7 +46,7 @@ export const useEditUserForm = ({ userId, defaultValues }: EditUserFormProps) =>
       const updatedUser = await updateUser(userId, email, name, currentRole, admin);
 
       setUsers(users => users.map((user) => { return user.id === userId ? updatedUser : user }));
-      toast({ title: 'Succès', description: `L'utilisateur ${updatedUser.name} a été mis à jour`, variant: 'success' });
+      toast({ title: 'Succès', description: `L'utilisateur ${updatedUser.name} a été mis à jour`, variant: 'default' });
     } catch (e) {
       const message = (e as Error).message;
       toast({ title: 'Uh-oh', description: message, variant: 'destructive' });

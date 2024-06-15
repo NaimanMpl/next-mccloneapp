@@ -34,7 +34,7 @@ const SkinUploadForm = () => {
       const skinUrl = await uploadFile('skins', formData);
       setUser({ ...user, skin: skinUrl });
       setFilename('');
-      toast({ title: 'Succès', description: 'Votre skin a été mis à jour', variant: 'success' })
+      toast({ title: 'Succès', description: 'Votre skin a été mis à jour', variant: 'default' })
     } catch (e) {
       logger.error(e)
       toast({ title: 'Uh-oh ! Un problème est survenu', description: 'Impossible de traiter votre requête', variant: 'destructive' })
