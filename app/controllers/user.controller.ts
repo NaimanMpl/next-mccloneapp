@@ -1,13 +1,12 @@
 import { RegisterFormData } from "@/app/hooks/useRegisterForm";
 import logger from "@/app/utils/logger";
-import { PrismaClient } from '@prisma/client';
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import bcrypt from 'bcrypt';
-
+import prisma from "../lib/db";
+import { EditUserFormData } from "../models/formsdata.model";
+import { RoleEnum, RolesDict } from "../models/role.model";
 export default class UserController {
   
   public createUser = async (userFormData: RegisterFormData) => {
-    const prisma = new PrismaClient();
 
     try {
       
@@ -39,10 +38,35 @@ export default class UserController {
 
   public getUsers = async () => {
 
-    const prisma = new PrismaClient();
     const users = await prisma.users.findMany();
     
     console.log(users);
+  }
+
+  public updateUser = async (id: string, formData: EditUserFormData) => {
+
+    const { email, name, userRole, admin } = formData;
+
+    try {
+      const user = await prisma.users.update({
+        where: {
+          id: id
+        },
+        data: {
+          admin: admin,
+          email: email,
+          name: name,
+          roleId: RolesDict[userRole as RoleEnum]
+        },
+        include: {
+          role: true,
+          skin: true
+        }
+      });
+      return user;
+    } catch (err) {
+      throw err;
+    }
   }
 
 }

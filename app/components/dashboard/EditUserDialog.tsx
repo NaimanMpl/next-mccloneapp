@@ -10,6 +10,7 @@ import { Switch } from '@/components/ui/switch'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { Loader2 } from 'lucide-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import RoleBadge from './RoleBadge'
@@ -18,21 +19,19 @@ interface EditUserDialogProps {
   id: string,
   name: string,
   userRole: RoleEnum,
-  email: string
+  email: string,
+  admin: boolean
 }
 
-const EditUserDialog = ({ id, userRole, name, email } : EditUserDialogProps) => {
+const EditUserDialog = ({ id, userRole, name, email, admin } : EditUserDialogProps) => {
   
-  const { FormSchema, loading, onSubmit } = useEditUserForm({
-    userId: id
-  });
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const { form, isAdmin, setIsAdmin, loading, onSubmit } = useEditUserForm({
+    userId: id,
     defaultValues: {
       email: email,
       name: name,
       userRole: userRole,
-      admin: false,
+      admin: admin
     }
   });
   
@@ -47,7 +46,7 @@ const EditUserDialog = ({ id, userRole, name, email } : EditUserDialogProps) => 
           <div className='space-y-4'>
             <FormItem>
               <Label>Identifiant</Label>
-              <Input defaultValue={name} value={id} disabled />
+              <Input value={id} disabled />
             </FormItem>
             <FormField 
               control={form.control}
@@ -114,7 +113,7 @@ const EditUserDialog = ({ id, userRole, name, email } : EditUserDialogProps) => 
                     </FormDescription>
                   </div>
                   <FormControl>
-                    <Switch />
+                    <Switch checked={isAdmin} onCheckedChange={(checked) => { setIsAdmin(checked); form.setValue('admin', checked) }} />
                   </FormControl>
                 </FormItem>
               )}

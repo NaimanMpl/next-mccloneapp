@@ -1,27 +1,17 @@
 'use client';
-import { getUsers } from '@/app/services/userservice';
+import { useUsers } from '@/app/contexts/UsersContext';
+import { RoleEnum } from '@/app/models/role.model';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Users } from '@prisma/client';
 import { ListFilter, Plus, Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import UserRow from './UserRow';
 
 const UsersTable = () => {
 
-  const [ users, setUsers ] = useState<Users[]>([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const users = await getUsers();
-      setUsers(users);
-    }
-
-    fetchUsers();
-  }, []);
+  const { users } = useUsers();
 
   return (
     <div className='mt-8'>
@@ -78,8 +68,8 @@ const UsersTable = () => {
                     name={user.name} 
                     email={user.email} 
                     admin={user.admin} 
-                    createdAt={user.createdAt} 
-                    role={user.role.name} 
+                    createdAt={user.createdAt}
+                    role={user.role.name as RoleEnum} 
                   />
                 )
               })}

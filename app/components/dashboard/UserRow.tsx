@@ -1,4 +1,4 @@
-import { Role } from '@/app/models/role.model'
+import { RoleEnum } from '@/app/models/role.model'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -13,7 +13,7 @@ interface UserRowProps {
   id: string,
   name: string,
   email: string,
-  role: Role,
+  role: RoleEnum,
   admin: boolean,
   createdAt: Date
 }
@@ -75,7 +75,7 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <EditUserDialog id={id} userRole={role} name={name} email={email} />
+          <EditUserDialog id={id} userRole={role} name={name} email={email} admin={admin} />
         </TableCell>
       </Dialog>
     </TableRow>

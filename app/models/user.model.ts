@@ -1,14 +1,22 @@
-export interface User {
-  name: string,
-  email: string,
-  password: string,
-  createdAt: string
-}
-
 export interface Role {
   id: number,
   name: string,
   score: number
+}
+
+export interface Skin {
+  id: number,
+  link: string,
+}
+
+export interface User {
+  id: string,
+  name: string,
+  email: string,
+  createdAt: Date,
+  admin: boolean,
+  role: Role,
+  skin: Skin
 }
 
 export interface UserPayload {

@@ -1,4 +1,4 @@
-import { Users } from "@prisma/client";
+import { User } from "../models/user.model";
 
 export const uploadSkin = async (formData: FormData, filename: string) => {
   const res = await fetch(
@@ -15,7 +15,7 @@ export const uploadSkin = async (formData: FormData, filename: string) => {
   return data;
 }
 
-export const getUsers = async (): Promise<Users[]> => {
+export const getUsers = async (): Promise<User[]> => {
   const res = await fetch(
     '/api/users',
     {
@@ -30,7 +30,7 @@ export const getUsers = async (): Promise<Users[]> => {
   return users;
 }
 
-export const updateUser = async (id: string | undefined, email: string | undefined, name: string | undefined, role: string | undefined, admin: boolean | undefined) => {
+export const updateUser = async (id: string | undefined, email: string | undefined, name: string | undefined, role: string | undefined, admin: boolean | undefined): Promise<User> => {
   try {
     const res = await fetch(
       `/api/users/update?id=${id}`,
@@ -46,6 +46,8 @@ export const updateUser = async (id: string | undefined, email: string | undefin
     if (!res.ok) {
       throw new Error('Oops.. Un problème est survenue');
     }
+    const data = await res.json();
+    return data.user;
   } catch (e) {
     throw new Error('Oops.. Un problème est survenue');
   }

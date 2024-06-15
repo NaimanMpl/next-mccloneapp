@@ -1,8 +1,7 @@
 import DashboardPageWrapper from '@/app/components/dashboard/DashboardPageWrapper';
+import UsersTableContainer from '@/app/components/dashboard/UsersTableContainer';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import React from 'react';
-import Header from '../../components/Header';
-import UsersTable from '../../components/dashboard/UsersTable';
 
 const UsersPage = () => {
   return (
@@ -19,7 +18,7 @@ const UsersPage = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <UsersTable />
+        <UsersTableContainer />
       </div>
     </DashboardPageWrapper>
   )
