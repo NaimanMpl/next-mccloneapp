@@ -1,26 +1,21 @@
+import { Role } from '@/app/models/role.model'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { TableCell, TableRow } from '@/components/ui/table'
-import { DialogTitle } from '@mui/material'
-import { ChevronDown, Circle, Edit, MoreHorizontal, TrashIcon } from 'lucide-react'
+import { MoreHorizontal } from 'lucide-react'
 import Image from 'next/image'
 import EditUserDialog from './EditUserDialog'
+import RoleBadge from './RoleBadge'
 
 interface UserRowProps {
   id: string,
   name: string,
   email: string,
-  role: string,
+  role: Role,
   admin: boolean,
   createdAt: Date
-}
-
-const roleCircleColors = {
-  'Joueur' : 'bg-neutral-50',
-  'Administrateur' : 'bg-red-500'
 }
 
 const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
@@ -42,13 +37,7 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Badge 
-              className='gap-2 flex items-center w-fit'
-              variant={role.toLowerCase()}
-            >
-              <div className={`w-2 h-2 ${roleCircleColors[role]} rounded-full`}></div>
-              {role}
-            </Badge>
+            <RoleBadge role={role} />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
@@ -58,9 +47,6 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </TableCell>
-      <TableCell>
-        <Checkbox defaultChecked={admin} />
       </TableCell>
       <TableCell>
         <p>{new Date(createdAt).toLocaleDateString()}</p>
@@ -89,7 +75,7 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <EditUserDialog id={id} name={name} email={email} />
+          <EditUserDialog id={id} userRole={role} name={name} email={email} />
         </TableCell>
       </Dialog>
     </TableRow>

@@ -71,7 +71,17 @@ const UsersTable = () => {
             </TableHeader>
             <TableBody>
               {users.map(user => {
-                return <UserRow key={user.id} id={user.id} name={user.name} email={user.email} admin={user.admin} createdAt={user.createdAt} role={user.role.name} />
+                return (
+                  <UserRow 
+                    key={user.id} 
+                    id={user.id} 
+                    name={user.name} 
+                    email={user.email} 
+                    admin={user.admin} 
+                    createdAt={user.createdAt} 
+                    role={user.role.name} 
+                  />
+                )
               })}
             </TableBody>
           </Table>
@@ -87,7 +97,6 @@ const UsersTableHead = () => {
       <TableHead>Utilisateur</TableHead>
       <TableHead>ID</TableHead>
       <TableHead>Role</TableHead>
-      <TableHead>Administrateur du site</TableHead>
       <TableHead>Date d'inscription</TableHead>
     </TableRow>
   )

@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '@radix-ui/react-label';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import FormWrapper from '../components/forms/FormWrapper';
