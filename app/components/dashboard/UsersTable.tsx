@@ -7,15 +7,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ListFilter, Plus, Search } from 'lucide-react';
 import { FormEventHandler, useEffect, useState } from 'react';
 import AddUserDialog from './AddUserDialog';
 import UserRow from './UserRow';
+import UserRowSkeleton from './UserRowSkeleton';
 
 const UsersTable = () => {
 
-  const { users } = useUsers();
+  const { users, loading } = useUsers();
   const [ searchValue, setSearchValue ] = useState<string>('');
   const [ currentUsers, setCurrentUsers ] = useState<User[]>(users);
 
@@ -91,19 +93,25 @@ const UsersTable = () => {
               <UsersTableHead />
             </TableHeader>
             <TableBody>
-              {currentUsers.map(user => {
-                return (
-                  <UserRow 
-                    key={user.id} 
-                    id={user.id} 
-                    name={user.name} 
-                    email={user.email} 
-                    admin={user.admin} 
-                    createdAt={user.createdAt}
-                    role={user.role.name as RoleEnum} 
-                  />
-                )
-              })}
+              {loading ? (
+                Array.from({ length: 10 }).map(() => (<UserRowSkeleton />))
+              ) : (
+                <>
+                  {currentUsers.map(user => {
+                    return (
+                      <UserRow 
+                        key={user.id} 
+                        id={user.id} 
+                        name={user.name} 
+                        email={user.email} 
+                        admin={user.admin} 
+                        createdAt={user.createdAt}
+                        role={user.role.name as RoleEnum} 
+                      />
+                    )
+                  })}
+                </>
+              )}
             </TableBody>
           </Table>
         </CardContent>

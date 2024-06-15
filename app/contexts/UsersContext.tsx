@@ -4,6 +4,7 @@ import { getUsers } from "../services/userservice";
 
 interface IUsersContext {
   users: User[],
+  loading: boolean,
   setUsers: Dispatch<SetStateAction<User[]>>
 }
 
@@ -11,18 +12,21 @@ export const UsersContext = createContext<IUsersContext | undefined>(undefined);
 
 export const UsersProvider = ({ children }: { children: ReactNode }) => {
   const [ users, setUsers ] = useState<User[]>([]);
+  const [ loading, setLoading ] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
       const users = await getUsers();
       setUsers(users);
+      setLoading(false);
     }
 
+    setLoading(true);
     fetchUsers();
   }, []);
 
   return (
-    <UsersContext.Provider value={{ users, setUsers }}>
+    <UsersContext.Provider value={{ users, loading, setUsers }}>
       {children}
     </UsersContext.Provider>
   )
