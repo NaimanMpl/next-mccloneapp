@@ -24,6 +24,7 @@ model Users {
   skin      Skin?
   roleId    Int      @default(1)
   role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permissions Permission[]
 }
 
 model Skin {
@@ -51,10 +52,14 @@ model Role {
   name  String
   score Int
   Users Users[]
+  permissions Permission[]
 }
 
 model Permission {
   id    Int    @id @default(autoincrement())
   name  String @unique
-  score Int
+  authorId String
+  author Users @relation(fields: [authorId], references: [id])
+  roleId Int
+  role Role @relation(fields: [roleId], references: [id])
 }

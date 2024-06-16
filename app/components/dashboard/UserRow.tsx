@@ -1,16 +1,15 @@
 import { RoleEnum } from '@/app/models/role.model'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { MoreHorizontal } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
-import DeleteAccontDialog from '../account/DeleteAccontDialog'
-import DeleteUserDialog from './DeleteUserDialog'
-import EditUserDialog from './EditUserDialog'
 import RoleBadge from './RoleBadge'
+import DeleteUserDialog from './dialogs/DeleteUserDialog'
+import EditUserDialog from './dialogs/EditUserDialog'
 
 interface UserRowProps {
   id: string,

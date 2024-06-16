@@ -1,60 +1,36 @@
-import { useEditUserForm } from '@/app/hooks/useEditUserForm'
+import { useAddUserForm } from '@/app/hooks/useAddUserForm'
 import { RoleEnum } from '@/app/models/role.model'
 import { Button } from '@/components/ui/button'
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel } from '@/components/ui/dropdown-menu'
+import { DropdownMenuContent, DropdownMenuLabel } from '@/components/ui/dropdown-menu'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { DropdownMenu, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
+import { DropdownMenu, DropdownMenuItem, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu'
 import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import RoleBadge from './RoleBadge'
+import RoleBadge from '../RoleBadge'
 
-interface EditUserDialogProps {
-  id: string,
-  name: string,
-  userRole: RoleEnum,
-  email: string,
-  admin: boolean
-}
-
-const EditUserDialog = ({ id, userRole, name, email, admin } : EditUserDialogProps) => {
+const AddUserDialog = () => {
   
-  const { form, isAdmin, setIsAdmin, currentRole, setCurrentRole, loading, onSubmit } = useEditUserForm({
-    userId: id,
-    defaultValues: {
-      email: email,
-      name: name,
-      userRole: userRole,
-      admin: admin
-    }
-  });
+  const { form, isAdmin, setIsAdmin, currentRole, setCurrentRole, loading, onSubmit } = useAddUserForm();
   
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Éditer l'utilisateur</DialogTitle>
+        <DialogTitle>Ajouter un utilisateur</DialogTitle>
         <DialogDescription>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat, nesciunt!</DialogDescription>
       </DialogHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='space-y-4'>
-            <FormItem>
-              <Label>Identifiant</Label>
-              <Input value={id} disabled />
-            </FormItem>
             <FormField
               control={form.control}
-              name='name'
+              name='username'
               render={({ field }) => (
                 <FormItem>
                   <Label>Nom</Label>
-                  <Input defaultValue={name} placeholder='Imperator' {...field} />
+                  <Input placeholder='Imperator' {...field} />
                 </FormItem>
               )}
             />
@@ -64,13 +40,33 @@ const EditUserDialog = ({ id, userRole, name, email, admin } : EditUserDialogPro
               render={({ field }) => (
                 <FormItem>
                   <Label>Email</Label>
-                  <Input defaultValue={email} placeholder='imperator@domain.com' {...field} />
+                  <Input placeholder='imperator@domain.com' {...field} />
                 </FormItem>
               )}
             />
             <FormField 
               control={form.control}
-              name='userRole'
+              name='password'
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Email</Label>
+                  <Input type='password' placeholder='•••••••••••••' {...field} />
+                </FormItem>
+              )}
+            />
+            <FormField 
+              control={form.control}
+              name='confirmPassword'
+              render={({ field }) => (
+                <FormItem>
+                  <Label>Email</Label>
+                  <Input type='password' placeholder='•••••••••••••' {...field} />
+                </FormItem>
+              )}
+            />
+            <FormField 
+              control={form.control}
+              name='role'
               render={({ field }) => (
                 <FormItem>
                   <DropdownMenu>
@@ -133,4 +129,4 @@ const EditUserDialog = ({ id, userRole, name, email, admin } : EditUserDialogPro
   )
 }
 
-export default EditUserDialog
+export default AddUserDialog

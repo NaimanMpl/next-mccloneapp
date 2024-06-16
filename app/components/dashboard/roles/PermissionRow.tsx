@@ -1,7 +1,13 @@
 import { User } from '@/app/models/user.model'
+import { Button } from '@/components/ui/button'
+import { Dialog } from '@/components/ui/dialog'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { TableCell, TableRow } from '@/components/ui/table'
+import { MoreHorizontal } from 'lucide-react'
 import Image from 'next/image'
-import React from 'react'
+import { useState } from 'react'
+import DeletePermissionDialog from '../dialogs/DeletePermissionDialog'
+import EditPermissionDialog from '../dialogs/EditPermissionDialog'
 
 interface PermissionRowProps {
   id: number,
@@ -11,6 +17,10 @@ interface PermissionRowProps {
 }
 
 const PermissionRow = ({ id, name, author, createdAt }: PermissionRowProps) => {
+
+  const [ isDeleteDialogOpen, setIsDeleteDialogOpen ] = useState(false);
+  const [ isEditDialogOpen, setIsEditDialogOpen ] = useState(false);
+
   return (
     <TableRow>
       <TableCell>
@@ -30,6 +40,40 @@ const PermissionRow = ({ id, name, author, createdAt }: PermissionRowProps) => {
       </TableCell>
       <TableCell>
         <p>{new Date(createdAt).toLocaleDateString()}</p>
+      </TableCell>
+      <TableCell>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              aria-haspopup="true"
+              size="icon"
+              variant="ghost"
+            >
+              <MoreHorizontal />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => setIsEditDialogOpen(true)}>
+              Éditer
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setIsDeleteDialogOpen(true)} className='text-destructive'>
+              Supprimer
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Dialog 
+          open={isEditDialogOpen}
+          onOpenChange={setIsEditDialogOpen}
+        >
+          <EditPermissionDialog />
+        </Dialog>
+        <Dialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setIsDeleteDialogOpen}
+        >
+          <DeletePermissionDialog />
+        </Dialog>
       </TableCell>
     </TableRow>
   )

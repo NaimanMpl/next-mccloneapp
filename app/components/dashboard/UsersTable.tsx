@@ -7,13 +7,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ListFilter, Plus, Search } from 'lucide-react';
 import { FormEventHandler, useEffect, useState } from 'react';
-import AddUserDialog from './AddUserDialog';
 import UserRow from './UserRow';
 import UserRowSkeleton from './UserRowSkeleton';
+import AddUserDialog from './dialogs/AddUserDialog';
 
 const UsersTable = () => {
 
