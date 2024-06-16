@@ -24,5 +24,6 @@ export interface UserPayload {
   name: string,
   email: string,
   skin: string,
-  role: Role
+  role: Role,
+  admin: boolean
 }

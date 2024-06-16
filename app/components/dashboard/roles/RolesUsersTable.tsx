@@ -1,3 +1,4 @@
+import { useRoles } from '@/app/contexts/RolesContext'
 import { useUsers } from '@/app/contexts/UsersContext'
 import { RoleEnum } from '@/app/models/role.model'
 import { Button } from '@/components/ui/button'
@@ -8,11 +9,13 @@ import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ListFilter, Pencil, Plus, Search } from 'lucide-react'
+import { useAuth } from '../../AuthProvider'
 import UserRow from '../UserRow'
 import UserRowSkeleton from '../UserRowSkeleton'
 import { UsersTableHead } from '../UsersTable'
+import AddPermissionDialog from '../dialogs/AddPermissionDialog'
 import AddUserDialog from '../dialogs/AddUserDialog'
-import EditPermissionsDialog from './EditPermissionsDialog'
+import EditRoleDialog from '../dialogs/EditRoleDialog'
 import PermissionRow from './PermissionRow'
 
 interface RolesUsersTable {
@@ -22,6 +25,8 @@ interface RolesUsersTable {
 const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
 
   const { users, loading } = useUsers();
+  const { user } = useAuth();
+  const { roles } = useRoles();
 
   return (
     <Tabs defaultValue='users'>
@@ -54,7 +59,7 @@ const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
                       Modifier le groupe
                     </Button>
                   </DialogTrigger>
-                  <EditPermissionsDialog />
+                  <EditRoleDialog />
                 </Dialog>
               </div>
               <div className='relative lg:w-96'>
@@ -117,7 +122,7 @@ const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
                       Ajouter une permission
                     </Button>
                   </DialogTrigger>
-                  <EditPermissionsDialog />
+                  <AddPermissionDialog roleName={roleName as RoleEnum} authorId={user === null ? '' : user.id} />
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -126,7 +131,7 @@ const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
                       Modifier le groupe
                     </Button>
                   </DialogTrigger>
-                  <EditPermissionsDialog />
+                  <EditRoleDialog />
                 </Dialog>
               </div>
               <div className='relative lg:w-96'>
@@ -162,24 +167,17 @@ const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <PermissionRow
-                  id={1}
-                  name='commands.teleportation'
-                  author={{ id: '82096844-076f-4ce3-ad67-0bb9d51b2b49', name: 'ZelphiX', email: 'zelphix@gmail.com' }}
-                  createdAt={new Date()}
-                />
-                <PermissionRow
-                  id={2}
-                  name='commands.schematics'
-                  author={{ id: '82096844-076f-4ce3-ad67-0bb9d51b2b49', name: 'DragonQQ', email: 'dragonqq@gmail.com' }}
-                  createdAt={new Date()}
-                />
-                <PermissionRow
-                  id={3}
-                  name='commands.gamemode'
-                  author={{ id: '82096844-076f-4ce3-ad67-0bb9d51b2b49', name: 'Molox', email: 'molox@gmail.com' }}
-                  createdAt={new Date()}
-                />
+                {
+                  roles.find(role => role.name === roleName)?.permissions.map((permission) => (
+                    <PermissionRow 
+                      key={permission.id}
+                      id={permission.id}
+                      name={permission.name}
+                      author={permission.author}
+                      createdAt={new Date()}
+                    />
+                  ))
+                }
               </TableBody>
             </Table>
           </TabsContent>

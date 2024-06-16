@@ -21,13 +21,13 @@ async function Header() {
         <Image src='/logo.png' alt='Minecraft Clone' width='150' height='100' />
       </Link>
       <nav>
-        <ul className='flex gap-6 items-center'>
+        <ul className='flex gap-3 items-center'>
           <li>
             <Link className='font-medium' href="/about">
               A propos
             </Link>
           </li>
-          {user != null && <li><AccountInfo name={user.name} /></li>}
+          {user != null && <li><AccountInfo name={user.name} admin={user.admin} /></li>}
           {user == null && 
           <>
             <li>

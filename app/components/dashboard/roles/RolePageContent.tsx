@@ -1,4 +1,5 @@
 'use client';
+import { RolesProvider } from '@/app/contexts/RolesContext';
 import { UsersProvider } from '@/app/contexts/UsersContext';
 import { RoleEnum } from '@/app/models/role.model';
 import React from 'react';
@@ -11,7 +12,9 @@ interface RolePageContent {
 const RolePageContent = ({ roleName }: RolePageContent) => {
   return (
     <UsersProvider>
-      <RolesUsersTable roleName={roleName} />
+      <RolesProvider>
+        <RolesUsersTable roleName={roleName} />
+      </RolesProvider>
     </UsersProvider>
   )
 }

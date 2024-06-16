@@ -1,12 +1,13 @@
 import prisma from "@/app/lib/db";
 import permissionMiddleware from "@/app/middlewares/permission.middleware";
+import { AddPermissionFormData } from "@/app/models/formsdata.model";
 import { Permission } from "@/app/models/permission.model";
 import logger from "@/app/utils/logger";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export async function POST(request: Request) {
 
-  const permissionData: Permission = await request.json();
+  const permissionData: AddPermissionFormData = await request.json();
   const missingAttributes = permissionMiddleware.verifyPermissionAttributes(permissionData)
   
   if (missingAttributes) {
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
       return new Response(JSON.stringify({ message: 'Cette permission existe déjà' }));
     }
     logger.error(e);
-    return new Response(JSON.stringify({ message: 'Le serveur a rencontré un problème.' }));
+    return new Response(JSON.stringify({ message: 'Oops.. Un problème est survenue' }));
   }
 }
 

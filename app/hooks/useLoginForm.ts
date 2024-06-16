@@ -16,7 +16,6 @@ export const useLoginForm = () => {
   });
   const [ error, setError ] = useState('');
   const [ loading, setLoading ] = useState(false);
-  const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
@@ -24,6 +23,7 @@ export const useLoginForm = () => {
       setLoading(true);
       await loginUser(values as LoginFormData);
       setLoading(false);
+      window.location.href = '/';
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);

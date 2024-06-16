@@ -1,13 +1,23 @@
-import { useEditPermissions } from '@/app/hooks/useEditPermissions'
+import { useAddPermissionForm } from '@/app/hooks/useAddPermissionForm'
+import { RoleEnum, RolesDict } from '@/app/models/role.model'
 import { Button } from '@/components/ui/button'
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Form, FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Loader2 } from 'lucide-react'
 
-const EditPermissionsDialog = () => {
+interface AddPermissionDialogProps {
+  roleName: RoleEnum,
+  authorId: string
+}
 
-  const { form, onSubmit } = useEditPermissions();
+const AddPermissionDialog = ({ roleName, authorId }: AddPermissionDialogProps) => {
+
+  const { form, onSubmit, loading } = useAddPermissionForm({
+    roleName: roleName,
+    authorId: authorId
+  });
 
   return (
     <DialogContent>
@@ -19,21 +29,24 @@ const EditPermissionsDialog = () => {
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField 
             control={form.control}
-            name='permission'
+            name='permissionName'
             render={({ field }) => (
               <FormItem>
                 <Label>Nom de la permission</Label>
-                <Input placeholder='core.teleportation' />
+                <Input placeholder='core.teleportation' {...field} />
               </FormItem>
             )}
           />
+          <DialogFooter>
+            <Button disabled={loading} type='submit' className='mt-4'>
+              {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+              Sauvegarder
+            </Button>
+          </DialogFooter>
         </form>
       </Form>
-      <DialogFooter>
-        <Button>Sauvegarder</Button>
-      </DialogFooter>
     </DialogContent>
   )
 }
 
-export default EditPermissionsDialog
+export default AddPermissionDialog

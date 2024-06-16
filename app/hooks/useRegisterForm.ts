@@ -29,6 +29,7 @@ export const useRegisterForm = () => {
       setLoading(true);
       await registerUser(values as RegisterFormData);
       setLoading(false);
+      window.location.href = '/login';
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message ? e.message : 'Le serveur a rencontré un problème.');

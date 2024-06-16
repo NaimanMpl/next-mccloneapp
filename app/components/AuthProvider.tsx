@@ -3,18 +3,24 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffe
 import { UserPayload } from "../models/user.model";
 import { getCurrentUser } from "../services/authservice";
 
-export const AuthContext = createContext<AuthPayload>({ user: null, setUser: () => {} });
+interface IAuthContext {
+  user: UserPayload | null,
+  setUser: Dispatch<SetStateAction<UserPayload | null>>
+}
+
+export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
 interface Props {
   children: ReactNode
 }
 
-export interface AuthPayload {
-  user: UserPayload | null,
-  setUser: (user: UserPayload) => void
+export const useAuth = () => { 
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  } 
+  return context;
 }
-
-export const useAuth = () => { useContext(AuthContext); }
 
 export const AuthProvider = ({ children }: Props) => {
   
@@ -23,10 +29,9 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     (async () => {
       const currentUser = await getCurrentUser();
-
       if (currentUser == null) return;
 
-      setUser({ email: currentUser.email, name: currentUser.name, id: currentUser.id, skin: currentUser.skin });
+      setUser({ email: currentUser.email, name: currentUser.name, id: currentUser.id, skin: currentUser.skin, role: currentUser.role, admin: currentUser.admin });
     })();
   }, []);
 

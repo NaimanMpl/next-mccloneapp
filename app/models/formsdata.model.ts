@@ -15,3 +15,13 @@ export interface AddUserFormData {
   confirmPassword: string,
   admin: boolean
 }
+
+export interface AddPermissionFormData {
+  name: string,
+  author: {
+    id: string
+  },
+  role: {
+    id: number
+  }
+}

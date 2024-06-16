@@ -1,8 +1,8 @@
-import { Permission } from "../models/permission.model";
+import { AddPermissionFormData } from "../models/formsdata.model";
 
 class PermissionMiddleware {
 
-  public verifyPermissionAttributes = (permission: Permission) => {
+  public verifyPermissionAttributes = (permission: AddPermissionFormData) => {
     
     if (!permission.name) {
       return new Response(JSON.stringify({ message: 'Veuillez saisir un nom de permisison '}), { status: 400 });

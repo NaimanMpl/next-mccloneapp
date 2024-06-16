@@ -57,7 +57,7 @@ export const updateTokens = async (payload: UserPayload) => {
 }
 
 const isUserPayload = (object: any): object is UserPayload => {
-  const keys: (keyof UserPayload)[] = ['id', 'email', 'name', 'skin', 'role'];
+  const keys: (keyof UserPayload)[] = ['id', 'email', 'name', 'skin', 'role', 'admin'];
 
   for (const key of keys) {
     if (!(key in object)) {
@@ -91,7 +91,8 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
       email: payload.email as string, 
       name: payload.name as string, 
       skin: payload.skin as string,
-      role: payload.role
+      role: payload.role,
+      admin: payload.admin
     };
 
     return new Promise(resolve => resolve({ ...user }));
@@ -123,7 +124,8 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
         email: payload.email as string, 
         name: payload.name as string, 
         skin: payload.skin as string,
-        role: payload.role
+        role: payload.role,
+        admin: payload.admin
       };
   
       return new Promise(resolve => resolve({ ...user }));
