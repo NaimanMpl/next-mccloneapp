@@ -1,4 +1,5 @@
 import { User } from '@/app/models/user.model'
+import { AlertDialog } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Dialog } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -68,12 +69,12 @@ const PermissionRow = ({ id, name, author, createdAt }: PermissionRowProps) => {
         >
           <EditPermissionDialog />
         </Dialog>
-        <Dialog
+        <AlertDialog
           open={isDeleteDialogOpen}
           onOpenChange={setIsDeleteDialogOpen}
         >
-          <DeletePermissionDialog />
-        </Dialog>
+          <DeletePermissionDialog permissionName={name} permissionId={id} />
+        </AlertDialog>
       </TableCell>
     </TableRow>
   )

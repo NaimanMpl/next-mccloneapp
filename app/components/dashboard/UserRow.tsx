@@ -1,4 +1,5 @@
 import { RoleEnum } from '@/app/models/role.model'
+import { AlertDialog } from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog } from '@/components/ui/dialog'
@@ -83,12 +84,12 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
         >
           <EditUserDialog id={id} userRole={role} name={name} email={email} admin={admin} />
         </Dialog>
-        <Dialog
+        <AlertDialog
           open={isDeleteDialogOpen}
           onOpenChange={setIsDeleteDialogOpen}
         >
           <DeleteUserDialog userId={id} username={name} />
-        </Dialog>
+        </AlertDialog>
       </TableCell>
     </TableRow>
   )

@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       },
       include: {
         author: true,
-        role: true
+        role: true,
       }
     });
     
@@ -71,5 +71,32 @@ export async function GET(request: Request) {
     return new Response(JSON.stringify(permissions.map(permission => ({...permission, author: { ...permission.author, password: undefined }}))));
   } catch (e) {
     return new Response(JSON.stringify({ message: 'Une erreur est survenue '}), { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const permissionId = searchParams.get('id');
+
+  if (!permissionId) {
+    return new Response(JSON.stringify({ message: 'Veuillez saisir une permission' }), { status: 400 });
+  }
+
+  const permissionIdNaN = permissionMiddleware.verifyPermissionIdParam(permissionId);
+  if (permissionIdNaN) {
+    return permissionIdNaN;
+  }
+
+  try {
+    const permission = await prisma.permission.delete({
+      where: {
+        id: parseInt(permissionId)
+      }
+    });
+    
+    return new Response(JSON.stringify({ message: 'Success', permission: permission }), { status: 200 });
+  } catch (e) {
+    return new Response(JSON.stringify({ message: 'Oops.. Un problème est survenu' }), { status: 500 });
   }
 }

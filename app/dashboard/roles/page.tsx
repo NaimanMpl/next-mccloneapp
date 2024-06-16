@@ -14,7 +14,7 @@ const DashboardGroupPage = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>Groupes</BreadcrumbPage>
+              <BreadcrumbPage>Roles</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

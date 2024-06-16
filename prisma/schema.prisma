@@ -15,15 +15,15 @@ datasource db {
 }
 
 model Users {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  admin     Boolean  @default(false)
-  skin      Skin?
-  roleId    Int      @default(1)
-  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  id          String       @id @default(uuid())
+  name        String       @unique
+  email       String       @unique
+  password    String
+  createdAt   DateTime     @default(now())
+  admin       Boolean      @default(false)
+  skin        Skin?
+  roleId      Int          @default(1)
+  role        Role         @relation(fields: [roleId], references: [id], onDelete: Cascade)
   permissions Permission[]
 }
 
@@ -48,18 +48,18 @@ model ServerInfo {
 }
 
 model Role {
-  id    Int     @id @default(autoincrement())
-  name  String
-  score Int
-  Users Users[]
+  id          Int          @id @default(autoincrement())
+  name        String
+  score       Int
+  Users       Users[]
   permissions Permission[]
 }
 
 model Permission {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
+  id       Int    @id @default(autoincrement())
+  name     String
   authorId String
-  author Users @relation(fields: [authorId], references: [id])
-  roleId Int
-  role Role @relation(fields: [roleId], references: [id])
+  author   Users  @relation(fields: [authorId], references: [id])
+  roleId   Int
+  role     Role   @relation(fields: [roleId], references: [id])
 }

@@ -35,6 +35,15 @@ class PermissionMiddleware {
 
     return null;
   }
+
+  public verifyPermissionIdParam = (permissionId: string | null) => {
+
+    if (Number.isNaN(permissionId)) {
+      return new Response(JSON.stringify({ message: "Veuillez saisir une permission" }));
+    }
+
+    return null;
+  }
 }
 
 export default new PermissionMiddleware();

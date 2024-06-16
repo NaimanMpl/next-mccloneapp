@@ -28,7 +28,7 @@ const AccountInfo = ({ name, admin }: AccountInfoProps) => {
             </div>
           </NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className='w-full py-2'>
+            <ul className='min-w-52 py-2'>
             <li>
                 <Link href='/account'>
                   <div className="flex items-center gap-2 px-6 py-2">

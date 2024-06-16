@@ -1,8 +1,8 @@
 'use client';
 import { useUsers } from '@/app/contexts/UsersContext';
 import { deleteUser } from '@/app/services/userservice';
+import { AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from '@/components/ui/use-toast';
 import React, { MouseEventHandler } from 'react';
 
@@ -29,18 +29,18 @@ const DeleteUserDialog = ({ userId, username }: DeleteUserDialogProps) => {
   } 
 
   return (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Etes vous sur de vouloir mettre fin à la carrière de {username}?</DialogTitle>
-        <DialogDescription>
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Etes vous sur de vouloir mettre fin à la carrière de {username}?</AlertDialogTitle>
+        <AlertDialogDescription>
           Cette action est irréversible. Le compte ne pourra être restauré et sera supprimé définitivement.
-        </DialogDescription>
-      </DialogHeader>
-      <DialogFooter>
-        <Button variant='outline'>Annuler</Button>
-        <Button variant='destructive' onClick={handleSubmit}>Supprimer</Button>
-      </DialogFooter>
-    </DialogContent>
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Annuler</AlertDialogCancel>
+        <AlertDialogAction onClick={handleSubmit}>Supprimer</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
   )
 }
 

@@ -30,4 +30,17 @@ export const addPermission = async (formData: AddPermissionFormData): Promise<Pe
     throw new Error(data.message);
   }
   return data.permission;
-} 
+}
+
+export const deletePermission = async (permissionId: number) => {
+  const res = await fetch(
+    `/api/roles/permissions?id=${permissionId}`,
+    {
+      method: 'DELETE'
+    }
+  );
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+}
