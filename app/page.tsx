@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Header from "./components/Header";
-import HeroImage from "./components/home/HeroImage";
+import HowItWorkCard from "./components/home/HowItWorkCard";
 import Stat from "./components/home/Stat";
 
 export default async function Home() {
@@ -29,7 +29,7 @@ export default async function Home() {
           />
         </section>
       </div>
-      <section className="px-20 mt-20">
+      <section className="px-20 py-28">
         <div className="flex justify-between items-start">
           <div className="space-y-4">
             <h2 className="text-4xl font-medium">Lorem ipsum dolor sit amet, consectetur adipiscing.</h2>
@@ -37,7 +37,7 @@ export default async function Home() {
           </div>
           <div>
             <h4 className="uppercase text-lg font-medium">Statistiques</h4>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 mt-4">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-12 mt-4">
               <Stat title="7.27M" description="Nombres de téléchargements" />
               <Stat title="200K" description="Nombres d'utilisateurs actifs" />
               <div className="space-y-4">
@@ -47,6 +47,10 @@ export default async function Home() {
             </div>
           </div>
         </div>
+      </section>
+      <section className="px-20 pb-28">
+        <h2 className="text-center text-6xl font-semibold pb-20">Comment ça marche ?</h2>
+        <HowItWorkCard />
       </section>
     </>
   );
