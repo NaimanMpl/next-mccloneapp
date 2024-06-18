@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Header from "./components/Header";
+import HomeImage from "./components/home/HomeImage";
 import HowItWorkCard from "./components/home/HowItWorkCard";
 import Stat from "./components/home/Stat";
 
@@ -51,6 +52,17 @@ export default async function Home() {
       <section className="px-20 pb-28">
         <h2 className="text-center text-6xl font-semibold pb-20">Comment ça marche ?</h2>
         <HowItWorkCard />
+      </section>
+      <section className="px-20 pb-28 flex gap-28">
+        <div className="w-1/2">
+          <span className="uppercase text-muted-foreground">Pourquoi un clone de Minecraft ?</span>
+          <h2 className="text-6xl font-semibold mt-16 pb-36">Pour revivre des souvenirs d'un passé plus simple...</h2>
+          <HomeImage src="/home-1.png" alt="Minecraft Clone Game Image 1" />
+        </div>
+        <div className="w-1/2">
+          <HomeImage src="/home-2.png" alt="Minecraft Clone Game Image 2"/>
+          <p className="text-muted-foreground text-lg mt-24">L'un des aspects les plus frappants du jeu est son esthétique visuelle, ce qui rend Minecraft précieux malgré la décennie du jeu, est qu’il ne vieillit jamais. Il ne devient pas cette expérience que notre imaginaire bonifie avec le temps mais reste pour chaque joueur, un morceau de notre passé plus simple.</p>
+        </div>
       </section>
     </>
   );
