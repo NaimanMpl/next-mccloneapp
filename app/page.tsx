@@ -34,7 +34,7 @@ export default async function Home() {
         <div className="flex justify-between items-start">
           <div className="space-y-4">
             <h2 className="text-4xl font-medium">Lorem ipsum dolor sit amet, consectetur adipiscing.</h2>
-            <p className="text-muted-foreground max-w-[60%]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque omnis porro ullam ipsum reiciendis inventore blanditiis animi obcaecati id praesentium.</p>
+            <p className="text-muted-foreground max-w-[60%] text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque omnis porro ullam ipsum reiciendis inventore blanditiis animi obcaecati id praesentium.</p>
           </div>
           <div>
             <h4 className="uppercase text-lg font-medium">Statistiques</h4>

@@ -29,9 +29,9 @@ const AccountInfo = ({ name, admin }: AccountInfoProps) => {
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className='min-w-52 py-2'>
-            <li>
+              <li>
                 <Link href='/account'>
-                  <div className="flex items-center gap-2 px-6 py-2">
+                  <div className="flex items-center gap-2 px-6 py-2 hover:bg-accent">
                     <Settings className='w-5 h-5' />
                     <span className='text-muted-foreground text-sm'>Paramètres</span>
                   </div>
@@ -41,7 +41,7 @@ const AccountInfo = ({ name, admin }: AccountInfoProps) => {
               admin &&
               <li>
                 <Link href='/dashboard/users'>
-                  <div className="flex items-center gap-2 px-6 py-2">
+                  <div className="flex items-center gap-2 px-6 py-2 hover:bg-accent">
                     <LayoutDashboard className='w-5 h-5' />
                     <span className='text-muted-foreground text-sm'>Tableau de bord</span>
                   </div>
@@ -50,7 +50,7 @@ const AccountInfo = ({ name, admin }: AccountInfoProps) => {
               }
               <li>
                 <div className='cursor-pointer' onClick={handleLogout}>
-                  <div className="flex items-center gap-2 px-6 py-2">
+                  <div className="flex items-center gap-2 px-6 py-2 hover:bg-accent">
                     <LogOut className='w-5 h-5 text-destructive' />
                     <span className='text-destructive text-sm'>Déconnexion</span>
                   </div>
