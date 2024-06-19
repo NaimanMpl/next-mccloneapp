@@ -3,12 +3,11 @@ import { RoleEnum } from '@/app/models/role.model';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { ListFilter, Plus, Search } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
-import AddUserDialog from '../AddUserDialog';
+import AddRoleDialog from './AddRoleDialog';
 import RoleDetails from './RoleDetails';
 
 const RolesGrid = () => {
@@ -31,6 +30,7 @@ const RolesGrid = () => {
                 Ajouter un role
               </Button>
             </DialogTrigger>
+            <AddRoleDialog />
           </Dialog>
           <div className='relative lg:w-96'>
             <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />

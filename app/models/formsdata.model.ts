@@ -25,3 +25,7 @@ export interface AddPermissionFormData {
     id: number
   }
 }
+
+export interface AddRoleFormData {
+  name: string
+}

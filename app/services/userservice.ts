@@ -45,12 +45,12 @@ export const updateUser = async (id: string | undefined, email: string | undefin
       }
     );
     if (!res.ok) {
-      throw new Error('Oops.. Un problème est survenue');
+      throw new Error('Oops.. Un problème est survenu');
     }
     const data = await res.json();
     return data.user;
   } catch (e) {
-    throw new Error('Oops.. Un problème est survenue');
+    throw new Error('Oops.. Un problème est survenu');
   }
 }
 

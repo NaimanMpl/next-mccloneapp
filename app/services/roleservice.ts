@@ -1,4 +1,4 @@
-import { AddPermissionFormData } from "../models/formsdata.model";
+import { AddPermissionFormData, AddRoleFormData } from "../models/formsdata.model";
 import { Permission } from "../models/permission.model";
 import { RoleData } from "../models/role.model";
 
@@ -43,4 +43,19 @@ export const deletePermission = async (permissionId: number) => {
   if (!res.ok) {
     throw new Error(data.message);
   }
+}
+
+export const addRole = async (formData: AddRoleFormData): Promise<RoleData> => {
+  const res = await fetch(
+    '/api/roles/',
+    {
+      method: 'POST',
+      body: JSON.stringify(formData)
+    }
+  );
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  return data.role;
 }
