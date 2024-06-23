@@ -1,5 +1,8 @@
+import { UserPayloadFactory } from '@/app/factories/userpayload.factory';
+import { updateTokens } from '@/app/lib/auth';
 import prisma from '@/app/lib/db';
 import userMiddleware from '@/app/middlewares/user.middleware';
+import { User, UserPayload } from '@/app/models/user.model';
 import { cookies } from "next/headers";
 import { NextRequest } from 'next/server';
 
@@ -27,7 +30,6 @@ export async function PATCH(request: NextRequest) {
   const error = userMiddleware.handlePatch(searchParams);
 
   if (error) return error;
-  
   try {
     const newUser = await prisma.users.update({
       where: {
@@ -35,9 +37,14 @@ export async function PATCH(request: NextRequest) {
       },
       data: {
         name: username!
+      },
+      include: {
+        skin: true,
+        role: true
       }
     });
-    console.log(newUser)
+
+    await updateTokens(UserPayloadFactory(newUser as User));
     return new Response(JSON.stringify({ message: 'Succès', username: newUser.name }), { status: 200 })
   } catch (e) {
     return new Response(JSON.stringify({ message: 'Un problème est survenu'}), { status: 500 });

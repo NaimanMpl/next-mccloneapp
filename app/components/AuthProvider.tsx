@@ -5,6 +5,7 @@ import { getCurrentUser } from "../services/authservice";
 
 interface IAuthContext {
   user: UserPayload | null,
+  loading: boolean,
   setUser: Dispatch<SetStateAction<UserPayload | null>>
 }
 
@@ -24,6 +25,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: Props) => {
   
+  const [ loading, setLoading ] = useState(true);
   const [ user, setUser ] = useState<UserPayload | null>(null);
 
   useEffect(() => {
@@ -32,11 +34,12 @@ export const AuthProvider = ({ children }: Props) => {
       if (currentUser == null) return;
 
       setUser({ email: currentUser.email, name: currentUser.name, id: currentUser.id, skin: currentUser.skin, role: currentUser.role, admin: currentUser.admin });
+      setLoading(false);
     })();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, loading, setUser }}>
       {children}
     </AuthContext.Provider>
   )

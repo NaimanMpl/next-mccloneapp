@@ -1,20 +1,15 @@
+'use client';
 import { Button } from '@/components/ui/button';
-import { cookies } from 'next/headers';
+import { Skeleton } from '@/components/ui/skeleton';
 import Image from 'next/image';
 import Link from 'next/link';
-import { UserPayload } from '../models/user.model';
 import AccountInfo from './AccountInfo';
+import { useAuth } from './AuthProvider';
 import ToggleTheme from './header/ToggleTheme';
 
-async function Header() {
+export const Header = () => {
 
-  const res = await fetch('http://localhost:3000/api/auth/me', 
-  { 
-    method: 'GET', 
-    headers: { Cookie: cookies().toString() }
-  });
-
-  const user: UserPayload | null = res.ok ? await res.json() : null;
+  const { user, loading } = useAuth();
 
   return (
     <header className='flex items-center justify-between px-20 py-8'>
@@ -23,8 +18,22 @@ async function Header() {
       </Link>
       <nav>
         <ul className='flex gap-6 items-center'>
-          {user != null && <li><AccountInfo name={user.name} admin={user.admin} /></li>}
-          {user == null && 
+          {loading
+          &&
+          <div className='flex items-center gap-2'>
+            <Skeleton className='w-[30px] h-[30px] rounded-full' />
+            <Skeleton className='w-24 h-4 rounded-full' />
+          </div>
+          }
+          
+          {!loading && user !== null
+          &&
+          <>
+            <li><AccountInfo name={user.name} admin={user.admin} /></li>
+          </>
+          }
+
+          {!loading && user === null && 
           <>
             <li>
               <Link className='font-medium' href='/register'>
