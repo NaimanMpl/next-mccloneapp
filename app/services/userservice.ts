@@ -1,4 +1,4 @@
-import { AddUserFormData, EditUsernameFormData } from "../models/formsdata.model";
+import { AddUserFormData, EditEmailFormData, EditUsernameFormData } from "../models/formsdata.model";
 import { User } from "../models/user.model";
 
 export const uploadSkin = async (formData: FormData, filename: string) => {
@@ -88,7 +88,6 @@ export const deleteUser = async (userId: string): Promise<{ id: string, name: st
 }
 
 export const saveUsername = async (formData: EditUsernameFormData): Promise<string> => {
-  console.log(`/api/auth/me?username=${formData.username}`)
   const res = await fetch(
     `/api/auth/me?username=${formData.username}`,
     {
@@ -101,4 +100,19 @@ export const saveUsername = async (formData: EditUsernameFormData): Promise<stri
   }
   const { username }: { username: string } = await res.json();
   return username;
+}
+
+export const saveEmail = async (formData: EditEmailFormData): Promise<string> => {
+  const res = await fetch(
+    `/api/auth/me?email=${formData.email}`,
+    {
+      method: 'PATCH'
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('Oops.. Un problème est survenu');
+  }
+  const { email }: { email: string } = await res.json();
+  return email;
 }

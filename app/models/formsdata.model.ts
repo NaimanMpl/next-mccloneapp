@@ -33,3 +33,7 @@ export interface AddRoleFormData {
 export interface EditUsernameFormData {
   username: string
 }
+
+export interface EditEmailFormData {
+  email: string
+}

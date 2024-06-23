@@ -6,6 +6,8 @@ import { isAuthenticated } from "../lib/auth";
 import { AddUserFormData } from "../models/formsdata.model";
 import { RoleEnum } from "../models/role.model";
 
+const emailRegex = /^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/;
+
 class UserMiddleware {
 
   public handleRegister = (user: RegisterFormData): Response | null => {
@@ -21,8 +23,6 @@ class UserMiddleware {
     if (user.password !== user.confirmPassword) {
       return new Response(JSON.stringify({ message: 'Les 2 mots de passes doivent être identiques.' }), { status: 400 });
     }
-  
-    const emailRegex = /^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$/;
   
     if (!emailRegex.test(user.email)) {
       return new Response(JSON.stringify({ message: 'Veuillez renseigner une adresse email valide !'}), { status: 400 });
@@ -62,13 +62,23 @@ class UserMiddleware {
 
   public handlePatch = (searchParams: URLSearchParams) => {
     const username = searchParams.get('username');
+    const email = searchParams.get('email');
 
-    if (!username) {
-      return new Response(JSON.stringify({ message: "Veuillez saisir un nom d'utilisateur "}), { status: 400 });
+    if (!email && !username) {
+      return new Response(JSON.stringify({ message: 'Veuillez saisir au moins un champ !'}), { status: 400 });
     }
 
-    if (username.length < 2 || username.length > 20) {
-      return new Response(JSON.stringify({ message: "Veuillez saisir un nom d'utilisateur dont la taille est comprise entre 2 et 20"}), { status: 400 });
+    if (username) {
+      if (username.length < 2 || username.length > 20) {
+        return new Response(JSON.stringify({ message: "Veuillez saisir un nom d'utilisateur dont la taille est comprise entre 2 et 20"}), { status: 400 });
+      }
+    }
+
+
+    if (email) {
+      if (!emailRegex.test(email)) {
+        return new Response(JSON.stringify({ message: 'Veuillez renseigner une adresse email valide !'}), { status: 400 });
+      }
     }
 
     return null;

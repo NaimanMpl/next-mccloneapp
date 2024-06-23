@@ -12,7 +12,7 @@ interface AccountEditUsernameFormProps {
 
 const AccountEditUsernameForm = ({ username }: AccountEditUsernameFormProps) => {
 
-  const { form, onSubmit, loading } = useEditUsernameForm();
+  const { form, onSubmit, loading } = useEditUsernameForm({ defaultValue: username });
 
   return (
     <Card>

@@ -31,7 +31,10 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     (async () => {
       const currentUser = await getCurrentUser();
-      if (currentUser == null) return;
+      if (currentUser == null) {
+        setLoading(false);
+        return;
+      }
 
       setUser({ email: currentUser.email, name: currentUser.name, id: currentUser.id, skin: currentUser.skin, role: currentUser.role, admin: currentUser.admin });
       setLoading(false);
