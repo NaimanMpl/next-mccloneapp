@@ -23,7 +23,8 @@ export default class UserController {
                 link: process.env.DEFAULT_SKIN_URL!,
             }
           },
-          roleId: 1
+          roleId: 1,
+          profileIconUrl: process.env.DEFAULT_PP_URL!
         }
       });
 
@@ -85,7 +86,8 @@ export default class UserController {
             create: {
                 link: process.env.DEFAULT_SKIN_URL!,
             }
-          }
+          },
+          profileIconUrl: process.env.DEFAULT_PP_URL!
         },
         include: {
           role: true,

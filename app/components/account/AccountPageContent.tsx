@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { useAuth } from '../AuthProvider';
 import AccountDeleteUserForm from './AccountDeleteUserForm';
 import AccountEditEmailForm from './AccountEditEmailForm';
+import AccountEditProfileIcon from './AccountEditProfileIcon';
 import AccountEditUsernameForm from './AccountEditUsernameForm';
 
 const AccountPageSkeleton = () => {
@@ -40,24 +41,7 @@ const AccountPageContent = () => {
       ))}
       {user &&
       <>
-        <Card>
-          <CardHeader>
-            <div className='flex justify-between w-full gap-10'>
-              <div>
-                <CardTitle className='text-xl font-semibold pb-2'>Photo de profil</CardTitle>
-                <CardDescription>Ceci est votre photo de profil. Vous pouvez la changer en cliquant desssus.</CardDescription>
-              </div>
-              <img className='rounded-full w-24 h-24' src='/default-pp.png' alt='' />
-            </div>
-          </CardHeader>
-          <CardFooter className='border-t border-border px-6 py-2'>
-            <div className='flex justify-between items-center w-full'>
-              <CardDescription>C'est toujours mieux avec que sans !</CardDescription>
-              <Button>Sauvegarder</Button>
-            </div>
-          </CardFooter>
-        </Card>
-
+        <AccountEditProfileIcon profileIconUrl={user.profileIconUrl} />
         <AccountEditUsernameForm username={user.name} />
         <AccountEditEmailForm email={user.email} />
         <AccountDeleteUserForm userId={user.id} />

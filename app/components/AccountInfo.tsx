@@ -7,10 +7,11 @@ import React from 'react';
 
 interface AccountInfoProps {
   name: string,
-  admin: boolean
+  admin: boolean,
+  profileIconUrl: string
 }
 
-const AccountInfo = ({ name, admin }: AccountInfoProps) => {
+const AccountInfo = ({ name, admin, profileIconUrl }: AccountInfoProps) => {
 
   const handleLogout = async () => {
     await fetch('/logout', { method: 'GET' });
@@ -23,7 +24,7 @@ const AccountInfo = ({ name, admin }: AccountInfoProps) => {
         <NavigationMenuItem>
           <NavigationMenuTrigger className='bg-transparent hover:bg-transparent'>
             <div className='flex gap-2 items-center'>
-              <Image className='rounded-full' width='30' height='30' src='/default-pp.png' alt='Profile Icon' />
+              <img src={profileIconUrl} alt="Profile Icon" className='w-[30px] h-[30px] rounded-full' />
               <Link className='font-semibold' href='/account'>{name}</Link>
             </div>
           </NavigationMenuTrigger>

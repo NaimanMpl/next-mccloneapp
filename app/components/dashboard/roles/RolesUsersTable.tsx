@@ -103,7 +103,8 @@ const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
                             email={user.email} 
                             admin={user.admin} 
                             createdAt={user.createdAt}
-                            role={user.role.name as RoleEnum} 
+                            role={user.role.name as RoleEnum}
+                            profileIconUrl={user.profileIconUrl}
                           />
                         )
                       })}

@@ -8,7 +8,6 @@ import { cookies } from "next/headers";
 import { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
-  const clientCookies = cookies();
   const user = await userMiddleware.handleAuth(request);
 
   if (user instanceof Response) {
@@ -46,8 +45,8 @@ export async function PATCH(request: NextRequest) {
         role: true
       }
     });
-
-    await updateTokens(UserPayloadFactory(newUser as User));
+    const payload = await UserPayloadFactory(newUser as User);
+    await updateTokens(payload);
     return new Response(JSON.stringify({ message: 'Succès', username: newUser.name }), { status: 200 })
   } catch (e) {
     return new Response(JSON.stringify({ message: 'Un problème est survenu'}), { status: 500 });

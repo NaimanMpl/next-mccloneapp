@@ -16,7 +16,8 @@ export interface User {
   createdAt: Date,
   admin: boolean,
   role: Role,
-  skin: Skin
+  skin: Skin,
+  profileIconUrl: string
 }
 
 export interface UserPayload {
@@ -25,5 +26,6 @@ export interface UserPayload {
   email: string,
   skin: string,
   role: Role,
-  admin: boolean
+  admin: boolean,
+  profileIconUrl: string
 }

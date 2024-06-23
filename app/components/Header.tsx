@@ -29,7 +29,7 @@ export const Header = () => {
           {!loading && user !== null
           &&
           <>
-            <li><AccountInfo name={user.name} admin={user.admin} /></li>
+            <li><AccountInfo name={user.name} admin={user.admin} profileIconUrl={user.profileIconUrl} /></li>
           </>
           }
 

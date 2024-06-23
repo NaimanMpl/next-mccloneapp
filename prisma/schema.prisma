@@ -25,6 +25,7 @@ model Users {
   roleId      Int          @default(1)
   role        Role         @relation(fields: [roleId], references: [id], onDelete: Cascade)
   permissions Permission[]
+  profileIconUrl String?
 }
 
 model Skin {

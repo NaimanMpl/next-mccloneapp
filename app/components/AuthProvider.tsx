@@ -35,8 +35,15 @@ export const AuthProvider = ({ children }: Props) => {
         setLoading(false);
         return;
       }
-
-      setUser({ email: currentUser.email, name: currentUser.name, id: currentUser.id, skin: currentUser.skin, role: currentUser.role, admin: currentUser.admin });
+      setUser({ 
+        email: currentUser.email, 
+        name: currentUser.name, 
+        id: currentUser.id, 
+        skin: currentUser.skin, 
+        role: currentUser.role, 
+        admin: currentUser.admin, 
+        profileIconUrl: currentUser.profileIconUrl || process.env.DEFAULT_PP_URL!
+      });
       setLoading(false);
     })();
   }, []);

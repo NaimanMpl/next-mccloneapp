@@ -25,7 +25,7 @@ const SkinUploadForm = () => {
     }
 
     if (filename.length === 0) {
-      toast({ title: 'Uh-oh !', description: 'Veuillez renseigner un fichier', variant: 'destructive' })
+      toast({ title: 'Pas si vite !', description: 'Veuillez renseigner un fichier', variant: 'default' })
       return;
     }
 
@@ -56,12 +56,12 @@ const SkinUploadForm = () => {
       <form onSubmit={handleSubmit}>
         <Card>
           <CardHeader>
-            <CardTitle className='font-xl'>Changer de skin</CardTitle>
+            <CardTitle className='text-xl'>Changer de skin</CardTitle>
             <CardDescription>Le skin est utilisé dans le jeu pour modifier l'aspect visuel de votre personnage</CardDescription>
           </CardHeader>
           <CardContent>
             <div className='mt-4'>
-              <Button>
+              <Button type='button'>
                 <Upload className='w-5 h-5 mr-2' />
                 <label className='inline-block font-semibold py-2 rounded-md cursor-pointer' htmlFor="file">Télécharger un fichier</label>
                 <input onChange={handleChange} className='hidden' type="file" name="file" id="file" />

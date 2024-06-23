@@ -1,6 +1,7 @@
+import { UserPayloadFactory } from "@/app/factories/userpayload.factory";
 import { LoginFormData } from "@/app/hooks/useLoginForm";
 import { generateAccessToken, generateRefreshToken, getTokenCookie } from "@/app/lib/auth";
-import { UserPayload } from "@/app/models/user.model";
+import { User, UserPayload } from "@/app/models/user.model";
 import logger from "@/app/utils/logger";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
@@ -40,13 +41,14 @@ export async function POST(request: Request) {
       return new Response(JSON.stringify({ error: 'Email ou mot de passe incorrect.'}), { status: 400 });
     }
   
-    const payload: UserPayload = { id: user.id, email: user.email, name: user.name, skin: user.skin!.link, role: user.role, admin: user.admin };
+    const payload = await UserPayloadFactory(user as User);
   
     const accessToken = await generateAccessToken(payload);
     const refreshToken = await generateRefreshToken(payload);
   
     const accessTokenCookie = getTokenCookie('accessToken', accessToken);
     const refreshTokenCookie = getTokenCookie('refreshToken', refreshToken);
+    
   
     const response = new Response(JSON.stringify({ message: 'Authenticated' }), { status: 200 });
     response.headers.append('Set-Cookie', accessTokenCookie);

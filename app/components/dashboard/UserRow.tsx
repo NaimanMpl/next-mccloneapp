@@ -18,10 +18,11 @@ interface UserRowProps {
   email: string,
   role: RoleEnum,
   admin: boolean,
+  profileIconUrl: string,
   createdAt: Date
 }
 
-const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
+const UserRow = ({ id, name, email, role, admin, profileIconUrl, createdAt }: UserRowProps) => {
 
   const [ isEditDialogOpen, setIsEditDialogOpen ] = useState(false);
   const [ isDeleteDialogOpen, setIsDeleteDialogOpen ] = useState(false);
@@ -30,7 +31,7 @@ const UserRow = ({ id, name, email, role, admin, createdAt }: UserRowProps) => {
     <TableRow className='cursor-pointer'>
       <TableCell>
         <div className='flex gap-4'>
-          <Image className='rounded w-10' src='/default-pp.png' alt='Minecraft Clone' width='150' height='100' />
+          <img className='w-10 h-10 rounded' src={profileIconUrl} alt={name} />
           <div>
             <p className='font-semibold'>{name}</p>
             <p className='text-muted-foreground'>{email}</p>

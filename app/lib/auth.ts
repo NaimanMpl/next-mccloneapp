@@ -57,7 +57,7 @@ export const updateTokens = async (payload: UserPayload) => {
 }
 
 const isUserPayload = (object: any): object is UserPayload => {
-  const keys: (keyof UserPayload)[] = ['id', 'email', 'name', 'skin', 'role', 'admin'];
+  const keys: (keyof UserPayload)[] = ['id', 'email', 'name', 'skin', 'role', 'admin', 'profileIconUrl'];
 
   for (const key of keys) {
     if (!(key in object)) {
@@ -86,14 +86,7 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
       return null;
     }
 
-    const user: UserPayload = { 
-      id: payload.id as string, 
-      email: payload.email as string, 
-      name: payload.name as string, 
-      skin: payload.skin as string,
-      role: payload.role,
-      admin: payload.admin
-    };
+    const user: UserPayload = { ...payload };
 
     return new Promise(resolve => resolve({ ...user }));
   } catch (e) {
@@ -119,14 +112,7 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
   
       request.headers.append('Set-Cookie', accessTokenCookie);
       
-      const user: UserPayload = { 
-        id: payload.id as string, 
-        email: payload.email as string, 
-        name: payload.name as string, 
-        skin: payload.skin as string,
-        role: payload.role,
-        admin: payload.admin
-      };
+      const user: UserPayload = { ...payload };
   
       return new Promise(resolve => resolve({ ...user }));
     } catch (e) {
