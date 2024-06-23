@@ -40,7 +40,7 @@ export const loginUser = async (formData: LoginFormData) => {
 }
 
 export const getCurrentUser = async (): Promise<UserPayload | null> => {
-  const res = await fetch('http://localhost:3000/api/auth/me', {
+  const res = await fetch('/api/auth/me', {
     method: 'GET',
   });
 
