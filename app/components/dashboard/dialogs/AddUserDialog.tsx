@@ -97,8 +97,8 @@ const AddUserDialog = () => {
                               return;
                             }
                             return (
-                              <DropdownMenuItem onClick={() => setCurrentRole(role as RoleEnum)}>
-                                <RoleBadge key={role} role={role as RoleEnum} />
+                              <DropdownMenuItem key={role} onClick={() => setCurrentRole(role as RoleEnum)}>
+                                <RoleBadge role={role as RoleEnum} />
                               </DropdownMenuItem>
                             )
                           })}

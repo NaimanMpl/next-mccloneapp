@@ -66,8 +66,8 @@ const RolesGrid = () => {
             !loading &&
             roles.length > 0 &&
             roles.map(role => (
-              <Link href={`/dashboard/roles/${role.name.toLowerCase()}`}>
-                <RoleDetails key={role.name} roleName={role.name as RoleEnum} />
+              <Link key={role.name} href={`/dashboard/roles/${role.name.toLowerCase()}`}>
+                <RoleDetails roleName={role.name as RoleEnum} />
               </Link>
             ))
             }

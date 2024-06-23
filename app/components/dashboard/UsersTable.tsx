@@ -93,7 +93,7 @@ const UsersTable = () => {
             </TableHeader>
             <TableBody>
               {loading ? (
-                Array.from({ length: 10 }).map(() => (<UserRowSkeleton />))
+                Array.from({ length: 10 }).map((item, index) => (<UserRowSkeleton key={index} />))
               ) : (
                 <>
                   {currentUsers.map(user => {

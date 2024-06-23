@@ -46,4 +46,6 @@ class PermissionMiddleware {
   }
 }
 
-export default new PermissionMiddleware();
+const permissionMiddleware = new PermissionMiddleware();
+
+export default permissionMiddleware;

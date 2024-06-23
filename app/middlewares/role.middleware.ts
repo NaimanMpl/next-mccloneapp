@@ -11,4 +11,6 @@ class RoleMiddleware {
   }
 }
 
-export default new RoleMiddleware();
+const roleMiddleware = new RoleMiddleware();
+
+export default roleMiddleware;

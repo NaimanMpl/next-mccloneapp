@@ -85,4 +85,6 @@ class UserMiddleware {
   }
 }
 
-export default new UserMiddleware();
+const userMiddleware = new UserMiddleware();
+
+export default userMiddleware;

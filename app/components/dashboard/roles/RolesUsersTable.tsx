@@ -91,7 +91,7 @@ const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
               </TableHeader>
               <TableBody>
                 {loading ? (
-                    Array.from({ length: 10 }).map(() => (<UserRowSkeleton />))
+                    Array.from({ length: 10 }).map((item, index) => (<UserRowSkeleton key={index} />))
                   ) : (
                     <>
                       {users.filter(user => user.role.name === roleName).map(user => {
