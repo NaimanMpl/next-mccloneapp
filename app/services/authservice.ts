@@ -53,7 +53,7 @@ export const getCurrentUser = async (): Promise<UserPayload | null> => {
 
 export const isUsernameAvailable = async (username: string): Promise<boolean> => {
   const res = await fetch(
-    `http://localhost:3000/api/users/find?username=${username}`,
+    `/api/users/find?username=${username}`,
     {
       method: 'GET'
     }
@@ -69,7 +69,7 @@ export const isUsernameAvailable = async (username: string): Promise<boolean> =>
 
 export const isEmailAvailable = async (email: string): Promise<boolean> => {
   const res = await fetch(
-    `http://localhost:3000/api/users/find?email=${email}`,
+    `/api/users/find?email=${email}`,
     {
       method: 'GET'
     }
