@@ -40,7 +40,8 @@ const AccountEditProfileIcon = ({ profileIconUrl }: AccountEditProfileIconProps)
       setSelectedFile(profileIconUrl);
       toast({ title: 'Succès', description: 'Votre photo de profil a été mis à jour', variant: 'default' })
     } catch (e) {
-      toast({ title: 'Uh-oh ! Un problème est survenu', description: 'Impossible de traiter votre requête', variant: 'destructive' })
+      const message = (e as Error).message;
+      toast({ title: 'Uh-oh', description: message, variant: 'destructive' })
     }
     setLoading(false);
 
@@ -52,6 +53,12 @@ const AccountEditProfileIcon = ({ profileIconUrl }: AccountEditProfileIconProps)
     if (!file) {
       return;
     }
+
+    if (file.size > 1000000) {
+      toast({ title: 'Pas si vite !', description: 'La taille de votre fichier ne doit pas dépasser 1mo.' })
+      return;
+    }
+
     const filename = file.name;
     setFilename(filename);
     const reader = new FileReader();
@@ -77,7 +84,7 @@ const AccountEditProfileIcon = ({ profileIconUrl }: AccountEditProfileIconProps)
           <Button type='button'>
             <Upload className='w-5 h-5 mr-2' />
             <label className='inline-block font-semibold py-2 rounded-md cursor-pointer' htmlFor="file">Télécharger un fichier</label>
-            <input onChange={handleChange} className='hidden' type="file" name="file" id="file" />
+            <input onChange={handleChange} className='hidden' type="file" name="file" id="file" accept="image/png, image/jpeg" />
           </Button>
         </CardContent>
         <CardFooter className='border-t border-border px-6 py-2'>

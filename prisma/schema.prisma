@@ -26,6 +26,7 @@ model Users {
   role        Role         @relation(fields: [roleId], references: [id], onDelete: Cascade)
   permissions Permission[]
   profileIconUrl String?
+  submissions Submission[]
 }
 
 model Skin {
@@ -63,4 +64,11 @@ model Permission {
   author   Users  @relation(fields: [authorId], references: [id])
   roleId   Int
   role     Role   @relation(fields: [roleId], references: [id])
+}
+
+model Submission {
+  int Int @id @default(autoincrement())
+  userId String
+  user Users @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
