@@ -61,7 +61,7 @@ export default async function Home() {
         </div>
         <div className="w-1/2">
           <HomeImage src="/home-2.png" alt="Minecraft Clone Game Image 2"/>
-          <p className="text-muted-foreground text-lg mt-24">L'un des aspects les plus frappants du jeu est son esthétique visuelle, ce qui rend Minecraft précieux malgré la décennie du jeu, est qu’il ne vieillit jamais. Il ne devient pas cette expérience que notre imaginaire bonifie avec le temps mais reste pour chaque joueur, un morceau de notre passé plus simple.</p>
+          <p className="text-muted-foreground text-lg mt-24">L'un des aspects les plus frappants du jeu est son esthétique visuelle. Ce qui rend Minecraft précieux, malgré ses dix ans, c'est qu'il ne vieillit jamais. Il ne devient pas cette expérience que notre imaginaire embellit avec le temps, mais reste pour chaque joueur un morceau de notre passé plus simple.</p>
         </div>
       </section>
     </>
