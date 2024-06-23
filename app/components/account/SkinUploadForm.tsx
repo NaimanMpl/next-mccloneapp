@@ -1,20 +1,19 @@
 'use client';
 import { uploadFile } from '@/app/api/upload/upload.action';
-import { uploadSkin } from '@/app/services/userservice';
 import logger from '@/app/utils/logger';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
+import { Upload } from 'lucide-react';
 import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from 'react';
-import { AuthContext, AuthPayload } from '../AuthProvider';
-import AccountInfoCard from './AccountInfoCard';
-import AccountInfoParagraph from './AccountInfoParagraph';
+import { useAuth } from '../AuthProvider';
 import SkinFileCard from './SkinFileCard';
 
 const SkinUploadForm = () => {
 
   const [filename, setFilename] = useState('');
   const { toast } = useToast();
-  const { user, setUser }: AuthPayload = useContext(AuthContext);
+  const { user, setUser } = useAuth();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -55,18 +54,27 @@ const SkinUploadForm = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <AccountInfoCard
-          title='Changer de skin' 
-          img={user?.skin}
-          tip="Le fichier ne peut dépasser 1 mo"
-          button={<Button>Upload</Button>}
-        >
-          <AccountInfoParagraph>Le skin est utilisé dans le jeu pour modifier l'aspect visuel de votre personnage</AccountInfoParagraph>
-          <div className='mt-4'>
-            <label className='inline-block text-foreground font-semibold px-4 py-2 rounded-md cursor-pointer' htmlFor="file">Télécharger un fichier</label>
-            <input onChange={handleChange} className='hidden' type="file" name="file" id="file" />
-          </div>
-        </AccountInfoCard>
+        <Card>
+          <CardHeader>
+            <CardTitle className='font-xl'>Changer de skin</CardTitle>
+            <CardDescription>Le skin est utilisé dans le jeu pour modifier l'aspect visuel de votre personnage</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className='mt-4'>
+              <Button>
+                <Upload className='w-5 h-5 mr-2' />
+                <label className='inline-block font-semibold py-2 rounded-md cursor-pointer' htmlFor="file">Télécharger un fichier</label>
+                <input onChange={handleChange} className='hidden' type="file" name="file" id="file" />
+              </Button>
+            </div>
+          </CardContent>
+          <CardFooter className='border-t border-border px-6 py-2'>
+            <div className='flex justify-between items-center w-full'>
+              <CardDescription>Le fichier ne doit pas dépasser 1mo.</CardDescription>
+              <Button type='submit'>Sauvegarder</Button>
+            </div>
+          </CardFooter>
+        </Card>
       </form>
       {filename !== '' && <SkinFileCard name={filename} size={1.22} />}
     </>

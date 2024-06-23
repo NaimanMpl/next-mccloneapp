@@ -21,9 +21,12 @@ export const useAddUserForm = () => {
     .max(20, { message: "Le nom d'utilisateur ne doit pas dépasser 20 caractères" }),
     email: z.string().email({ message: 'Veuillez renseigner une adresse mail valide '}),
     password: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères '}),
-    confirmPassword: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères '}),
+    confirmPassword: z.string(),
     role: z.enum([ RoleEnum.Administrateur, RoleEnum.Joueur ]),
     admin: z.boolean()
+  }).refine(data => data.password === data.confirmPassword, {
+    message: 'Les mots de passes doivent correspondre.',
+    path: ['confirmPassword']
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({

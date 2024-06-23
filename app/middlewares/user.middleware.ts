@@ -1,5 +1,8 @@
+import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
 import { boolean } from "zod";
 import { RegisterFormData } from "../hooks/useRegisterForm";
+import { isAuthenticated } from "../lib/auth";
 import { AddUserFormData } from "../models/formsdata.model";
 import { RoleEnum } from "../models/role.model";
 
@@ -44,6 +47,31 @@ class UserMiddleware {
 
     return null;
 
+  }
+
+  public handleAuth = async (request: NextRequest) => {
+    const clientCookies = cookies();
+    const user = await isAuthenticated(request, clientCookies);
+
+    if (!user) {
+      return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 403 });
+    }
+
+    return user;
+  }
+
+  public handlePatch = (searchParams: URLSearchParams) => {
+    const username = searchParams.get('username');
+
+    if (!username) {
+      return new Response(JSON.stringify({ message: "Veuillez saisir un nom d'utilisateur "}), { status: 400 });
+    }
+
+    if (username.length < 2 || username.length > 20) {
+      return new Response(JSON.stringify({ message: "Veuillez saisir un nom d'utilisateur dont la taille est comprise entre 2 et 20"}), { status: 400 });
+    }
+
+    return null;
   }
 }
 

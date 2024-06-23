@@ -29,3 +29,7 @@ export interface AddPermissionFormData {
 export interface AddRoleFormData {
   name: string
 }
+
+export interface EditUsernameFormData {
+  username: string
+}

@@ -3,7 +3,7 @@ import { RoleEnum } from '@/app/models/role.model'
 import { Button } from '@/components/ui/button'
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DropdownMenuContent, DropdownMenuLabel } from '@/components/ui/dropdown-menu'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
@@ -30,7 +30,10 @@ const AddUserDialog = () => {
               render={({ field }) => (
                 <FormItem>
                   <Label>Nom</Label>
-                  <Input placeholder='Imperator' {...field} />
+                  <FormControl>
+                    <Input placeholder='Imperator' {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -40,7 +43,10 @@ const AddUserDialog = () => {
               render={({ field }) => (
                 <FormItem>
                   <Label>Email</Label>
-                  <Input placeholder='imperator@domain.com' {...field} />
+                  <FormControl>
+                    <Input placeholder='imperator@domain.com' {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -49,8 +55,11 @@ const AddUserDialog = () => {
               name='password'
               render={({ field }) => (
                 <FormItem>
-                  <Label>Email</Label>
-                  <Input type='password' placeholder='•••••••••••••' {...field} />
+                  <Label>Mot de passe</Label>
+                  <FormControl>
+                    <Input type='password' placeholder='•••••••••••••' {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -59,8 +68,11 @@ const AddUserDialog = () => {
               name='confirmPassword'
               render={({ field }) => (
                 <FormItem>
-                  <Label>Email</Label>
-                  <Input type='password' placeholder='•••••••••••••' {...field} />
+                  <Label>Confirmer le mot de passe</Label>
+                  <FormControl>
+                    <Input type='password' placeholder='•••••••••••••' {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
