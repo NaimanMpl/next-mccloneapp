@@ -1,18 +1,19 @@
 import { useRoles } from '@/app/contexts/RolesContext';
 import { RoleEnum } from '@/app/models/role.model';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { ListFilter, Plus, Search } from 'lucide-react';
+import { Frown, ListFilter, Plus, Search } from 'lucide-react';
 import Link from 'next/link';
 import AddRoleDialog from './AddRoleDialog';
 import RoleDetails from './RoleDetails';
+import RoleDetailsSkeleton from './RoleDetailsSkeleton';
 
 const RolesGrid = () => {
 
-  const { roles } = useRoles();
+  const { roles, loading } = useRoles();
 
   return (
     <div className='mt-8'>
@@ -56,13 +57,32 @@ const RolesGrid = () => {
             </DropdownMenu>
           </div>
           <div className='grid grid-cols-2 gap-3'>
-            {roles.map(role => (
+            {loading &&
+            Array.from({ length: 4 }).map((item, index) => (
+              <RoleDetailsSkeleton key={index} />
+            ))
+            }
+            {
+            !loading &&
+            roles.length > 0 &&
+            roles.map(role => (
               <Link href={`/dashboard/roles/${role.name.toLowerCase()}`}>
-                <RoleDetails roleName={role.name as RoleEnum} />
+                <RoleDetails key={role.name} roleName={role.name as RoleEnum} />
               </Link>
-            ))}
+            ))
+            }
           </div>
         </CardContent>
+        {!loading && roles.length === 0 && 
+        <CardFooter className='border-t border-border flex justify-center items-center py-4'>
+          <CardDescription>
+            <div className='flex items-center gap-2'>
+              <p>Aucun role enregistré...</p>
+              <Frown />
+            </div>
+          </CardDescription>
+        </CardFooter>
+        }
       </Card>
     </div>
   )

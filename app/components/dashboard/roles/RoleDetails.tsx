@@ -1,7 +1,6 @@
 import { useRoles } from '@/app/contexts/RolesContext'
 import { RoleEnum } from '@/app/models/role.model'
-import { Card, CardHeader, CardTitle } from '@/components/ui/card'
-import { CardContent } from '@mui/material'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Info } from 'lucide-react'
 import React from 'react'
 

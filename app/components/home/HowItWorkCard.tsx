@@ -7,13 +7,13 @@ const HowItWorkCard = () => {
   return (
     <Card className='flex px-10 justify-center'>
       <div className='py-28'>
-        <Card className='border-transparent border-r border-r-border rounded-none md:px-12'>
+        <Card className='border-transparent border-r border-r-border rounded-none shadow-none md:px-12'>
           <CardHeader className='p-0'>
             <CardTitle className='text-4xl'>Et si... Il suffisait juste d'avoir un compte.</CardTitle>
             <CardDescription className='text-lg'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, reprehenderit.</CardDescription>
           </CardHeader>
           <CardFooter className='mt-52 p-0'>
-            <Button className='font-bold text-base py-6'>J'ai envie d'essayer !</Button>
+            <Button className='text-base py-6'>J'ai envie d'essayer !</Button>
           </CardFooter>
         </Card>
       </div>
