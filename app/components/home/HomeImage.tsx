@@ -2,12 +2,13 @@ import React from 'react'
 
 interface HomeImageProps {
   src: string,
-  alt: string
+  alt: string,
+  className?: string
 }
 
-const HomeImage = ({ src, alt }: HomeImageProps) => {
+const HomeImage = ({ src, alt, className }: HomeImageProps) => {
   return (
-    <img className='w-full object-cover' src={src} alt={alt} />
+    <img className={`w-full object-cover ${className}`} src={src} alt={alt} />
   )
 }
 

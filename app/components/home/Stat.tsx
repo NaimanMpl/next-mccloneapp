@@ -8,8 +8,8 @@ interface StatProps {
 const Stat = ({ title, description }: StatProps) => {
   return (
     <div>
-      <span className='text-6xl font-semibold'>{title}</span>
-      <p>{description}</p>
+      <span className='text-6xl font-semibold mobile:text-4xl'>{title}</span>
+      <p className='mobile:text-sm'>{description}</p>
     </div>
   )
 }

@@ -22,12 +22,12 @@ export const FeatureCardContainer = ({ children }: { children: ReactNode }) => {
 
 export const FeatureCardTitle = ({ children }: { children: string }) => {
   return (
-    <p className='font-bold text-xl md:text-lg'>{children}</p>
+    <p className='font-bold text-xl md:text-lg mobile:text-base'>{children}</p>
   )
 }
 
 export const FeatureCardDescription = ({ children }: { children: string }) => {
   return (
-    <p className='font-medium text-lg text-muted-foreground md:text-base'>{children}</p>
+    <p className='font-medium text-lg text-muted-foreground md:text-base mobile:text-sm'>{children}</p>
   )
 }
