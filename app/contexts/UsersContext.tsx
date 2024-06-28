@@ -12,7 +12,7 @@ export const UsersContext = createContext<IUsersContext | undefined>(undefined);
 
 export const UsersProvider = ({ children }: { children: ReactNode }) => {
   const [ users, setUsers ] = useState<User[]>([]);
-  const [ loading, setLoading ] = useState(false);
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {

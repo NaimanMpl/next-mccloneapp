@@ -10,7 +10,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 export async function POST(request: Request) {
   const user: RegisterFormData = await request.json();
   const error = userMiddleware.handleRegister(user);
-  
+
   if (error) {
     return error;
   }

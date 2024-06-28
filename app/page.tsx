@@ -1,36 +1,53 @@
+import DotPattern from "@/components/magicui/DotPattern";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Heart } from "lucide-react";
 import Link from "next/link";
 import Header from "./components/Header";
 import HomeImage from "./components/home/HomeImage";
 import HowItWorkCard from "./components/home/HowItWorkCard";
 import Stat from "./components/home/Stat";
+import GradientTitle from "./components/ui/GradientTitle";
 
 export default async function Home() {
 
   return (
     <>
-      <div className="relative overflow-x-hidden">
+      <div className="relative overflow-x-hidden h-[80vh]">
         <Header />
-        <span className="absolute -right-72 top-[40%] -translate-y-1/2 text-[10vw] -z-10 text-outline">ME N THE HOMIES</span>
-        <section className="px-20 mt-20">
-          <h1 className="text-6xl font-semibold max-w-[50%]">A Minecraft Clone made with love {"<3"}</h1>
-          <p className="text-muted-foreground font-medium py-6 max-w-[50%]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt cupiditate atque temporibus ipsam optio beatae quia molestiae magnam nam minima.</p>
-          <div className="flex items-center gap-4">
-            <Link href='/register'>
-              <Button className="px-6" variant='outline'>S'inscrire</Button>
-            </Link>
-            <Link href='/play'>
-              <Button className="px-8 py-2">Jouer</Button>
-            </Link>
+        <section className="px-20 mt-40">            
+          <div className="relative flex flex-col items-center justify-center">
+            <div className="max-w-[55%]">
+              <div className="relative">
+                <GradientTitle>
+                  Un clone de Minecraft fait avec amour {"<3"}
+                </GradientTitle>
+                <div className="absolute -top-10 -left-44 -rotate-12 flex items-center gap-2">
+                  <p className="font-playwrite font-semibold">Codé avec nos petites mains</p>
+                  <img className="max-w-12" src="/curved-arrow.svg" alt="Flèche" />
+                </div>
+              </div>
+            </div>
+            <p className="text-center font-medium py-6 max-w-[50%] md:text-lg z-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt cupiditate atque temporibus ipsam optio beatae quia molestiae magnam nam minima.</p>
+            <div className="flex items-center gap-4">
+              <Link href='/register'>
+                <Button className="px-8 z-10" variant='outline'>S'inscrire</Button>
+              </Link>
+              <Link href='/play'>
+                <Button className="px-10 py-2 z-10">Jouer</Button>
+              </Link>
+            </div>
+            <div className="flex items-center gap-8 mt-6">
+              <img className="max-w-16" src="/java-logo-dark.svg" alt="Java" />
+              <img className="max-w-16" src="/opengl-logo-dark.svg" alt="OpenGL" />
+              <img className="max-w-12" src="/apple-logo-dark.svg" alt="MacOS" />
+              <img className="max-w-12" src="/linux-logo-dark.svg" alt="Linux" />
+              <img className="max-w-12" src="/windows-logo-dark.svg" alt="Windows" />
+            </div>
           </div>
-          <img
-            className='mt-20 w-full h-[70vh] object-cover'
-            src='/hero.png'
-            alt='Hero Background'
-          />
         </section>
       </div>
-      <section className="px-20 py-28">
+      <section className="px-20 py-10">
         <div className="flex justify-between items-start">
           <div className="space-y-4">
             <h2 className="text-4xl font-medium">Lorem ipsum dolor sit amet, consectetur adipiscing.</h2>

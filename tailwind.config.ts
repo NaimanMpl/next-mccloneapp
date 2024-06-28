@@ -21,6 +21,9 @@ const config = {
       backgroundImage: {
         "hero" : "url('/hero.png')"
       },
+      fontFamily: {
+        playwrite : ['Playwrite US Trad']
+      },
       colors: {
         'gold-0' : '#ECDB85',
         'black' : '#171615',
