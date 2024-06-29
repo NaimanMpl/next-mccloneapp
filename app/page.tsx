@@ -1,21 +1,22 @@
 import DotPattern from "@/components/magicui/DotPattern";
 import Globe from "@/components/magicui/globe";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Heart } from "lucide-react";
+import { BadgeCheck, Box, Boxes, Group, Heart, Pickaxe, Users } from "lucide-react";
 import Link from "next/link";
 import Header from "./components/Header";
+import { GlobeDemo } from "./components/home/GlobeDemo";
 import HomeImage from "./components/home/HomeImage";
 import HowItWorkCard from "./components/home/HowItWorkCard";
-import Stat from "./components/home/Stat";
 import GradientTitle from "./components/ui/GradientTitle";
 
 export default async function Home() {
 
   return (
     <>
-      <div className="relative overflow-x-hidden h-screen">
+      <div className="relative overflow-x-hidden h-[90vh]">
         <Header />
         <section className="px-20 mt-40">            
           <div className="relative flex flex-col items-center justify-center">
@@ -49,12 +50,9 @@ export default async function Home() {
           </div>
         </section>
       </div>
-      <section className="px-20 py-10">
-        <GradientTitle className="py-2 text-6xl">
-          Rejoignez la communauté !
-        </GradientTitle>
-        <div className="grid grid-cols-3 mt-10 gap-x-4">
-          <Card className="relative flex flex-col justify-center items-center">
+      <section className="px-20 pb-28">
+        <div className="grid grid-cols-3 mt-10 gap-x-4 gap-y-4">
+          <Card className="py-10 relative flex flex-col justify-center items-center">
             <CardHeader>
               <CardTitle className="relative flex flex-col items-center justify-center gap-6">
                 <div className="relative w-[34rem]">
@@ -72,19 +70,13 @@ export default async function Home() {
               />
             </CardHeader>
           </Card>
-          <div className="relative flex h-full w-full max-w-[32rem] items-center justify-center overflow-hidden rounded-lg border border-border bg-background px-40 pb-40 pt-8 md:pb-30 md:shadow-xl">
-            <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-r from-black to-gray-300/80 bg-clip-text text-center text-6xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
-              Multijoueur
-            </span>
-            <Globe className="top-20" />
-            <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
-          </div>
+          <GlobeDemo />
           <Card className="relative py-10">
-            <CardHeader>
-              <CardTitle className="text-4xl flex items-center justify-center">Lorem ipsum</CardTitle>
-              <CardDescription className="text-lg text-center">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere, eligendi?
-              </CardDescription>
+            <CardHeader className="flex flex-col justify-center items-center">
+              <CardTitle className="text-5xl flex flex-col items-center justify-center">
+                <p>Redécouvrez</p>
+                <p>Minecraft</p>
+              </CardTitle>
               <DotPattern
                 className={cn(
                   "[mask-image:radial-gradient(200px_circle_at_center,white,transparent)]",
@@ -93,8 +85,99 @@ export default async function Home() {
             </CardHeader>
           </Card>
         </div>
+        <div className="grid grid-cols-2 gap-x-4 mt-4">
+          <Card className="relative pt-20">
+            <CardHeader>
+              <div className="ml-10 mt-10 absolute top-0 left-0 mb-auto border border-muted-foreground rounded-full w-14 h-14">
+                <Heart className="w-full h-full p-3" />
+              </div>
+            </CardHeader>
+            <CardFooter className="flex flex-col items-start px-10">
+              <CardTitle className="text-5xl">
+                C'est chez vous...
+              </CardTitle>
+              <CardDescription className="text-lg">
+                N'oubliez pas que même si votre maison est en dirt, s'il y a un lit, une table de craft et un four c'est chez vous...
+              </CardDescription>
+            </CardFooter>
+            <DotPattern
+              className={cn(
+                "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+              )}
+            />
+          </Card>
+          <Card className="relative pt-20">
+            <CardHeader>
+              <div className="ml-10 mt-10 absolute top-0 left-0 mb-auto border border-muted-foreground rounded-full w-14 h-14">
+                <Box className="w-full h-full p-3" />
+              </div>
+            </CardHeader>
+            <CardFooter className="flex flex-col items-start px-10">
+              <CardTitle className="text-5xl">
+                Codé par Me and the hoes
+              </CardTitle>
+              <CardDescription className="text-lg">
+                Ex-fans de la version 1.7.10 de Minecraft, on a tenté de reproduire le notre ! Aujourd'hui on repense aux bons vieux blocs avec un sourire.
+              </CardDescription>
+            </CardFooter>
+            <DotPattern
+              className={cn(
+                "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+              )}
+            />
+          </Card>
+        </div>
       </section>
-      <section className="px-20 pb-28">
+      <section className="px-20 flex justify-between">
+        <div className="relative w-1/2">
+          <h2 className="text-5xl font-semibold leading-none tracking-tight">
+            {"Un monde qu'on a construit blocs par blocs.".split(' ').map((word, index) => (
+              <span className="relative inline-flex" key={index}>
+                {word}
+                {word.includes('blocs') && <img className="absolute -bottom-3" src="/double-underline.svg" alt="" />}
+                {index !== "Un monde qu'on a construit blocs par blocs.".split(' ').length - 1 && <>&nbsp;</>}
+              </span>
+            ))}
+          </h2>
+          <div className="mt-20">
+            <h3 className="font-playwrite font-semibold text-2xl">Objectifs du projet</h3>
+            <p className="text-muted-foreground text-lg mt-6">
+              Nous avons souhaité
+              développer un jeu qui puisse offrir une expérience de jeu agréable et immersive en respectant les codes
+              de bases du jeu originel et son esthétique rudimentaire.
+            </p>
+          </div>
+          <div className="mt-10">
+            <h3 className="font-playwrite font-semibold text-2xl">Notre plus belle déclaration</h3>
+            <p className="text-muted-foreground text-lg mt-6">Parce que ça nous tient à coeur.</p>
+            <Card className="mt-6 max-w-[35em]">
+              <CardHeader>
+                <div className="flex items-center gap-4">
+                  <Avatar>
+                    <AvatarImage src="/raygunito.png" />
+                    <AvatarFallback>R</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <CardTitle>Raygunito</CardTitle>
+                    <CardDescription className="font-medium">@raygunito</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-lg">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, beatae.
+                </CardDescription>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="absolute bottom-0 -right-44 flex items-center">
+            <span className="font-playwrite font-semibold mb-16 ml-10 -rotate-6">Photo des développeurs touchant de l'herbe.</span>
+            <img className="max-w-24 -scale-x-[1] rotate-[220deg]" src="/curved-arrow.svg" alt="Curved Arrow" />
+          </div>
+        </div>
+        <img src="/zelphixmolox.png" alt="Minecraft Clone Game Image" className="rounded-xl max-w-[40rem]" />
+      </section>
+      <section className="px-20 pb-28 mt-44">
         <h2 className="text-center text-6xl font-semibold pb-20">Comment ça marche ?</h2>
         <HowItWorkCard />
       </section>
