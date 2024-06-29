@@ -1,5 +1,7 @@
 import DotPattern from "@/components/magicui/DotPattern";
+import Globe from "@/components/magicui/globe";
 import { Button } from "@/components/ui/button";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Heart } from "lucide-react";
 import Link from "next/link";
@@ -13,11 +15,11 @@ export default async function Home() {
 
   return (
     <>
-      <div className="relative overflow-x-hidden h-[80vh]">
+      <div className="relative overflow-x-hidden h-screen">
         <Header />
         <section className="px-20 mt-40">            
           <div className="relative flex flex-col items-center justify-center">
-            <div className="max-w-[55%]">
+            <div className="max-w-[60%]">
               <div className="relative">
                 <GradientTitle>
                   Un clone de Minecraft fait avec amour {"<3"}
@@ -48,22 +50,48 @@ export default async function Home() {
         </section>
       </div>
       <section className="px-20 py-10">
-        <div className="flex justify-between items-start">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-medium">Lorem ipsum dolor sit amet, consectetur adipiscing.</h2>
-            <p className="text-muted-foreground max-w-[60%] text-lg">Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque omnis porro ullam ipsum reiciendis inventore blanditiis animi obcaecati id praesentium.</p>
+        <GradientTitle className="py-2 text-6xl">
+          Rejoignez la communauté !
+        </GradientTitle>
+        <div className="grid grid-cols-3 mt-10 gap-x-4">
+          <Card className="relative flex flex-col justify-center items-center">
+            <CardHeader>
+              <CardTitle className="relative flex flex-col items-center justify-center gap-6">
+                <div className="relative w-[34rem]">
+                  <GradientTitle className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl">
+                    100%
+                  </GradientTitle>
+                  <img className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" src="/oval-dark.svg" alt="Oval" />
+                </div>
+                <span className="text-4xl mt-4">Open Source</span>
+              </CardTitle>
+              <DotPattern
+                className={cn(
+                  "[mask-image:radial-gradient(200px_circle_at_center,white,transparent)]",
+                )}
+              />
+            </CardHeader>
+          </Card>
+          <div className="relative flex h-full w-full max-w-[32rem] items-center justify-center overflow-hidden rounded-lg border border-border bg-background px-40 pb-40 pt-8 md:pb-30 md:shadow-xl">
+            <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-r from-black to-gray-300/80 bg-clip-text text-center text-6xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
+              Multijoueur
+            </span>
+            <Globe className="top-20" />
+            <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
           </div>
-          <div>
-            <h4 className="uppercase text-lg font-medium">Statistiques</h4>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-12 mt-4">
-              <Stat title="7.27M" description="Nombres de téléchargements" />
-              <Stat title="200K" description="Nombres d'utilisateurs actifs" />
-              <div className="space-y-4">
-                <p className="uppercase">Plus de 20K <span className="underline">Reviews</span></p>
-                <img src="/users-reviews.png" alt="Review d'utilisateurs" />
-              </div>
-            </div>
-          </div>
+          <Card className="relative py-10">
+            <CardHeader>
+              <CardTitle className="text-4xl flex items-center justify-center">Lorem ipsum</CardTitle>
+              <CardDescription className="text-lg text-center">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere, eligendi?
+              </CardDescription>
+              <DotPattern
+                className={cn(
+                  "[mask-image:radial-gradient(200px_circle_at_center,white,transparent)]",
+                )}
+              />
+            </CardHeader>
+          </Card>
         </div>
       </section>
       <section className="px-20 pb-28">
