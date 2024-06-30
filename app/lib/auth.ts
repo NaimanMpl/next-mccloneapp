@@ -1,12 +1,15 @@
 import cookie from 'cookie';
-import { jwtVerify, SignJWT } from 'jose';
+import { jwtVerify, JWTVerifyResult, SignJWT } from 'jose';
 import { JWSSignatureVerificationFailed } from 'jose/errors';
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
-import { resolve } from 'path';
-import { User, UserPayload } from '../models/user.model';
+import { UserPayload } from '../models/user.model';
 import logger from '../utils/logger';
+
+interface JwtUserPayload extends JWTVerifyResult {
+  payload: UserPayload; // Assurez-vous que cela correspond à la structure de votre payload
+}
 
 const accessTokenKey = new TextEncoder().encode(process.env.JWT_SECRET_KEY);
 const refreshTokenKey = new TextEncoder().encode(process.env.JWT_REFRESH_KEY);
@@ -76,13 +79,9 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
   }
 
   try {
-    const { payload } = await jwtVerify(accessToken.value, accessTokenKey, { algorithms: ['HS256'] });
+    const { payload }: JwtUserPayload = await jwtVerify(accessToken.value, accessTokenKey, { algorithms: ['HS256'] });
     
     if (!payload) {
-      return null;
-    }
-
-    if (!isUserPayload(payload)) {
       return null;
     }
 
@@ -90,6 +89,7 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
 
     return new Promise(resolve => resolve({ ...user }));
   } catch (e) {
+
     const refreshToken = cookies.get('refreshToken');
     
     if (!refreshToken || refreshToken.value.length === 0) {
@@ -97,16 +97,12 @@ export const isAuthenticated = async (request: NextRequest, cookies: ReadonlyReq
     }
 
     try {
-      const { payload } = await jwtVerify(refreshToken.value, refreshTokenKey, { algorithms: ['HS256'] });
-  
+      const { payload }: JwtUserPayload = await jwtVerify(refreshToken.value, refreshTokenKey, { algorithms: ['HS256'] });
+
       if (!payload) {
         return null;
       }
 
-      if (!isUserPayload(payload)) {
-        return null;
-      }
-  
       const newAccessToken = await generateAccessToken(payload);
       const accessTokenCookie = getTokenCookie('accessToken', newAccessToken);
   

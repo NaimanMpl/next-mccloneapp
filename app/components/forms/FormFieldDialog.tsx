@@ -1,5 +1,4 @@
 import { FormMessage } from '@/components/ui/form'
-import React from 'react'
 
 interface FormFieldDialogProps {
   children: string,
@@ -8,7 +7,7 @@ interface FormFieldDialogProps {
 
 const FormFieldDialog = ({ children, error }: FormFieldDialogProps) => {
   return (
-    <FormMessage className={error ? 'text-red-500' : 'text-green-500'}>{children}</FormMessage>
+    <FormMessage className={error ? 'text-destructive' : 'text-green-600'}>{children}</FormMessage>
   )
 }
 

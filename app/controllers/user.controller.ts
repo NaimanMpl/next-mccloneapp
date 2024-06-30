@@ -4,12 +4,29 @@ import bcrypt from 'bcrypt';
 import prisma from "../lib/db";
 import { AddUserFormData, EditUserFormData } from "../models/formsdata.model";
 import { RoleEnum, RolesDict } from "../models/role.model";
+
 export default class UserController {
+
+  public getUser = async (id: string) => {
+    try {
+      const user = await prisma.users.findUnique({
+        where: {
+          id: id
+        },
+        include: {
+          skin: true,
+          role: true
+        }
+      });
+      return user;
+    } catch (e) {
+      logger.error(e);
+      return null;
+    }
+  }
   
   public createUser = async (userFormData: RegisterFormData) => {
-
     try {
-      
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(userFormData.password, salt);
 

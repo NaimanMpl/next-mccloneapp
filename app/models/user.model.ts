@@ -1,3 +1,5 @@
+import { JwtPayload } from "jsonwebtoken"
+
 export interface Role {
   id: number,
   name: string,
@@ -20,7 +22,7 @@ export interface User {
   profileIconUrl: string
 }
 
-export interface UserPayload {
+export interface UserPayload extends JwtPayload {
   id: string,
   name: string,
   email: string,

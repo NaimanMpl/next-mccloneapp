@@ -1,18 +1,16 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import React, { FormEvent, FormEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useRegisterForm } from '../hooks/useRegisterForm';
-import { isEmailAvailable, isUsernameAvailable } from '../services/authservice';
-import FormFieldDialog from '../components/forms/FormFieldDialog';
 
 const RegisterPage = () => {
 
@@ -39,36 +37,6 @@ const RegisterPage = () => {
     }
   });
 
-  const handleUsernameChange = async (e: FormEvent<HTMLInputElement>) => {
-    
-    if (e.currentTarget.value.length < 2) {
-      setUserDialog({...userDialog, username: { message: "", error: false }});
-      return;
-    }
-
-    const usernameAvailable = await isUsernameAvailable(e.currentTarget.value);
-    if (usernameAvailable) {
-      setUserDialog({...userDialog, username: { message: "Super ! Ce nom d'utilisateur est disponible", error: false }});
-    } else {
-      setUserDialog({...userDialog, username: { message: "Ce nom d'utilisateur n'est pas disponible :(", error: true }});
-    }
-  }
-
-  const handleEmailChange = async (e: FormEvent<HTMLInputElement>) => {
-
-    if (e.currentTarget.value.length < 2) {
-      setUserDialog({...userDialog, email: { message: "", error: false }});
-      return;
-    }
-    
-    const emailAvailable = await isEmailAvailable(e.currentTarget.value);
-    if (emailAvailable) {
-      setUserDialog({...userDialog, email: { message: "Super ! Cette adresse mail est disponible", error: false }});
-    } else {
-      setUserDialog({...userDialog, email: { message: "Cette adresse mail n'est pas disponible :(", error: true }});
-    }
-  }
-
   return (
     <div className='h-screen flex items-center justify-center'>
       <Card className='mx-auto max-w-md'>
@@ -89,9 +57,9 @@ const RegisterPage = () => {
                   <FormItem className='flex flex-col'>
                     <Label htmlFor='username'>Nom d'utilisateur</Label>
                     <FormControl>
-                      <Input placeholder="john.doe" {...field} onChangeCapture={handleUsernameChange} />
+                      <Input placeholder="john.doe" {...field} />
                     </FormControl>
-                    <FormFieldDialog error={userDialog.username.error}>{userDialog.username.message && userDialog.username.message}</FormFieldDialog>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -102,9 +70,9 @@ const RegisterPage = () => {
                   <FormItem className='flex flex-col'>
                     <Label htmlFor='email'>Adresse mail</Label>
                     <FormControl>
-                      <Input placeholder="john.doe@domain.com" {...field} onChangeCapture={handleEmailChange} />
+                      <Input placeholder="john.doe@domain.com" {...field} />
                     </FormControl>
-                    <FormFieldDialog error={userDialog.email.error}>{userDialog.email.message && userDialog.email.message}</FormFieldDialog>
+                    <FormMessage />
                   </FormItem>
                 )}
               />

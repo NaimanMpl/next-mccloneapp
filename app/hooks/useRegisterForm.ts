@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { z } from 'zod';
-import { registerUser } from "../services/authservice";
+import { isEmailAvailable, isUsernameAvailable, registerUser } from "../services/authservice";
 import logger from "../utils/logger";
 
 
@@ -22,6 +22,15 @@ export const useRegisterForm = () => {
     email: z.string().email({ message: 'Veuillez renseigner une adresse mail valide '}),
     password: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères '}),
     confirmPassword: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères '})
+  }).refine(data => data.password === data.confirmPassword, {
+    message: 'Les mots de passes doivent correspondre.',
+    path: ['confirmPassword']
+  }).refine(async (data) => await isEmailAvailable(data.email), {
+    message: "Aïe, cette adresse mail n'est pas disponible...",
+    path: ['email']
+  }).refine(async (data) => await isUsernameAvailable(data.username), {
+    message: "Aïe, ce nom d'utilisateur n'est pas disponible...",
+    path: ['username']
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

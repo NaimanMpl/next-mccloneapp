@@ -1,7 +1,7 @@
 import { UserPayloadFactory } from "@/app/factories/userpayload.factory";
 import { LoginFormData } from "@/app/hooks/useLoginForm";
 import { generateAccessToken, generateRefreshToken, getTokenCookie } from "@/app/lib/auth";
-import { User, UserPayload } from "@/app/models/user.model";
+import { User } from "@/app/models/user.model";
 import logger from "@/app/utils/logger";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
@@ -48,7 +48,6 @@ export async function POST(request: Request) {
   
     const accessTokenCookie = getTokenCookie('accessToken', accessToken);
     const refreshTokenCookie = getTokenCookie('refreshToken', refreshToken);
-    
   
     const response = new Response(JSON.stringify({ message: 'Authenticated' }), { status: 200 });
     response.headers.append('Set-Cookie', accessTokenCookie);

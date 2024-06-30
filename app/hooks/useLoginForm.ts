@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { loginUser } from "../services/authservice";
 
@@ -10,6 +10,8 @@ export interface LoginFormData {
 
 export const useLoginForm = () => {
   
+  const { push } = useRouter();
+
   const formSchema = z.object({
     email: z.string(),
     password: z.string()
@@ -23,7 +25,7 @@ export const useLoginForm = () => {
       setLoading(true);
       await loginUser(values as LoginFormData);
       setLoading(false);
-      window.location.href = '/';
+      push('/');
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);

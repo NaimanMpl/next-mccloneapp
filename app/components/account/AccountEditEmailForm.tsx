@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import React from 'react';
+import { Loader2 } from 'lucide-react';
 
 interface AccountEditEmailFormProps {
   email: string
@@ -40,7 +40,10 @@ const AccountEditEmailForm = ({ email }: AccountEditEmailFormProps) => {
           <CardFooter className='border-t border-border px-6 py-2'>
             <div className='flex justify-between items-center w-full'>
               <CardDescription>Les adresses emails doivent êtres vérifiés afin de pouvoir se connecter avec.</CardDescription>
-              <Button type='submit'>Sauvegarder</Button>
+              <Button type='submit' disabled={loading}>
+                {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+                Sauvegarder
+              </Button>
             </div>
           </CardFooter>
         </form>
