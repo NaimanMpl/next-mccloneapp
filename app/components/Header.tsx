@@ -1,7 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import Image from 'next/image';
 import Link from 'next/link';
 import AccountInfo from './AccountInfo';
 import { useAuth } from './AuthProvider';
@@ -12,12 +11,12 @@ export const Header = () => {
   const { user, loading } = useAuth();
 
   return (
-    <header className='flex items-center justify-between px-20 py-8'>
+    <header className='flex items-center justify-between border-b border-border px-20 py-6 mobile:px-10 mobile:py-4'>
       <Link href='/'>
-        <Image src='/logo.png' alt='Minecraft Clone' width='150' height='100' />
+        <img src="/logo.png" alt="Minecraft Clone" className='w-[150px] mobile:w-24' />
       </Link>
       <nav>
-        <ul className='flex gap-6 items-center'>
+        <ul className='flex gap-6 items-center mobile:gap-4'>
           {loading
           &&
           <div className='flex items-center gap-2'>
@@ -36,8 +35,8 @@ export const Header = () => {
           {!loading && user === null && 
           <>
             <li>
-              <Link className='font-medium' href='/register'>
-                {"S'inscrire"}
+              <Link className='font-medium mobile:hidden' href='/register'>
+                S'inscrire
               </Link>
             </li>
             <li>
@@ -58,4 +57,4 @@ export const Header = () => {
   )
 }
 
-export default Header
+export default Header;

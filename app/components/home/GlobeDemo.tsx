@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import React from "react";
 
 const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), {
   ssr: false,
@@ -395,8 +394,8 @@ export function GlobeDemo() {
   ];
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border flex flex-row items-center justify-center py-20 h-screen md:h-auto dark:bg-black bg-white relative w-full">
-      <div className="max-w-7xl mx-auto w-full relative h-full md:h-[5rem] px-4">
+    <div className="overflow-hidden rounded-lg border border-border flex flex-row items-center justify-center py-20 h-screen md:h-auto dark:bg-black bg-white relative w-full mobile:h-[13rem]">
+      <div className="max-w-7xl mx-auto w-full relative h-full md:h-[5rem] px-4 mobile:h-[7rem]">
         <motion.div
           initial={{
             opacity: 0,
@@ -411,11 +410,11 @@ export function GlobeDemo() {
           }}
           className="div"
         >
-          <h2 className="pointer-events-none whitespace-pre-wrap bg-gradient-to-r from-black to-gray-300/80 bg-clip-text text-center text-6xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
+          <h2 className="pointer-events-none whitespace-pre-wrap bg-gradient-to-r from-black to-gray-300/80 bg-clip-text text-center text-6xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10 mobile:text-4xl mobile:from-65%">
             Multijoueur
           </h2>
         </motion.div>
-        <div className="absolute w-full -bottom-96 h-72 md:h-[30rem] z-10">
+        <div className="absolute w-full -bottom-96 h-72 md:h-[30rem] z-10 mobile:-bottom-44 mobile:left-1/2 mobile:-translate-x-1/2">
           <World data={sampleArcs} globeConfig={globeConfig} />;
         </div>
       </div>
