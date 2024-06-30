@@ -1,12 +1,11 @@
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import { AuthProvider } from "./components/AuthProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-const plusjakartasans = Plus_Jakarta_Sans({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Minecraft Clone",
