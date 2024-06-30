@@ -1,10 +1,9 @@
 import DotPattern from "@/components/magicui/DotPattern";
-import Globe from "@/components/magicui/globe";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { BadgeCheck, Box, Boxes, Group, Heart, Pickaxe, Users } from "lucide-react";
+import { Box, Heart } from "lucide-react";
 import Link from "next/link";
 import Header from "./components/Header";
 import { GlobeDemo } from "./components/home/GlobeDemo";
@@ -128,7 +127,7 @@ export default async function Home() {
           </Card>
         </div>
       </section>
-      <section className="px-20 flex justify-between">
+      <section className="px-20 flex gap-4 justify-between">
         <div className="relative w-1/2">
           <h2 className="text-5xl font-semibold leading-none tracking-tight">
             {"Un monde qu'on a construit blocs par blocs.".split(' ').map((word, index) => (
@@ -170,12 +169,14 @@ export default async function Home() {
               </CardContent>
             </Card>
           </div>
-          <div className="absolute bottom-0 -right-44 flex items-center">
-            <span className="font-playwrite font-semibold mb-16 ml-10 -rotate-6">Photo des développeurs touchant de l'herbe.</span>
+        </div>
+        <div className="relative max-w-[40em]">
+          <img src="/zelphixmolox.png" alt="Minecraft Clone Game Image" className="rounded-xl w-full object-cover" />
+          <div className="absolute bottom-0 -left-[35rem] flex items-center">
+            <span className="font-playwrite font-semibold mb-16 ml-10 -rotate-6 max-w-96">Photo des développeurs touchant de l'herbe.</span>
             <img className="max-w-24 -scale-x-[1] rotate-[220deg]" src="/curved-arrow.svg" alt="Curved Arrow" />
           </div>
         </div>
-        <img src="/zelphixmolox.png" alt="Minecraft Clone Game Image" className="rounded-xl max-w-[40rem]" />
       </section>
       <section className="px-20 pb-28 mt-44">
         <h2 className="text-center text-6xl font-semibold pb-20">Comment ça marche ?</h2>
