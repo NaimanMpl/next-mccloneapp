@@ -58,7 +58,7 @@ export default async function Home() {
                   <GradientTitle className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-5xl mobile:text-5xl">
                     100%
                   </GradientTitle>
-                  <img className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" src="/oval-dark.svg" alt="Oval" />
+                  <img className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 mobile:w-1/2" src="/oval-dark.svg" alt="Oval" />
                 </div>
                 <span className="text-4xl mt-4 mobile:text-4xl">Open Source</span>
               </CardTitle>
