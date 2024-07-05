@@ -1,3 +1,4 @@
+import axios, { AxiosResponse } from 'axios';
 import { AddUserFormData, EditEmailFormData, EditUsernameFormData } from "../models/formsdata.model";
 import { User } from "../models/user.model";
 
@@ -17,18 +18,12 @@ export const uploadSkin = async (formData: FormData, filename: string) => {
 }
 
 export const getUsers = async (): Promise<User[]> => {
-  const res = await fetch(
-    '/api/users',
-    {
-      method: 'GET'
-    }
-  );
-  if (!res.ok) {
+  try {
+    const { data } = await axios.get<User[]>('/api/users');
+    return data;
+  } catch (e) {
     return [];
   }
-
-  const users = await res.json();
-  return users;
 }
 
 export const updateUser = async (id: string | undefined, email: string | undefined, name: string | undefined, role: string | undefined, admin: boolean | undefined): Promise<User> => {

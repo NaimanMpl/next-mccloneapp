@@ -8,7 +8,7 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { ListFilter, Plus, Search } from 'lucide-react';
+import { Frown, ListFilter, Plus, Search } from 'lucide-react';
 import { FormEventHandler, useEffect, useState } from 'react';
 import UserRow from './UserRow';
 import UserRowSkeleton from './UserRowSkeleton';
@@ -96,7 +96,7 @@ const UsersTable = () => {
                 Array.from({ length: 10 }).map((item, index) => (<UserRowSkeleton key={index} />))
               ) : (
                 <>
-                  {currentUsers.map(user => {
+                  {currentUsers.length > 0 && currentUsers.map(user => {
                     return (
                       <UserRow 
                         key={user.id} 
@@ -114,6 +114,11 @@ const UsersTable = () => {
               )}
             </TableBody>
           </Table>
+          {!loading && currentUsers.length === 0 && (
+            <div className='flex justify-center gap-2 mt-5'>
+              <p className='text-center text-muted-foreground text-sm'>Aucun utilisateur inscrit...</p>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

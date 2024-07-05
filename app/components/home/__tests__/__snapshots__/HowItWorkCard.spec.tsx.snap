@@ -1,0 +1,350 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HowItWorkCard /> should render sucessfully 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="rounded-lg border border-border bg-card text-card-foreground shadow-sm flex px-10 justify-center mobile:flex-col"
+      >
+        <div
+          class="py-28 mobile:py-10"
+        >
+          <div
+            class="border bg-card text-card-foreground border-transparent border-r border-r-border rounded-none shadow-none md:px-12 mobile:border-r-transparent mobile:border-l-transparent mobile:border-t-transparent mobile:border-b mobile:border-b-border mobile:pb-10"
+          >
+            <div
+              class="flex flex-col space-y-1.5 p-0"
+            >
+              <h3
+                class="font-semibold tracking-tight text-4xl mobile:text-2xl"
+              >
+                Et si... Il suffisait juste d'avoir un compte.
+              </h3>
+              <p
+                class="text-muted-foreground text-lg mobile:text-base"
+              >
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, reprehenderit.
+              </p>
+            </div>
+            <div
+              class="flex items-center mt-52 p-0 mobile:mt-40"
+            >
+              <button
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 text-base py-6"
+              >
+                J'ai envie d'essayer !
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex flex-col justify-between py-28 items-center w-1/2 px-24 md:px-12 mobile:px-0 mobile:w-full mobile:gap-8 mobile:pt-0 mobile:pb-10"
+        >
+          <div
+            class="flex items-center w-full justify-between"
+          >
+            <div>
+              <p
+                class="font-bold text-xl md:text-lg mobile:text-base"
+              >
+                Multijoueur en ligne
+              </p>
+              <p
+                class="font-medium text-lg text-muted-foreground md:text-base mobile:text-sm"
+              >
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </div>
+            <svg
+              class="lucide lucide-globe bg-[#B6D7FF] rounded-md p-3 text-black w-14 h-14 mobile:p-4 mobile:w-16"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+              />
+              <path
+                d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+              />
+              <path
+                d="M2 12h20"
+              />
+            </svg>
+          </div>
+          <div
+            class="flex items-center w-full justify-between"
+          >
+            <div>
+              <p
+                class="font-bold text-xl md:text-lg mobile:text-base"
+              >
+                Monde infini
+              </p>
+              <p
+                class="font-medium text-lg text-muted-foreground md:text-base mobile:text-sm"
+              >
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </div>
+            <svg
+              class="lucide lucide-infinity bg-[#DBB6FF] rounded-md p-3 text-black w-14 h-14 mobile:p-4 mobile:w-16"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"
+              />
+            </svg>
+          </div>
+          <div
+            class="flex items-center w-full justify-between"
+          >
+            <div>
+              <p
+                class="font-bold text-xl md:text-lg mobile:text-base"
+              >
+                Écrit avec amour
+              </p>
+              <p
+                class="font-medium text-lg text-muted-foreground md:text-base mobile:text-sm"
+              >
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+              </p>
+            </div>
+            <svg
+              class="lucide lucide-heart bg-[#FFC0C0] rounded-md p-3 text-black w-14 h-14 mobile:p-4 mobile:w-16"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="rounded-lg border border-border bg-card text-card-foreground shadow-sm flex px-10 justify-center mobile:flex-col"
+    >
+      <div
+        class="py-28 mobile:py-10"
+      >
+        <div
+          class="border bg-card text-card-foreground border-transparent border-r border-r-border rounded-none shadow-none md:px-12 mobile:border-r-transparent mobile:border-l-transparent mobile:border-t-transparent mobile:border-b mobile:border-b-border mobile:pb-10"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-0"
+          >
+            <h3
+              class="font-semibold tracking-tight text-4xl mobile:text-2xl"
+            >
+              Et si... Il suffisait juste d'avoir un compte.
+            </h3>
+            <p
+              class="text-muted-foreground text-lg mobile:text-base"
+            >
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, reprehenderit.
+            </p>
+          </div>
+          <div
+            class="flex items-center mt-52 p-0 mobile:mt-40"
+          >
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 text-base py-6"
+            >
+              J'ai envie d'essayer !
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col justify-between py-28 items-center w-1/2 px-24 md:px-12 mobile:px-0 mobile:w-full mobile:gap-8 mobile:pt-0 mobile:pb-10"
+      >
+        <div
+          class="flex items-center w-full justify-between"
+        >
+          <div>
+            <p
+              class="font-bold text-xl md:text-lg mobile:text-base"
+            >
+              Multijoueur en ligne
+            </p>
+            <p
+              class="font-medium text-lg text-muted-foreground md:text-base mobile:text-sm"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+          <svg
+            class="lucide lucide-globe bg-[#B6D7FF] rounded-md p-3 text-black w-14 h-14 mobile:p-4 mobile:w-16"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="10"
+            />
+            <path
+              d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"
+            />
+            <path
+              d="M2 12h20"
+            />
+          </svg>
+        </div>
+        <div
+          class="flex items-center w-full justify-between"
+        >
+          <div>
+            <p
+              class="font-bold text-xl md:text-lg mobile:text-base"
+            >
+              Monde infini
+            </p>
+            <p
+              class="font-medium text-lg text-muted-foreground md:text-base mobile:text-sm"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+          <svg
+            class="lucide lucide-infinity bg-[#DBB6FF] rounded-md p-3 text-black w-14 h-14 mobile:p-4 mobile:w-16"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"
+            />
+          </svg>
+        </div>
+        <div
+          class="flex items-center w-full justify-between"
+        >
+          <div>
+            <p
+              class="font-bold text-xl md:text-lg mobile:text-base"
+            >
+              Écrit avec amour
+            </p>
+            <p
+              class="font-medium text-lg text-muted-foreground md:text-base mobile:text-sm"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+          </div>
+          <svg
+            class="lucide lucide-heart bg-[#FFC0C0] rounded-md p-3 text-black w-14 h-14 mobile:p-4 mobile:w-16"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
