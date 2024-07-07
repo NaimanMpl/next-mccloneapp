@@ -1,10 +1,9 @@
 import { UsersProvider } from "@/app/contexts/UsersContext";
-import * as hooks from '@/app/hooks/useAddUserForm';
-import { useAddUserForm } from "@/app/hooks/useAddUserForm";
 import { Dialog } from "@/components/ui/dialog";
-import { ToastProvider } from "@/components/ui/toast";
 import { Toaster } from "@/components/ui/toaster";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import user from "@testing-library/user-event";
+import { addUser } from "../../../../services/userservice";
 import AddUserDialog from "../AddUserDialog";
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -13,13 +12,14 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
-jest.mock('@/app/hooks/useAddUserForm', () => ({
-  onSubmit: jest.fn()
-}))
+jest.mock('../../../../services/userservice');
 
 describe('<AddUserDialog />', () => {
   
   it('should not submit the form with empty fields', async () => {
+    
+    const addUserMock = (addUser as jest.Mock).mockResolvedValueOnce(jest.fn());
+    
     render(
       <>
         <UsersProvider>
@@ -31,11 +31,15 @@ describe('<AddUserDialog />', () => {
       </>
     );
 
+    const [ usernameInput, emailInput ] = screen.getAllByRole('textbox');
+
+    await user.type(usernameInput, 'John Doe');
+    await user.type(emailInput, 'johndoe@gmail.com');
+
     const submitButton = screen.getByText('Sauvegarder');
-    fireEvent.click(submitButton);
+    await user.click(submitButton);
 
-    const { onSubmit } = useAddUserForm();
-    expect(onSubmit).not.toHaveBeenCalled();
-  })
+    expect(addUserMock).not.toHaveBeenCalled();
+  });
 
-}) 
+})

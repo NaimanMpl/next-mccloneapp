@@ -2,11 +2,11 @@ import { toast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { boolean, z } from 'zod';
+import { z } from 'zod';
 import { useUsers } from '../contexts/UsersContext';
 import { AddUserFormData } from '../models/formsdata.model';
 import { RoleEnum } from '../models/role.model';
-import { addUser, updateUser } from '../services/userservice';
+import { addUser } from '../services/userservice';
 
 export const useAddUserForm = () => {
   
@@ -19,8 +19,8 @@ export const useAddUserForm = () => {
     .string()
     .min(2, { message: "Le nom d'utilisateur doit avoir au moins 2 caractères" })
     .max(20, { message: "Le nom d'utilisateur ne doit pas dépasser 20 caractères" }),
-    email: z.string().email({ message: 'Veuillez renseigner une adresse mail valide '}),
-    password: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères '}),
+    email: z.string().email({ message: 'Veuillez renseigner une adresse mail valide'}),
+    password: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères'}),
     confirmPassword: z.string(),
     role: z.enum([ RoleEnum.Administrateur, RoleEnum.Joueur ]),
     admin: z.boolean()
