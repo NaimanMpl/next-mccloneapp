@@ -50,7 +50,7 @@ export async function POST(request: Request) {
         }
       }
     });
-    return new Response(JSON.stringify({ message: 'Success', role: {
+    return new Response(JSON.stringify({ role: {
       ...newRole,
       Users: undefined,
       permissions: newRole.permissions.map(permission => ({...permission, author: {...permission.author, password: undefined }})),

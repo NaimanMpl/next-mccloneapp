@@ -1,3 +1,4 @@
+import axios from "axios";
 import { LoginFormData } from "../hooks/useLoginForm";
 import { RegisterFormData } from "../hooks/useRegisterForm";
 import { UserPayload } from "../models/user.model";
@@ -13,7 +14,6 @@ export const registerUser = async (formData: RegisterFormData) => {
   );
 
   const response = await request.json();
-  console.log(response)
   if (!response.ok) {
     throw new Error(response.message);
   }
@@ -40,15 +40,12 @@ export const loginUser = async (formData: LoginFormData) => {
 }
 
 export const getCurrentUser = async (): Promise<UserPayload | null> => {
-  const res = await fetch('/api/auth/me', {
-    method: 'GET',
-  });
-
-  if (!res.ok) {
+  try {
+    const { data } = await axios.get<UserPayload>('/api/auth/me');
+    return data;
+  } catch (e) {
     return null;
   }
-
-  return res.json();
 }
 
 export const isUsernameAvailable = async (username: string): Promise<boolean> => {

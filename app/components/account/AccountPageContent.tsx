@@ -1,9 +1,6 @@
 'use client';
-import { UserPayload } from '@/app/models/user.model';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import React, { useEffect } from 'react';
 import { useAuth } from '../AuthProvider';
 import AccountDeleteUserForm from './AccountDeleteUserForm';
 import AccountEditEmailForm from './AccountEditEmailForm';

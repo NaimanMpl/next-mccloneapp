@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
-import { boolean } from "zod";
 import { RegisterFormData } from "../hooks/useRegisterForm";
 import { isAuthenticated } from "../lib/auth";
 import { AddUserFormData } from "../models/formsdata.model";

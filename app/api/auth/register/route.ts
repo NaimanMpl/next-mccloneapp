@@ -2,9 +2,7 @@ import UserController from '@/app/controllers/user.controller';
 import { RegisterFormData } from '@/app/hooks/useRegisterForm';
 import { generateAccessToken, generateRefreshToken, getTokenCookie } from '@/app/lib/auth';
 import userMiddleware from '@/app/middlewares/user.middleware';
-import { registerUser } from '@/app/services/authservice';
 import logger from '@/app/utils/logger';
-import { Prisma } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 export async function POST(request: Request) {

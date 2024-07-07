@@ -1,20 +1,15 @@
+import axios from "axios";
 import { AddPermissionFormData, AddRoleFormData } from "../models/formsdata.model";
 import { Permission } from "../models/permission.model";
 import { RoleData } from "../models/role.model";
 
 export const getRolesAndTheirUsers = async (): Promise<RoleData[]> => {
-  const res = await fetch(
-    '/api/roles/',
-    {
-      method: 'GET'
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error();
+  try {
+    const { data } = await axios.get('/api/roles');
+    return data;
+  } catch (e) {
+    return [];
   }
-
-  return await res.json();;
 }
 
 export const addPermission = async (formData: AddPermissionFormData): Promise<Permission> => {
@@ -46,16 +41,15 @@ export const deletePermission = async (permissionId: number) => {
 }
 
 export const addRole = async (formData: AddRoleFormData): Promise<RoleData> => {
-  const res = await fetch(
-    '/api/roles/',
-    {
-      method: 'POST',
-      body: JSON.stringify(formData)
+  try {
+    const { data } = await axios.post<{ role: RoleData, message: string }>('/api/roles', formData);
+    
+    if (data.message) {
+      throw new Error(data.message);
     }
-  );
-  const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message);
+  
+    return data.role;
+  } catch (e) {
+    throw new Error('Le serveur a rencontré un problème.');
   }
-  return data.role;
 }

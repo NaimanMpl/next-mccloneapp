@@ -30,7 +30,7 @@ describe('<UsersTable />', () => {
   
   afterEach(() => {
     mockAxios.reset();
-  })
+  });
 
   it('should render successfully', async () => {
 

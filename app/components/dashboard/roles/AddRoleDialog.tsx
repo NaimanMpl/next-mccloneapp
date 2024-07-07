@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 
 const AddRoleDialog = () => {
 
-  const { form, onSubmit } = useAddRoleForm();
+  const { FormSchema, form, onSubmit } = useAddRoleForm();
 
   return (
     <DialogContent>
