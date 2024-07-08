@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { AddUserFormData, EditEmailFormData, EditUsernameFormData } from "../models/formsdata.model";
 import { User } from "../models/user.model";
 
@@ -83,18 +83,12 @@ export const deleteUser = async (userId: string): Promise<{ id: string, name: st
 }
 
 export const saveUsername = async (formData: EditUsernameFormData): Promise<string> => {
-  const res = await fetch(
-    `/api/auth/me?username=${formData.username}`,
-    {
-      method: 'PATCH'
-    }
-  );
-
-  if (!res.ok) {
+  try {
+    const { data } = await axios.patch<{ username: string }>(`/api/auth/me?username=${formData.username}`);
+    return data.username;
+  } catch (e) {
     throw new Error('Oops.. Un problème est survenu');
   }
-  const { username }: { username: string } = await res.json();
-  return username;
 }
 
 export const saveEmail = async (formData: EditEmailFormData): Promise<string> => {
