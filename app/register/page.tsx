@@ -10,12 +10,11 @@ import Link from 'next/link';
 import React, { FormEvent, FormEventHandler, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import FormFieldDialog from '../components/forms/FormFieldDialog';
 import { useRegisterForm } from '../hooks/useRegisterForm';
 import { isEmailAvailable, isUsernameAvailable } from '../services/authservice';
-import FormFieldDialog from '../components/forms/FormFieldDialog';
 
 const RegisterPage = () => {
-
 
   const { formSchema, onSubmit, loading, error } = useRegisterForm();
   const [ userDialog, setUserDialog ] = useState({

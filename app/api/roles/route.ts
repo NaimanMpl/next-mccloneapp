@@ -15,13 +15,14 @@ export async function GET(request: Request) {
         }
       }
     });
+
     return new Response(
       JSON.stringify(rolesAndUsers.map(roleData => ({
         ...roleData,
         Users: undefined,
         permissions: roleData.permissions.map(permission => ({...permission, author: {...permission.author, password: undefined }})),
         users: roleData.Users.map(user => ({...user, password: undefined }))
-      }))), 
+      }))),
       { status: 200 }
     );
   } catch (e) {

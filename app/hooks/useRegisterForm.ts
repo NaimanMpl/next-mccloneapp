@@ -31,13 +31,7 @@ export const useRegisterForm = () => {
       setLoading(false);
       window.location.href = '/login';
     } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message ? e.message : 'Le serveur a rencontré un problème.');
-        logger.error(e.message);
-      } else {
-        setError('Le serveur a rencontré un problème.');
-        logger.error('Unexpected error : ', e);
-      }
+      setError((e as Error).message);
       setLoading(false);
     }
   }

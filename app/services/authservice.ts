@@ -4,39 +4,25 @@ import { RegisterFormData } from "../hooks/useRegisterForm";
 import { UserPayload } from "../models/user.model";
 
 export const registerUser = async (formData: RegisterFormData) => {
-  const request = await fetch(
-    '/api/auth/register', 
-    {
-      method: 'POST',
-      headers: { 'Content-Type' : 'application/json' },
-      body: JSON.stringify(formData)
+  try {
+    await axios.post('/api/auth/register', formData);
+  } catch (e: any) {
+    if (e.response) {
+      throw new Error(e.response.data.message);
     }
-  );
-
-  const response = await request.json();
-  if (!response.ok) {
-    throw new Error(response.message);
+    throw new Error('Le serveur a rencontré un problème.');
   }
-
-  return response;
 }
 
 export const loginUser = async (formData: LoginFormData) => {
-  const request = await fetch(
-    '/api/auth/login', 
-    {
-      method: 'POST',
-      headers: { 'Content-Type' : 'application/json' },
-      body: JSON.stringify(formData)
+  try {
+    await axios.post('/api/auth/login', formData);
+  } catch (e: any) {
+    if (e.response) {
+      throw new Error(e.response.data.message)
     }
-  );
-  const response = await request.json();
-
-  if (!response.ok) {
-    throw new Error(response.message);
+    throw new Error('Le serveur a rencontré un problème.');
   }
-
-  return response;
 }
 
 export const getCurrentUser = async (): Promise<UserPayload | null> => {
