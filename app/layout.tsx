@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "./components/AuthProvider";
+import NextAuthProvider from "./contexts/NextAuthProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,9 +26,11 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem
         >
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <NextAuthProvider>
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+          </NextAuthProvider>
         </ThemeProvider>
         <Toaster />
       </body>

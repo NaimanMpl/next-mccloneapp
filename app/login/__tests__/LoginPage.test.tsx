@@ -1,16 +1,12 @@
-import mockAxios from '@/__mocks__/axios';
 import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { AxiosError, AxiosResponse } from 'axios';
+import { signIn } from 'next-auth/react';
 import LoginForm from '../page';
 
-jest.mock('axios');
+jest.mock('next-auth/react');
 
 describe('<LoginForm />', () => {
 
-  afterEach(() => {
-    mockAxios.reset();
-  })
 
   it('should render successfully', () => {
     const loginForm = render(
@@ -22,7 +18,7 @@ describe('<LoginForm />', () => {
 
   it('should shows an error message if API call fails', async () => {
 
-    mockAxios.post.mockRejectedValue(new Error("Failed to fetch users !"));
+    (signIn as jest.Mock).mockRejectedValue(new Error("Failed to fetch users !"));
 
     render(
       <LoginForm />
@@ -42,39 +38,9 @@ describe('<LoginForm />', () => {
 
   });
 
-  it('should shows an error message if API call fails', async () => {
-
-    const error = {
-      response: {
-        data: {
-          message: 'Veuillez remplir tout les champs.'
-        }
-      }
-    } as AxiosError;
-
-    mockAxios.post.mockRejectedValue(error);
-
-    render(
-      <LoginForm />
-    );
-
-    const [ emailInput ] = screen.getAllByRole('textbox');
-
-    await user.clear(emailInput);
-    await user.type(emailInput, "john.doe@domain.com");
-
-    const loginBtn = screen.getByText('Connexion');
-    await user.click(loginBtn);
-
-    await waitFor(() => {
-      expect(screen.getByText('Veuillez remplir tout les champs.')).toBeInTheDocument();
-    });
-
-  });
-
   it('should show redirect the user if user gives valid credentials', async () => {
 
-    mockAxios.post.mockResolvedValue({});
+    (signIn as jest.Mock).mockResolvedValue({});
 
     render(
       <LoginForm />

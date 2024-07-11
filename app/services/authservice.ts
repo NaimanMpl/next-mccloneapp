@@ -1,6 +1,8 @@
 import axios from "axios";
+import { signIn } from 'next-auth/react';
 import { LoginFormData } from "../hooks/useLoginForm";
 import { RegisterFormData } from "../hooks/useRegisterForm";
+import { AuthentificationError } from "../models/error.model";
 import { UserPayload } from "../models/user.model";
 
 export const registerUser = async (formData: RegisterFormData) => {
@@ -16,11 +18,26 @@ export const registerUser = async (formData: RegisterFormData) => {
 
 export const loginUser = async (formData: LoginFormData) => {
   try {
-    await axios.post('/api/auth/login', formData);
-  } catch (e: any) {
-    if (e.response) {
-      throw new Error(e.response.data.message)
+    const response = await signIn("credentials", {
+      email: formData.email,
+      password: formData.password,
+      redirect: false
+    });
+    
+    if (!response) {
+      throw new AuthentificationError('Le serveur a rencontré un problème.');
     }
+
+    if (!response.ok) {
+      throw new AuthentificationError('Email ou mot de passe incorrect.');
+    }
+
+  } catch (e: any) {
+
+    if (e instanceof AuthentificationError) {
+      throw new Error(e.message);
+    }
+
     throw new Error('Le serveur a rencontré un problème.');
   }
 }

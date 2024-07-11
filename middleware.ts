@@ -1,6 +1,5 @@
-import { cookies } from "next/headers";
+import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
-import { isAuthenticated } from './app/lib/auth';
 
 const PROTECTED_ADMIN_ROUTES = [
   '/api/users',
@@ -11,27 +10,26 @@ const PROTECTED_ADMIN_ROUTES = [
 
 export async function middleware(request: NextRequest) {
 
-  const clientCookies = cookies();
-  const userPayload = await isAuthenticated(request, clientCookies);
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET});
 
   if (PROTECTED_ADMIN_ROUTES.includes(request.nextUrl.pathname)) {
-    if (!userPayload || !userPayload.admin) {
+    if (!token || !token.admin) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 403 });
     }
   }
 
   if (request.nextUrl.pathname.startsWith('/login')) {
-    if (userPayload !== null) {
+    if (token !== null) {
       return NextResponse.redirect(new URL('/', request.url));
     }
   }
 
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
-    if (userPayload === null) {
+    if (token === null) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    if (!userPayload.admin) {
+    if (!token.admin) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
   }

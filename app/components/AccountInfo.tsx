@@ -1,9 +1,8 @@
 'use client';
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from '@/components/ui/navigation-menu';
 import { LayoutDashboard, LogOut, Settings } from 'lucide-react';
-import Image from 'next/image';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import React from 'react';
 
 interface AccountInfoProps {
   name: string,
@@ -14,7 +13,7 @@ interface AccountInfoProps {
 const AccountInfo = ({ name, admin, profileIconUrl }: AccountInfoProps) => {
 
   const handleLogout = async () => {
-    await fetch('/logout', { method: 'GET' });
+    await signOut();
     window.location.href = '/';
   }
 

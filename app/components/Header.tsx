@@ -1,14 +1,16 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import AccountInfo from './AccountInfo';
-import { useAuth } from './AuthProvider';
 import ToggleTheme from './header/ToggleTheme';
 
 export const Header = () => {
 
-  const { user, loading } = useAuth();
+  const { data: session, status } = useSession();
+  const loading = status === 'loading';
+  const authenticated = status === 'authenticated';
 
   return (
     <header className='flex items-center justify-between border-b border-border px-20 py-6 mobile:px-10 mobile:py-4'>
@@ -25,14 +27,13 @@ export const Header = () => {
           </div>
           }
           
-          {!loading && user !== null
-          &&
+          {!loading && authenticated && session.user &&
           <>
-            <li><AccountInfo name={user.name} admin={user.admin} profileIconUrl={user.profileIconUrl} /></li>
+            <li><AccountInfo name={session.user.name} admin={session.user.admin} profileIconUrl={session.user.profileIconUrl} /></li>
           </>
           }
 
-          {!loading && user === null && 
+          {!loading && !authenticated &&
           <>
             <li>
               <Link className='font-medium mobile:hidden' href='/register'>
