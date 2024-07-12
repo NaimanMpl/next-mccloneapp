@@ -4,7 +4,7 @@ import logger from '@/app/utils/logger';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
-import { Upload } from 'lucide-react';
+import { Loader2, Upload } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from 'react';
 import SkinFileCard from './SkinFileCard';
@@ -14,6 +14,7 @@ const SkinUploadForm = () => {
   const [filename, setFilename] = useState('');
   const { toast } = useToast();
   const { data: session, update } = useSession();
+  const [ loading, setLoading ] = useState(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ const SkinUploadForm = () => {
       return;
     }
 
+    setLoading(true);
     try {
       const skinUrl = await uploadFile('skins', formData);
       update({
@@ -44,6 +46,7 @@ const SkinUploadForm = () => {
       logger.error(e)
       toast({ title: 'Uh-oh ! Un problème est survenu', description: 'Impossible de traiter votre requête', variant: 'destructive' })
     }
+    setLoading(false);
 
   }
 
@@ -77,7 +80,10 @@ const SkinUploadForm = () => {
           <CardFooter className='border-t border-border px-6 py-2'>
             <div className='flex justify-between items-center w-full'>
               <CardDescription>Le fichier ne doit pas dépasser 1mo.</CardDescription>
-              <Button type='submit'>Sauvegarder</Button>
+              <Button type='submit' disabled={loading}>
+                {loading && <Loader2 className='mr-2 h-4 w-4 animate-spin' />}
+                Sauvegarder
+              </Button>
             </div>
           </CardFooter>
         </Card>
