@@ -18,6 +18,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (request.nextUrl.pathname.startsWith('/account')) {
+    if (token === null) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+  }
+
   if (request.nextUrl.pathname.startsWith('/login')) {
     if (token !== null) {
       return NextResponse.redirect(new URL('/', request.url));

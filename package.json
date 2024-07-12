@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest -u"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

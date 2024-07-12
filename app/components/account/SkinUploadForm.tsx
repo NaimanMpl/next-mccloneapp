@@ -5,22 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 import { Upload } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import React, { ChangeEventHandler, FormEventHandler, useContext, useState } from 'react';
-import { useAuth } from '../AuthProvider';
 import SkinFileCard from './SkinFileCard';
 
 const SkinUploadForm = () => {
 
   const [filename, setFilename] = useState('');
   const { toast } = useToast();
-  const { user, setUser } = useAuth();
+  const { data: session, update } = useSession();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    if (!user) {
+    if (!session) {
       return;
     }
 
@@ -31,7 +31,13 @@ const SkinUploadForm = () => {
 
     try {
       const skinUrl = await uploadFile('skins', formData);
-      setUser({ ...user, skin: skinUrl });
+      update({
+        ...session,
+        user: {
+          ...session.user,
+          skin: skinUrl
+        }
+      });
       setFilename('');
       toast({ title: 'Succès', description: 'Votre skin a été mis à jour', variant: 'default' })
     } catch (e) {

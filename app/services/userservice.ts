@@ -92,16 +92,10 @@ export const saveUsername = async (formData: EditUsernameFormData): Promise<stri
 }
 
 export const saveEmail = async (formData: EditEmailFormData): Promise<string> => {
-  const res = await fetch(
-    `/api/auth/me?email=${formData.email}`,
-    {
-      method: 'PATCH'
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error('Oops.. Un problème est survenu');
+  try {
+    const { data } = await axios.patch<{ email: string }>(`/api/auth/me?email=${formData.email}`);
+    return data.email;
+  } catch (e) {
+    throw new Error('Un problème est survenu.');
   }
-  const { email }: { email: string } = await res.json();
-  return email;
 }

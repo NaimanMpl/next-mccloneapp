@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ListFilter, Pencil, Plus, Search } from 'lucide-react'
-import { useAuth } from '../../AuthProvider'
+import { useSession } from 'next-auth/react'
 import UserRow from '../UserRow'
 import UserRowSkeleton from '../UserRowSkeleton'
 import { UsersTableHead } from '../UsersTable'
@@ -25,7 +25,7 @@ interface RolesUsersTable {
 const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
 
   const { users, loading } = useUsers();
-  const { user } = useAuth();
+  const { data: session } = useSession();
   const { roles } = useRoles();
 
   return (
@@ -123,7 +123,7 @@ const RolesUsersTable = ({ roleName }: RolesUsersTable) => {
                       Ajouter une permission
                     </Button>
                   </DialogTrigger>
-                  <AddPermissionDialog roleName={roleName as RoleEnum} authorId={user === null ? '' : user.id} />
+                  <AddPermissionDialog roleName={roleName as RoleEnum} authorId={session === null ? '' : session.user.id} />
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>

@@ -1,13 +1,13 @@
-import { cookies } from "next/headers";
+import axios from "axios";
 import { UserPayload } from "../models/user.model";
 
 export const getUser = async (): Promise<UserPayload | null> => {
-  const res = await fetch(`${process.env.API_ENDPOINT!}/api/auth/me`, 
-  { 
-    method: 'GET',
-    headers: {
-      Cookie: cookies().toString()
-    } 
-  });
-  return !res.ok ? null : await res.json() as UserPayload;
+
+  try {
+    const { data } = await axios.get<UserPayload>(`${process.env.API_ENDPOINT!}/api/auth/session`);
+    return data;
+  } catch (e) {
+    return null;
+  }
+
 }

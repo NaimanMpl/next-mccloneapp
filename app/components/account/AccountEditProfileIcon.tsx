@@ -2,9 +2,10 @@ import { uploadAvatar, uploadFile } from '@/app/api/upload/upload.action'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useToast } from '@/components/ui/use-toast'
+import { profile } from 'console'
 import { Loader2, Upload } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import { useAuth } from '../AuthProvider'
 
 interface AccountEditProfileIconProps {
   profileIconUrl: string
@@ -15,7 +16,7 @@ const AccountEditProfileIcon = ({ profileIconUrl }: AccountEditProfileIconProps)
   const [ selectedFile, setSelectedFile ] = useState(profileIconUrl);
   const [ filename, setFilename ] = useState('');
   const { toast } = useToast();
-  const { user, setUser } = useAuth();
+  const { data: session, update } = useSession();
   const [ loading, setLoading ] = useState(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -23,7 +24,7 @@ const AccountEditProfileIcon = ({ profileIconUrl }: AccountEditProfileIconProps)
 
     const formData = new FormData(e.currentTarget);
 
-    if (!user) {
+    if (!session) {
       return;
     }
 
@@ -35,7 +36,13 @@ const AccountEditProfileIcon = ({ profileIconUrl }: AccountEditProfileIconProps)
     setLoading(true);
     try {
       const profileIconUrl = await uploadAvatar(formData);
-      setUser({ ...user, profileIconUrl: profileIconUrl });
+      update({
+        ...session,
+        user: {
+          ...session.user,
+          profileIconUrl: profileIconUrl
+        }
+      });
       setFilename('');
       setSelectedFile(profileIconUrl);
       toast({ title: 'Succès', description: 'Votre photo de profil a été mis à jour', variant: 'default' })

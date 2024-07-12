@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<AccountEditUsernameForm> should render successfully 1`] = `
+exports[`<AccountEditEmailForm> should render successfully 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
@@ -14,12 +14,12 @@ exports[`<AccountEditUsernameForm> should render successfully 1`] = `
           <h3
             class="tracking-tight text-xl font-semibold"
           >
-            Nom d'utilisateur
+            Adresse mail
           </h3>
           <p
             class="text-sm text-muted-foreground"
           >
-            Le nom d'utilisateur est utilisé pour vous différencier des autres joueurs.
+            Veuillez saisir une adresse email avec laquelle vous souhaitez pouvoir vous connecter.
           </p>
         </div>
         <form>
@@ -34,10 +34,9 @@ exports[`<AccountEditUsernameForm> should render successfully 1`] = `
                 aria-invalid="false"
                 class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-3 w-80"
                 id=":r0:-form-item"
-                name="username"
-                placeholder="Imperator"
+                name="email"
                 type="text"
-                value="John Doe"
+                value="johndoe@domain.com"
               />
             </div>
           </div>
@@ -50,7 +49,7 @@ exports[`<AccountEditUsernameForm> should render successfully 1`] = `
               <p
                 class="text-sm text-muted-foreground"
               >
-                Veuillez ne pas dépasser 20 caractères.
+                Les adresses emails doivent êtres vérifiés afin de pouvoir se connecter avec.
               </p>
               <button
                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
@@ -74,12 +73,12 @@ exports[`<AccountEditUsernameForm> should render successfully 1`] = `
         <h3
           class="tracking-tight text-xl font-semibold"
         >
-          Nom d'utilisateur
+          Adresse mail
         </h3>
         <p
           class="text-sm text-muted-foreground"
         >
-          Le nom d'utilisateur est utilisé pour vous différencier des autres joueurs.
+          Veuillez saisir une adresse email avec laquelle vous souhaitez pouvoir vous connecter.
         </p>
       </div>
       <form>
@@ -94,10 +93,9 @@ exports[`<AccountEditUsernameForm> should render successfully 1`] = `
               aria-invalid="false"
               class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-3 w-80"
               id=":r0:-form-item"
-              name="username"
-              placeholder="Imperator"
+              name="email"
               type="text"
-              value="John Doe"
+              value="johndoe@domain.com"
             />
           </div>
         </div>
@@ -110,7 +108,7 @@ exports[`<AccountEditUsernameForm> should render successfully 1`] = `
             <p
               class="text-sm text-muted-foreground"
             >
-              Veuillez ne pas dépasser 20 caractères.
+              Les adresses emails doivent êtres vérifiés afin de pouvoir se connecter avec.
             </p>
             <button
               class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"

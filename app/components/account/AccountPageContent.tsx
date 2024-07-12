@@ -1,7 +1,7 @@
 'use client';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useAuth } from '../AuthProvider';
+import { useSession } from 'next-auth/react';
 import AccountDeleteUserForm from './AccountDeleteUserForm';
 import AccountEditEmailForm from './AccountEditEmailForm';
 import AccountEditProfileIcon from './AccountEditProfileIcon';
@@ -29,19 +29,19 @@ const AccountPageSkeleton = () => {
 
 const AccountPageContent = () => {
 
-  const { user } = useAuth();
+  const { data: session } = useSession();
 
   return (
     <>
-      {!user && Array.from({ length: 4 }).map((item, index) => (
+      {!session && Array.from({ length: 4 }).map((item, index) => (
         <AccountPageSkeleton key={index} />
       ))}
-      {user &&
+      {session &&
       <>
-        <AccountEditProfileIcon profileIconUrl={user.profileIconUrl} />
-        <AccountEditUsernameForm username={user.name} />
-        <AccountEditEmailForm email={user.email} />
-        <AccountDeleteUserForm userId={user.id} />
+        <AccountEditProfileIcon profileIconUrl={session.user.profileIconUrl} />
+        <AccountEditUsernameForm username={session.user.name} />
+        <AccountEditEmailForm email={session.user.email} />
+        <AccountDeleteUserForm userId={session.user.id} />
       </>
       }
     </>
