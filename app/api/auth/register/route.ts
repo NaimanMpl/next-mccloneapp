@@ -1,6 +1,5 @@
 import UserController from '@/app/controllers/user.controller';
 import { RegisterFormData } from '@/app/hooks/useRegisterForm';
-import { generateAccessToken, generateRefreshToken, getTokenCookie } from '@/app/lib/auth';
 import userMiddleware from '@/app/middlewares/user.middleware';
 import logger from '@/app/utils/logger';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
@@ -20,17 +19,8 @@ export async function POST(request: Request) {
 
     const payload = { id: userData.id, username: userData.name, email: userData.email };
 
-    const accessToken = await generateAccessToken(payload);
-    const refreshToken = await generateRefreshToken(payload);
 
-    const accessTokenCookie = getTokenCookie('accessToken', accessToken);
-    const refreshTokenCookie = getTokenCookie('refreshToken', refreshToken);
-
-    const response = new Response(JSON.stringify({ user: payload, message: 'Registered' }), { status: 200 });
-    response.headers.append('Set-Cookie', accessTokenCookie);
-    response.headers.append('Set-Cookie', refreshTokenCookie);
-
-    return response;
+    return new Response(JSON.stringify({ user: payload, message: 'Registered' }), { status: 200 });
 
   } catch (e) {
     logger.error(e);
