@@ -1,5 +1,6 @@
 'use client';
-import { uploadFile } from '@/app/api/upload/upload.action';
+import { uploadSkin } from '@/app/api/upload/upload.action';
+import { UserPayload } from '@/app/models/user.model';
 import logger from '@/app/utils/logger';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -32,7 +33,7 @@ const SkinUploadForm = () => {
 
     setLoading(true);
     try {
-      const skinUrl = await uploadFile('skins', formData);
+      const skinUrl = await uploadSkin(session.user as UserPayload, formData);
       update({
         ...session,
         user: {

@@ -12,7 +12,7 @@ const hasCorrectMime = async (file: ArrayBuffer) => {
   return fileData && mimeTypes.includes(fileData.mime);
 };
 
-export const uploadFile = async (user: UserPayload, formData: FormData): Promise<string> => {
+export const uploadSkin = async (user: UserPayload, formData: FormData): Promise<string> => {
 
   const file = formData.get('file') as File;
 
@@ -38,7 +38,7 @@ export const uploadFile = async (user: UserPayload, formData: FormData): Promise
       throw new Error("Vous avez envoyer trop d'images ! Veuillez réessayer plus tard.")
     }
   
-    const blob = await put(`avatars/${user.id}.${extension}`, file, {
+    const blob = await put(`skins/${user.id}.${extension}`, file, {
       access: 'public'
     });
     createSubmission({ userId: user.id });
