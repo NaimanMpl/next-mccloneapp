@@ -74,7 +74,7 @@ const UserRow = ({ id, name, email, role, admin, profileIconUrl, createdAt }: Us
             <DropdownMenuItem onClick={() => setIsEditDialogOpen(true)}>
               Éditer
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setIsDeleteDialogOpen(true)} className='text-destructive'>
+            <DropdownMenuItem disabled={admin} onClick={() => setIsDeleteDialogOpen(true)} className='text-destructive'>
               Supprimer
             </DropdownMenuItem>
           </DropdownMenuContent>

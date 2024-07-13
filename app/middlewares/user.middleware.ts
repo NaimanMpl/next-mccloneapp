@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import { RegisterFormData } from "../hooks/useRegisterForm";
-import { isAuthenticated } from "../lib/auth";
 import { AddUserFormData } from "../models/formsdata.model";
 import { RoleEnum } from "../models/role.model";
 
@@ -46,17 +45,6 @@ class UserMiddleware {
 
     return null;
 
-  }
-
-  public handleAuth = async (request: NextRequest) => {
-    const clientCookies = cookies();
-    const user = await isAuthenticated(request, clientCookies);
-
-    if (!user) {
-      return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 403 });
-    }
-
-    return user;
   }
 
   public handlePatch = (searchParams: URLSearchParams) => {

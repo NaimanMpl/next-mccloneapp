@@ -1,13 +1,10 @@
 'use server';
-import { getUser } from "@/app/actions/user.action";
-import { updateTokens } from "@/app/lib/auth";
 import prisma from "@/app/lib/db";
 import { UserPayload } from "@/app/models/user.model";
 import logger from "@/app/utils/logger";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { put } from "@vercel/blob";
 import { fileTypeFromBuffer } from 'file-type';
-import { getServerSession } from "next-auth";
 
 const hasCorrectMime = async (file: ArrayBuffer) => {
   const mimeTypes = ['image/jpeg', 'image/png'];
@@ -15,13 +12,7 @@ const hasCorrectMime = async (file: ArrayBuffer) => {
   return fileData && mimeTypes.includes(fileData.mime);
 };
 
-export const uploadFile = async (folder: string, formData: FormData): Promise<string> => {
-
-  const session = await getServerSession();
-
-  if (session == null) {
-    throw new Error('Un problème est survenu');
-  }
+export const uploadFile = async (user: UserPayload, formData: FormData): Promise<string> => {
 
   const file = formData.get('file') as File;
 
@@ -33,15 +24,6 @@ export const uploadFile = async (folder: string, formData: FormData): Promise<st
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
   
   try {
-    const user = await prisma.users.findUnique({
-      where: {
-        email: session.user.email
-      }
-    });
-
-    if (user === null) {
-      throw new Error('Un problème est survenu');
-    }
 
     const currentSubmissions = await prisma.submission.count({
       where: {
@@ -59,10 +41,10 @@ export const uploadFile = async (folder: string, formData: FormData): Promise<st
     const blob = await put(`avatars/${user.id}.${extension}`, file, {
       access: 'public'
     });
-    createSubmission({ userId: session.user.id });
+    createSubmission({ userId: user.id });
     await prisma.skin.update({
       where: {
-        userId: session.user.id
+        userId: user.id
       },
       data: {
         link: blob.url
@@ -80,12 +62,7 @@ export const uploadFile = async (folder: string, formData: FormData): Promise<st
 
 }
 
-export const uploadAvatar = async (formData: FormData): Promise<string> => {
-  const session = await getServerSession();
-
-  if (session == null) {
-    throw new Error('Un problème est survenu');
-  }
+export const uploadAvatar = async (user: UserPayload, formData: FormData): Promise<string> => {
 
   const file = formData.get('file') as File;
 
@@ -95,19 +72,8 @@ export const uploadAvatar = async (formData: FormData): Promise<string> => {
 
   const extension = file.name.split('.').pop();
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-
   
   try {
-    const user = await prisma.users.findUnique({
-      where: {
-        email: session.user.email
-      }
-    });
-
-    if (user === null) {
-      throw new Error('Un problème est survenu');
-    }
-
     const currentSubmissions = await prisma.submission.count({
       where: {
         userId: user.id,

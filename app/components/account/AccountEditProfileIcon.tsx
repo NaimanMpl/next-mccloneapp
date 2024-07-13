@@ -1,8 +1,8 @@
-import { uploadAvatar, uploadFile } from '@/app/api/upload/upload.action'
+import { uploadAvatar } from '@/app/api/upload/upload.action'
+import { UserPayload } from '@/app/models/user.model'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useToast } from '@/components/ui/use-toast'
-import { profile } from 'console'
 import { Loader2, Upload } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react'
@@ -35,7 +35,7 @@ const AccountEditProfileIcon = ({ profileIconUrl }: AccountEditProfileIconProps)
 
     setLoading(true);
     try {
-      const profileIconUrl = await uploadAvatar(formData);
+      const profileIconUrl = await uploadAvatar(session.user as UserPayload, formData);
       update({
         ...session,
         user: {

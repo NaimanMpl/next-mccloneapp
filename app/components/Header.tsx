@@ -17,8 +17,7 @@ export const Header = () => {
       </Link>
       <nav>
         <ul className='flex gap-6 items-center mobile:gap-4'>
-          {!session
-          &&
+          {!session && status === 'loading' &&
           <div className='flex items-center gap-2'>
             <Skeleton className='w-[30px] h-[30px] rounded-full' />
             <Skeleton className='w-24 h-4 rounded-full' />

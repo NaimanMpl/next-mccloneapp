@@ -20,7 +20,6 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
       setUsers(users);
       setLoading(false);
     }
-
     setLoading(true);
     fetchUsers();
   }, []);

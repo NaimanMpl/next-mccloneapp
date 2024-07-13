@@ -1,3 +1,4 @@
+import { User } from '@/app/models/user.model';
 import mockAxios from 'jest-mock-axios';
 
 export const SESSION_MOCK = {

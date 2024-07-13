@@ -11,7 +11,6 @@ const PROTECTED_ADMIN_ROUTES = [
 export async function middleware(request: NextRequest) {
 
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET});
-
   if (PROTECTED_ADMIN_ROUTES.includes(request.nextUrl.pathname)) {
     if (!token || !token.admin) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 403 });
@@ -36,7 +35,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if (!token.admin) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
 }
