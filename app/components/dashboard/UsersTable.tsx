@@ -41,7 +41,7 @@ const UsersTable = () => {
   }, [users]);
 
   return (
-    <div className='mt-8'>
+    <div className='mt-6'>
       <Card>
         <CardHeader>
           <CardTitle>Utilisateurs</CardTitle>

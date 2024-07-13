@@ -9,7 +9,6 @@ export const getUser = async (): Promise<Session | null> => {
 
   try {
     const { data } = await axios.get<Session>(`${process.env.API_ENDPOINT!}/api/auth/session`);
-    console.log('ALLO SESSION', data);
     return data;
   } catch (e) {
     return null;

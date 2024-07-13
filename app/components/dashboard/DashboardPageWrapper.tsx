@@ -11,7 +11,9 @@ const DashboardPageWrapper = ({ children }: DashboardPageWrapperProps) => {
     <>
       <Header />
       <DashboardAsideHeader />
-      {children}
+      <div className='mt-6'>
+        {children}
+      </div>
     </>
   )
 }

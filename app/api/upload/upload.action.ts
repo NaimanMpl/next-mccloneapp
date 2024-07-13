@@ -1,5 +1,6 @@
 'use server';
 import prisma from "@/app/lib/db";
+import { UploadError } from "@/app/models/error.model";
 import { UserPayload } from "@/app/models/user.model";
 import logger from "@/app/utils/logger";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -17,7 +18,7 @@ export const uploadSkin = async (user: UserPayload, formData: FormData): Promise
   const file = formData.get('file') as File;
 
   if (!await hasCorrectMime(await file.arrayBuffer())) {
-    throw new Error('Les formats acceptés sont PNG ou JPG !');
+    throw new UploadError('Les formats acceptés sont PNG ou JPG !');
   }
 
   const extension = file.name.split('.').pop();
@@ -35,7 +36,7 @@ export const uploadSkin = async (user: UserPayload, formData: FormData): Promise
     });
   
     if (currentSubmissions > 2) {
-      throw new Error("Vous avez envoyer trop d'images ! Veuillez réessayer plus tard.")
+      throw new UploadError("Vous avez envoyer trop d'images ! Veuillez réessayer plus tard.")
     }
   
     const blob = await put(`skins/${user.id}.${extension}`, file, {
@@ -53,13 +54,11 @@ export const uploadSkin = async (user: UserPayload, formData: FormData): Promise
 
     return blob.url;
   } catch (e) {
-    logger.error(e);
-    if (e instanceof PrismaClientKnownRequestError) {
-      throw new Error('Un problème est survenu');
+    if (e instanceof UploadError) {
+      throw e;
     }
-    throw e;
+    throw new Error('Un problème est survenu');
   }
-
 }
 
 export const uploadAvatar = async (user: UserPayload, formData: FormData): Promise<string> => {
@@ -67,7 +66,7 @@ export const uploadAvatar = async (user: UserPayload, formData: FormData): Promi
   const file = formData.get('file') as File;
 
   if (!await hasCorrectMime(await file.arrayBuffer())) {
-    throw new Error('Les formats acceptés sont PNG ou JPG !');
+    throw new UploadError('Les formats acceptés sont PNG ou JPG !');
   }
 
   const extension = file.name.split('.').pop();
@@ -84,7 +83,7 @@ export const uploadAvatar = async (user: UserPayload, formData: FormData): Promi
     });
   
     if (currentSubmissions > 2) {
-      throw new Error("Vous avez envoyer trop d'images ! Veuillez réessayer plus tard.")
+      throw new UploadError("Vous avez envoyer trop d'images ! Veuillez réessayer plus tard.")
     }
   
     const blob = await put(`avatars/${user.id}.${extension}`, file, {
@@ -104,6 +103,9 @@ export const uploadAvatar = async (user: UserPayload, formData: FormData): Promi
     return blob.url;
   } catch (e) {
     logger.error(e);
+    if (e instanceof UploadError) {
+      throw e;
+    }
     if (e instanceof PrismaClientKnownRequestError) {
       throw new Error('Un problème est survenu');
     }

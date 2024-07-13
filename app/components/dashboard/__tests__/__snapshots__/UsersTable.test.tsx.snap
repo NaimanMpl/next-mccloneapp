@@ -6,7 +6,7 @@ exports[`<UsersTable /> should render successfully 1`] = `
   "baseElement": <body>
     <div>
       <div
-        class="mt-8"
+        class="mt-6"
       >
         <div
           class="rounded-lg border border-border bg-card text-card-foreground shadow-sm"
@@ -267,7 +267,7 @@ exports[`<UsersTable /> should render successfully 1`] = `
   </body>,
   "container": <div>
     <div
-      class="mt-8"
+      class="mt-6"
     >
       <div
         class="rounded-lg border border-border bg-card text-card-foreground shadow-sm"
