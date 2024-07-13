@@ -37,3 +37,9 @@ export interface EditUsernameFormData {
 export interface EditEmailFormData {
   email: string
 }
+
+export interface EditPasswordFormData {
+  oldPassword: string,
+  newPassword: string,
+  confirmNewPassword: string
+}

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AddUserFormData, EditEmailFormData, EditUsernameFormData } from "../models/formsdata.model";
+import { AddUserFormData, EditEmailFormData, EditPasswordFormData, EditUsernameFormData } from "../models/formsdata.model";
 import { User } from "../models/user.model";
 
 export const uploadSkin = async (formData: FormData, filename: string) => {
@@ -96,6 +96,19 @@ export const saveEmail = async (formData: EditEmailFormData): Promise<string> =>
     const { data } = await axios.patch<{ email: string }>(`/api/auth/me?email=${formData.email}`);
     return data.email;
   } catch (e) {
+    throw new Error('Un problème est survenu.');
+  }
+}
+
+export const savePassword = async (formData: EditPasswordFormData) => {
+  try {
+    await axios.post('/api/auth/me', formData);
+  } catch (e: any) {
+
+    if (e.response) {
+      throw new Error(e.response.data.message);
+    }
+
     throw new Error('Un problème est survenu.');
   }
 }

@@ -1,10 +1,11 @@
+import AccountEditPasswordForm from '@/app/components/account/AccountEditPasswordForm'
 import AccountPageWrapper from '@/app/components/account/AccountPageWrapper'
 import React from 'react'
 
 const ResetPasswordPage = () => {
   return (
     <AccountPageWrapper>
-      <h1>hello</h1>
+      <AccountEditPasswordForm />
     </AccountPageWrapper>
   )
 }
