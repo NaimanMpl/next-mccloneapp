@@ -6,6 +6,7 @@ import logger from "@/app/utils/logger";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { put } from "@vercel/blob";
 import { fileTypeFromBuffer } from 'file-type';
+import path from "path";
 
 const hasCorrectMime = async (file: ArrayBuffer) => {
   const mimeTypes = ['image/jpeg', 'image/png'];
@@ -21,7 +22,7 @@ export const uploadSkin = async (user: UserPayload, formData: FormData): Promise
     throw new UploadError('Les formats acceptés sont PNG ou JPG !');
   }
 
-  const extension = file.name.split('.').pop();
+  const extension = path.extname(file.name).slice(1);
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
   
   try {
@@ -69,7 +70,7 @@ export const uploadAvatar = async (user: UserPayload, formData: FormData): Promi
     throw new UploadError('Les formats acceptés sont PNG ou JPG !');
   }
 
-  const extension = file.name.split('.').pop();
+  const extension = path.extname(file.name).slice(1);
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
   
   try {

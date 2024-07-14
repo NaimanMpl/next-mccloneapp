@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react";
 import { useSession } from "next-auth/react";
 import AccountEditProfileIcon from "../AccountEditProfileIcon";
 
-jest.mock('axios');
 jest.mock('next-auth/react');
 
 describe('<AccountEditProfileIcon />', () => {

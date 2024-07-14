@@ -9,7 +9,7 @@ const PROTECTED_ADMIN_ROUTES = [
 ]
 
 const WORK_IN_PROGRESS_ROUTES = [
-  '/play'
+  '/none'
 ]
 
 export async function middleware(request: NextRequest) {
