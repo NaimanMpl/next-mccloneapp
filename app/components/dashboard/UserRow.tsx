@@ -56,7 +56,7 @@ const UserRow = ({ id, name, email, role, admin, profileIconUrl, createdAt }: Us
         </DropdownMenu>
       </TableCell>
       <TableCell>
-        <p>{new Date(createdAt).toLocaleDateString()}</p>
+        <p>{new Date(createdAt).toLocaleDateString('fr-FR')}</p>
       </TableCell>
       <TableCell>
         <DropdownMenu>
