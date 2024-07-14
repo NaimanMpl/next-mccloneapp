@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Globe, Heart, Infinity } from 'lucide-react'
+import Link from 'next/link'
 import { FeatureCard, FeatureCardContainer, FeatureCardDescription, FeatureCardTitle } from './FeatureCard'
 
 const HowItWorkCard = () => {
@@ -13,7 +14,9 @@ const HowItWorkCard = () => {
             <CardDescription className='text-lg mobile:text-base'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto, reprehenderit.</CardDescription>
           </CardHeader>
           <CardFooter className='mt-52 p-0 mobile:mt-40'>
-            <Button className='text-base py-6'>J'ai envie d'essayer !</Button>
+            <Link href='/play'>
+              <Button className='text-base py-6'>J'ai envie d'essayer !</Button>
+            </Link>
           </CardFooter>
         </Card>
       </div>

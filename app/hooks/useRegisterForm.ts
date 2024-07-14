@@ -20,8 +20,8 @@ export const useRegisterForm = () => {
     .min(2, { message: "Le nom d'utilisateur doit avoir au moins 2 caractères" })
     .max(20, { message: "Le nom d'utilisateur ne doit pas dépasser 20 caractères" }),
     email: z.string().email({ message: 'Veuillez renseigner une adresse mail valide '}),
-    password: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères '}),
-    confirmPassword: z.string().min(2, { message: 'Le mot de passe doit au moins contenir 2 caractères '})
+    password: z.string().min(8, { message: 'Le mot de passe doit au moins contenir 8 caractères '}),
+    confirmPassword: z.string().min(8, { message: 'Le mot de passe doit au moins contenir 8 caractères '})
   }).refine(data => data.password === data.confirmPassword, {
     message: 'Les mots de passes doivent correspondre.',
     path: ['confirmPassword']

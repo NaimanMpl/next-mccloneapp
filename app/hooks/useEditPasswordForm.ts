@@ -14,7 +14,8 @@ export const useEditPasswordForm = () => {
     newPassword: z.string().min(8, { message: 'Le mot de passe doit au moins contenir 8 caractères '}),
     confirmNewPassword: z.string().min(8, { message: 'Le mot de passe doit au moins contenir 8 caractères '}),
   }).refine(data => data.newPassword === data.confirmNewPassword, {
-    message: 'Les mots de passes doivent correspondre.'
+    message: 'Les mots de passes doivent correspondre.',
+    path: ['confirmNewPassword']
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({

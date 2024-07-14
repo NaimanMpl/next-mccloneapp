@@ -19,7 +19,8 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        "hero" : "url('/hero.png')"
+        "hero" : "url('/hero.png')",
+        "steve" : "url('/steve_alone.png')"
       },
       fontFamily: {
         playwrite : ['Playwrite US Trad']

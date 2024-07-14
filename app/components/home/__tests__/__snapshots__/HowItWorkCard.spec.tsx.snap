@@ -31,11 +31,15 @@ exports[`<HowItWorkCard /> should render sucessfully 1`] = `
             <div
               class="flex items-center mt-52 p-0 mobile:mt-40"
             >
-              <button
-                class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 text-base py-6"
+              <a
+                href="/play"
               >
-                J'ai envie d'essayer !
-              </button>
+                <button
+                  class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 text-base py-6"
+                >
+                  J'ai envie d'essayer !
+                </button>
+              </a>
             </div>
           </div>
         </div>
@@ -177,11 +181,15 @@ exports[`<HowItWorkCard /> should render sucessfully 1`] = `
           <div
             class="flex items-center mt-52 p-0 mobile:mt-40"
           >
-            <button
-              class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 text-base py-6"
+            <a
+              href="/play"
             >
-              J'ai envie d'essayer !
-            </button>
+              <button
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 text-base py-6"
+              >
+                J'ai envie d'essayer !
+              </button>
+            </a>
           </div>
         </div>
       </div>

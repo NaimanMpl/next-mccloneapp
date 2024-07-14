@@ -8,7 +8,15 @@ const PROTECTED_ADMIN_ROUTES = [
   '/api/roles',
 ]
 
+const WORK_IN_PROGRESS_ROUTES = [
+  '/play'
+]
+
 export async function middleware(request: NextRequest) {
+
+  if (WORK_IN_PROGRESS_ROUTES.includes(request.nextUrl.pathname)) {
+    return NextResponse.redirect(new URL('/in-construction', request.url));
+  }
 
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET});
   if (PROTECTED_ADMIN_ROUTES.includes(request.nextUrl.pathname)) {
@@ -23,7 +31,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (request.nextUrl.pathname.startsWith('/login')) {
+  if (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register')) {
     if (token !== null) {
       return NextResponse.redirect(new URL('/', request.url));
     }

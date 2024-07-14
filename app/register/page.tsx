@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -54,7 +54,7 @@ const RegisterPage = () => {
                 name='username'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <Label htmlFor='username'>Nom d'utilisateur</Label>
+                    <FormLabel htmlFor='username'>Nom d'utilisateur</FormLabel>
                     <FormControl>
                       <Input placeholder="john.doe" {...field} />
                     </FormControl>
@@ -67,7 +67,7 @@ const RegisterPage = () => {
                 name='email'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <Label htmlFor='email'>Adresse mail</Label>
+                    <FormLabel htmlFor='email'>Adresse mail</FormLabel>
                     <FormControl>
                       <Input placeholder="john.doe@domain.com" {...field} />
                     </FormControl>
@@ -80,7 +80,7 @@ const RegisterPage = () => {
                 name='password'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <Label htmlFor='password'>Mot de passe</Label>
+                    <FormLabel htmlFor='password'>Mot de passe</FormLabel>
                     <FormControl>
                       <Input type='password' placeholder="•••••••••••••" {...field} />
                     </FormControl>
@@ -93,7 +93,7 @@ const RegisterPage = () => {
                 name='confirmPassword'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <Label htmlFor='confirmPassword'>Confirmation de mot de passe</Label>
+                    <FormLabel htmlFor='confirmPassword'>Confirmation de mot de passe</FormLabel>
                     <FormControl>
                       <Input type='password' placeholder="•••••••••••••" {...field} />
                     </FormControl>

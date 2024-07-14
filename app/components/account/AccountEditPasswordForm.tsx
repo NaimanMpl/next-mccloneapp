@@ -2,7 +2,7 @@
 import { useEditPasswordForm } from '@/app/hooks/useEditPasswordForm';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
@@ -33,7 +33,7 @@ const AccountEditPasswordForm = () => {
                   name='oldPassword'
                   render={({ field }) => (
                     <FormItem>
-                      <Label htmlFor='currentPassword'>Ancien mot de passe</Label>
+                      <FormLabel>Ancien mot de passe</FormLabel>
                       <FormControl>
                         <Input className='mt-3 w-80' type='password' placeholder='•••••••••••••' {...field} />
                       </FormControl>
@@ -46,7 +46,7 @@ const AccountEditPasswordForm = () => {
                   name='newPassword'
                   render={({ field }) => (
                     <FormItem>
-                      <Label htmlFor='password'>Nouveau mot de passe</Label>
+                      <FormLabel>Nouveau mot de passe</FormLabel>
                       <FormControl>
                         <Input className='mt-3 w-80' type='password' placeholder='•••••••••••••' {...field} />
                       </FormControl>
@@ -59,7 +59,7 @@ const AccountEditPasswordForm = () => {
                   name='confirmNewPassword'
                   render={({ field }) => (
                     <FormItem>
-                      <Label htmlFor='confirmPassword'>Confirmation du mot de passe</Label>
+                      <FormLabel>Confirmation du mot de passe</FormLabel>
                       <FormControl>
                         <Input className='mt-3 w-80' type='password' placeholder='•••••••••••••' {...field} />
                       </FormControl>

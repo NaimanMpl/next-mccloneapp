@@ -92,7 +92,6 @@ describe('<AccountEditEmailForm>', () => {
     render(
       <>
         <AccountEditEmailForm email={email} />
-        <Toaster />
       </>
     );
 
