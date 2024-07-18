@@ -129,7 +129,7 @@ const DashboardContent = () => {
             <Skeleton className='w-32 h-5'/>
             <div className='grid grid-cols-4 gap-4 mt-4'>
               {Array.from({ length: 4 }).map((item, index) => (
-                <Card>
+                <Card key={index}>
                   <CardHeader>
                     <Skeleton className='w-40 h-3'/>
                   </CardHeader>

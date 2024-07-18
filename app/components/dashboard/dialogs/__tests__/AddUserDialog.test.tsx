@@ -1,10 +1,11 @@
 import mockAxios from "@/__mocks__/axios";
+import { USERS_MOCK } from "@/__mocks__/users";
 import { UsersProvider } from "@/app/contexts/UsersContext";
 import { Dialog } from "@/components/ui/dialog";
 import { Toaster } from "@/components/ui/toaster";
 import { render, screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import { addUser } from "../../../../services/userservice";
+import { addUser, getUsers } from "../../../../services/userservice";
 import AddUserDialog from "../AddUserDialog";
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -24,6 +25,7 @@ describe('<AddUserDialog />', () => {
   
   it('should not submit the form with empty fields', async () => {
     
+    (getUsers as jest.Mock).mockResolvedValueOnce({ users: USERS_MOCK });
     const addUserMock = (addUser as jest.Mock).mockResolvedValueOnce(jest.fn());
     
     render(

@@ -10,14 +10,14 @@ import UsersTable from "../UsersTable";
 jest.mock('axios');
 
 describe('<UsersTable />', () => {
-  
+
   afterEach(() => {
     mockAxios.reset();
   });
 
   it('should render successfully', async () => {
 
-    mockAxios.get.mockResolvedValueOnce({ data: USERS_MOCK });
+    mockAxios.get.mockResolvedValueOnce({ data: { users: USERS_MOCK } });
 
     const users = render(
       <UsersProvider>
