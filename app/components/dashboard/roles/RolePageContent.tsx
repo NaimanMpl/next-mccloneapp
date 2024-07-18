@@ -2,7 +2,7 @@
 import { RolesProvider } from '@/app/contexts/RolesContext';
 import { UsersProvider } from '@/app/contexts/UsersContext';
 import { RoleEnum } from '@/app/models/role.model';
-import React from 'react';
+import React, { Suspense } from 'react';
 import RolesUsersTable from './RolesUsersTable';
 
 interface RolePageContent {
@@ -11,11 +11,13 @@ interface RolePageContent {
 
 const RolePageContent = ({ roleName }: RolePageContent) => {
   return (
-    <UsersProvider>
-      <RolesProvider>
-        <RolesUsersTable roleName={roleName} />
-      </RolesProvider>
-    </UsersProvider>
+    <Suspense>
+      <UsersProvider>
+        <RolesProvider>
+          <RolesUsersTable roleName={roleName} />
+        </RolesProvider>
+      </UsersProvider>
+    </Suspense>
   )
 }
 
