@@ -4,5 +4,6 @@ export interface ServerInfo {
   id: number,
   status: ServerStatus,
   ip: string,
-  onlinePlayers: number
+  onlinePlayers: number,
+  totalPlayers: number
 }

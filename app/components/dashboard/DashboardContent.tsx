@@ -5,6 +5,7 @@ import { getServerInfo } from '@/app/services/serverservice';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Activity, Circle, Eye, Globe, MessageCircle, PartyPopper, Users } from 'lucide-react';
 import { useSession } from 'next-auth/react';
@@ -116,368 +117,397 @@ const DashboardContent = () => {
   });
 
   return (
-    <Card className='mt-6'>
-      {
-        session &&
-        <>
+    <>
+      {(!session || loading) &&
+      <>
+        <Card className='mt-6 h-[70vh]'>
           <CardHeader>
-            <CardTitle>Content de vous revoir, {session.user.name} 👋</CardTitle>
-            <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, voluptates.</CardDescription>
+            <Skeleton className='w-96 h-5' />
+            <Skeleton className='w-[30rem] h-4' />
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue='overview'>
-              <TabsList>
-                <TabsTrigger value='overview'>Aperçu</TabsTrigger>
-                <TabsTrigger value='server'>Serveur</TabsTrigger>
-              </TabsList>
-              <TabsContent value='overview'>
-                <div className='grid grid-cols-4 gap-4 mt-4'>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>Utilisateurs actifs</CardTitle>
-                      <Activity className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='text-2xl font-bold'>2</div>
-                      <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>Nouveaux inscrits</CardTitle>
-                      <PartyPopper className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='text-2xl font-bold'>2</div>
-                      <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>Visites du site</CardTitle>
-                      <Eye className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='text-2xl font-bold'>2</div>
-                      <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>Messages dans le chat</CardTitle>
-                      <MessageCircle className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='text-2xl font-bold'>0</div>
-                      <p className='text-xs text-muted-foreground'>+0.0% par rapport au mois dernier</p>
-                    </CardContent>
-                  </Card>
-                </div>
-                <div className='mt-4'>
-                  <Card className='border-transparent shadow-none'>
-                    <CardHeader className='px-0 flex flex-row items-center justify-between gap-2 space-y-0 py-5'>
-                      <div className='flex-1 gap-1'>
-                        <CardTitle>Nombres de visites total</CardTitle>
-                        <CardDescription>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur, ad!</CardDescription>
-                      </div>
-                      <Select value={timeRange} onValueChange={setTimeRange}>
-                        <SelectTrigger
-                          className='w-[160px] rounded-lg'
-                          aria-label='Sélectionner une valeur'
-                        >
-                          <SelectValue placeholder='3 derniers mois' />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value='90d' className='rounded-lg'>
-                            3 derniers mois
-                          </SelectItem>
-                          <SelectItem value='30d' className='rounded-lg'>
-                            30 derniers jours
-                          </SelectItem>
-                          <SelectItem value='7d' className='rounded-lg'>
-                            Cette semaine
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </CardHeader>
-                    <CardContent className='p-0'>
-                      <ChartContainer
-                        config={chartConfig}
-                        className='aspect-auto h-[250px] w-full'
-                      >
-                        <AreaChart data={filteredData}>
-                          <defs>
-                            <linearGradient id="fillMacOS" x1="0" y1="0" x2="0" y2="1">
-                              <stop 
-                                offset='5%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.8}
-                              />
-                              <stop 
-                                offset='95%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.1}
-                              />
-                            </linearGradient>
-                            <linearGradient id="fillWindows" x1="0" y1="0" x2="0" y2="1">
-                              <stop 
-                                offset='5%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.8}
-                              />
-                              <stop 
-                                offset='95%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.1}
-                              />
-                            </linearGradient>
-                            <linearGradient id="fillLinux" x1="0" y1="0" x2="0" y2="1">
-                              <stop 
-                                offset='5%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.8}
-                              />
-                              <stop 
-                                offset='95%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.1}
-                              />
-                            </linearGradient>
-                          </defs>
-                          <CartesianGrid vertical={false} />
-                          <XAxis 
-                            dataKey='date'
-                            tickLine={false}
-                            axisLine={false}
-                            tickMargin={8}
-                            minTickGap={32}
-                            tickFormatter={(value) => {
-                              const date = new Date(value);
-                              return date.toLocaleDateString('fr-FR', {
-                                month: 'short',
-                                day: 'numeric'
-                              });
-                            }}
-                          />
-                          <ChartTooltip
-                            cursor={false}
-                            content={
-                              <ChartTooltipContent 
-                                labelFormatter={(value) => {
-                                  return new Date(value).toLocaleDateString('fr-FR', {
-                                    month: 'short',
-                                    day: 'numeric'
-                                  })
-                                }}
-                                indicator='dot'
-                              />
-                            }
-                          />
-                          <Area 
-                            dataKey='macos'
-                            type='natural'
-                            fill='url(#fillMacOS)'
-                            stroke='var(--color-macos)'
-                            stackId='a'
-                          />
-                          <Area 
-                            dataKey='linux'
-                            type='natural'
-                            fill='url(#fillLinux)'
-                            stroke='var(--color-linux)'
-                            stackId='a'
-                          />
-                          <Area 
-                            dataKey='windows'
-                            type='natural'
-                            fill='url(#fillWindows)'
-                            stroke='var(--color-windows)'
-                            stackId='a'
-                          />
-                        </AreaChart>
-                      </ChartContainer>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
-              <TabsContent value='server'>
-              <div className='grid grid-cols-4 gap-4 mt-4'>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>État du serveur</CardTitle>
-                      <Activity className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='flex items-center gap-2'>
-                        <div className='text-xl font-bold'>En ligne</div>
-                        <Circle fill='green' className='w-2 h-2 text-transparent' />
-                      </div>
-                      <p className='text-xs text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>Joueurs en ligne</CardTitle>
-                      <Globe className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='text-2xl font-bold'>{serverInfo?.onlinePlayers}</div>
-                      <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>IP</CardTitle>
-                      <Eye className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='text-2xl font-bold'>{serverInfo?.ip}</div>
-                      <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                      <CardTitle className='text-sm font-medium'>Messages dans le chat</CardTitle>
-                      <MessageCircle className='w-4 h-4' />
-                    </CardHeader>
-                    <CardContent>
-                      <div className='text-2xl font-bold'>0</div>
-                      <p className='text-xs text-muted-foreground'>+0.0% par rapport au mois dernier</p>
-                    </CardContent>
-                  </Card>
-                </div>
-                <div className='mt-4'>
-                  <Card className='border-transparent shadow-none'>
-                    <CardHeader className='px-0 flex flex-row items-center justify-between gap-2 space-y-0 py-5'>
-                      <div className='flex-1 gap-1'>
-                        <CardTitle>Nombres de joueurs total</CardTitle>
-                        <CardDescription>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur, ad!</CardDescription>
-                      </div>
-                      <Select value={timeRange} onValueChange={setTimeRange}>
-                        <SelectTrigger
-                          className='w-[160px] rounded-lg'
-                          aria-label='Sélectionner une valeur'
-                        >
-                          <SelectValue placeholder='3 derniers mois' />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value='90d' className='rounded-lg'>
-                            3 derniers mois
-                          </SelectItem>
-                          <SelectItem value='30d' className='rounded-lg'>
-                            30 derniers jours
-                          </SelectItem>
-                          <SelectItem value='7d' className='rounded-lg'>
-                            Cette semaine
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </CardHeader>
-                    <CardContent className='p-0'>
-                      <ChartContainer
-                        config={chartConfig}
-                        className='aspect-auto h-[250px] w-full'
-                      >
-                        <AreaChart data={filteredData}>
-                          <defs>
-                            <linearGradient id="fillMacOS" x1="0" y1="0" x2="0" y2="1">
-                              <stop 
-                                offset='5%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.8}
-                              />
-                              <stop 
-                                offset='95%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.1}
-                              />
-                            </linearGradient>
-                            <linearGradient id="fillWindows" x1="0" y1="0" x2="0" y2="1">
-                              <stop 
-                                offset='5%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.8}
-                              />
-                              <stop 
-                                offset='95%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.1}
-                              />
-                            </linearGradient>
-                            <linearGradient id="fillLinux" x1="0" y1="0" x2="0" y2="1">
-                              <stop 
-                                offset='5%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.8}
-                              />
-                              <stop 
-                                offset='95%'
-                                stopColor='var(--color-desktop)'
-                                stopOpacity={0.1}
-                              />
-                            </linearGradient>
-                          </defs>
-                          <CartesianGrid vertical={false} />
-                          <XAxis 
-                            dataKey='date'
-                            tickLine={false}
-                            axisLine={false}
-                            tickMargin={8}
-                            minTickGap={32}
-                            tickFormatter={(value) => {
-                              const date = new Date(value);
-                              return date.toLocaleDateString('fr-FR', {
-                                month: 'short',
-                                day: 'numeric'
-                              });
-                            }}
-                          />
-                          <ChartTooltip
-                            cursor={false}
-                            content={
-                              <ChartTooltipContent 
-                                labelFormatter={(value) => {
-                                  return new Date(value).toLocaleDateString('fr-FR', {
-                                    month: 'short',
-                                    day: 'numeric'
-                                  })
-                                }}
-                                indicator='dot'
-                              />
-                            }
-                          />
-                          <Area 
-                            dataKey='macos'
-                            type='natural'
-                            fill='url(#fillMacOS)'
-                            stroke='var(--color-macos)'
-                            stackId='a'
-                          />
-                          <Area 
-                            dataKey='linux'
-                            type='natural'
-                            fill='url(#fillLinux)'
-                            stroke='var(--color-linux)'
-                            stackId='a'
-                          />
-                          <Area 
-                            dataKey='windows'
-                            type='natural'
-                            fill='url(#fillWindows)'
-                            stroke='var(--color-windows)'
-                            stackId='a'
-                          />
-                        </AreaChart>
-                      </ChartContainer>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
-            </Tabs>
+            <Skeleton className='w-32 h-5'/>
+            <div className='grid grid-cols-4 gap-4 mt-4'>
+              {Array.from({ length: 4 }).map((item, index) => (
+                <Card>
+                  <CardHeader>
+                    <Skeleton className='w-40 h-3'/>
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className='w-10 h-4'/>
+                    <Skeleton className='w-72 h-4 mt-2'/>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <Skeleton className='w-60 h-5 mt-10'/>
+            <Skeleton className='w-96 h-4 mt-2'/>
           </CardContent>
-        </>
+        </Card>
+      </>
       }
-    </Card>
+      {session && !loading &&
+        <Card className='mt-6'>
+          <>
+            <CardHeader>
+              <CardTitle>Content de vous revoir, {session.user.name} 👋</CardTitle>
+              <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, voluptates.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Tabs defaultValue='overview'>
+                <TabsList>
+                  <TabsTrigger value='overview'>Aperçu</TabsTrigger>
+                  <TabsTrigger value='server'>Serveur</TabsTrigger>
+                </TabsList>
+                <TabsContent value='overview'>
+                  <div className='grid grid-cols-4 gap-4 mt-4'>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>Utilisateurs actifs</CardTitle>
+                        <Activity className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>{serverInfo?.totalPlayers}</div>
+                        <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>Nouveaux inscrits</CardTitle>
+                        <PartyPopper className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>2</div>
+                        <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>Visites du site</CardTitle>
+                        <Eye className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>2</div>
+                        <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>Messages dans le chat</CardTitle>
+                        <MessageCircle className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>0</div>
+                        <p className='text-xs text-muted-foreground'>+0.0% par rapport au mois dernier</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  <div className='mt-4'>
+                    <Card className='border-transparent shadow-none'>
+                      <CardHeader className='px-0 flex flex-row items-center justify-between gap-2 space-y-0 py-5'>
+                        <div className='flex-1 gap-1'>
+                          <CardTitle>Nombres de visites total</CardTitle>
+                          <CardDescription>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur, ad!</CardDescription>
+                        </div>
+                        <Select value={timeRange} onValueChange={setTimeRange}>
+                          <SelectTrigger
+                            className='w-[160px] rounded-lg'
+                            aria-label='Sélectionner une valeur'
+                          >
+                            <SelectValue placeholder='3 derniers mois' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value='90d' className='rounded-lg'>
+                              3 derniers mois
+                            </SelectItem>
+                            <SelectItem value='30d' className='rounded-lg'>
+                              30 derniers jours
+                            </SelectItem>
+                            <SelectItem value='7d' className='rounded-lg'>
+                              Cette semaine
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </CardHeader>
+                      <CardContent className='p-0'>
+                        <ChartContainer
+                          config={chartConfig}
+                          className='aspect-auto h-[250px] w-full'
+                        >
+                          <AreaChart data={filteredData}>
+                            <defs>
+                              <linearGradient id="fillMacOS" x1="0" y1="0" x2="0" y2="1">
+                                <stop 
+                                  offset='5%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.8}
+                                />
+                                <stop 
+                                  offset='95%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.1}
+                                />
+                              </linearGradient>
+                              <linearGradient id="fillWindows" x1="0" y1="0" x2="0" y2="1">
+                                <stop 
+                                  offset='5%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.8}
+                                />
+                                <stop 
+                                  offset='95%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.1}
+                                />
+                              </linearGradient>
+                              <linearGradient id="fillLinux" x1="0" y1="0" x2="0" y2="1">
+                                <stop 
+                                  offset='5%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.8}
+                                />
+                                <stop 
+                                  offset='95%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.1}
+                                />
+                              </linearGradient>
+                            </defs>
+                            <CartesianGrid vertical={false} />
+                            <XAxis 
+                              dataKey='date'
+                              tickLine={false}
+                              axisLine={false}
+                              tickMargin={8}
+                              minTickGap={32}
+                              tickFormatter={(value) => {
+                                const date = new Date(value);
+                                return date.toLocaleDateString('fr-FR', {
+                                  month: 'short',
+                                  day: 'numeric'
+                                });
+                              }}
+                            />
+                            <ChartTooltip
+                              cursor={false}
+                              content={
+                                <ChartTooltipContent 
+                                  labelFormatter={(value) => {
+                                    return new Date(value).toLocaleDateString('fr-FR', {
+                                      month: 'short',
+                                      day: 'numeric'
+                                    })
+                                  }}
+                                  indicator='dot'
+                                />
+                              }
+                            />
+                            <Area 
+                              dataKey='macos'
+                              type='natural'
+                              fill='url(#fillMacOS)'
+                              stroke='var(--color-macos)'
+                              stackId='a'
+                            />
+                            <Area 
+                              dataKey='linux'
+                              type='natural'
+                              fill='url(#fillLinux)'
+                              stroke='var(--color-linux)'
+                              stackId='a'
+                            />
+                            <Area 
+                              dataKey='windows'
+                              type='natural'
+                              fill='url(#fillWindows)'
+                              stroke='var(--color-windows)'
+                              stackId='a'
+                            />
+                          </AreaChart>
+                        </ChartContainer>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </TabsContent>
+                <TabsContent value='server'>
+                <div className='grid grid-cols-4 gap-4 mt-4'>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>État du serveur</CardTitle>
+                        <Activity className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='flex items-center gap-2'>
+                          <div className='text-xl font-bold'>En ligne</div>
+                          <Circle fill='green' className='w-2 h-2 text-transparent' />
+                        </div>
+                        <p className='text-xs text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>Joueurs en ligne</CardTitle>
+                        <Globe className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>{serverInfo?.onlinePlayers}</div>
+                        <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>IP</CardTitle>
+                        <Eye className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>{serverInfo?.ip}</div>
+                        <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                        <CardTitle className='text-sm font-medium'>Messages dans le chat</CardTitle>
+                        <MessageCircle className='w-4 h-4' />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>0</div>
+                        <p className='text-xs text-muted-foreground'>+0.0% par rapport au mois dernier</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  <div className='mt-4'>
+                    <Card className='border-transparent shadow-none'>
+                      <CardHeader className='px-0 flex flex-row items-center justify-between gap-2 space-y-0 py-5'>
+                        <div className='flex-1 gap-1'>
+                          <CardTitle>Nombres de joueurs total</CardTitle>
+                          <CardDescription>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur, ad!</CardDescription>
+                        </div>
+                        <Select value={timeRange} onValueChange={setTimeRange}>
+                          <SelectTrigger
+                            className='w-[160px] rounded-lg'
+                            aria-label='Sélectionner une valeur'
+                          >
+                            <SelectValue placeholder='3 derniers mois' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value='90d' className='rounded-lg'>
+                              3 derniers mois
+                            </SelectItem>
+                            <SelectItem value='30d' className='rounded-lg'>
+                              30 derniers jours
+                            </SelectItem>
+                            <SelectItem value='7d' className='rounded-lg'>
+                              Cette semaine
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </CardHeader>
+                      <CardContent className='p-0'>
+                        <ChartContainer
+                          config={chartConfig}
+                          className='aspect-auto h-[250px] w-full'
+                        >
+                          <AreaChart data={filteredData}>
+                            <defs>
+                              <linearGradient id="fillMacOS" x1="0" y1="0" x2="0" y2="1">
+                                <stop 
+                                  offset='5%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.8}
+                                />
+                                <stop 
+                                  offset='95%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.1}
+                                />
+                              </linearGradient>
+                              <linearGradient id="fillWindows" x1="0" y1="0" x2="0" y2="1">
+                                <stop 
+                                  offset='5%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.8}
+                                />
+                                <stop 
+                                  offset='95%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.1}
+                                />
+                              </linearGradient>
+                              <linearGradient id="fillLinux" x1="0" y1="0" x2="0" y2="1">
+                                <stop 
+                                  offset='5%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.8}
+                                />
+                                <stop 
+                                  offset='95%'
+                                  stopColor='var(--color-desktop)'
+                                  stopOpacity={0.1}
+                                />
+                              </linearGradient>
+                            </defs>
+                            <CartesianGrid vertical={false} />
+                            <XAxis 
+                              dataKey='date'
+                              tickLine={false}
+                              axisLine={false}
+                              tickMargin={8}
+                              minTickGap={32}
+                              tickFormatter={(value) => {
+                                const date = new Date(value);
+                                return date.toLocaleDateString('fr-FR', {
+                                  month: 'short',
+                                  day: 'numeric'
+                                });
+                              }}
+                            />
+                            <ChartTooltip
+                              cursor={false}
+                              content={
+                                <ChartTooltipContent 
+                                  labelFormatter={(value) => {
+                                    return new Date(value).toLocaleDateString('fr-FR', {
+                                      month: 'short',
+                                      day: 'numeric'
+                                    })
+                                  }}
+                                  indicator='dot'
+                                />
+                              }
+                            />
+                            <Area 
+                              dataKey='macos'
+                              type='natural'
+                              fill='url(#fillMacOS)'
+                              stroke='var(--color-macos)'
+                              stackId='a'
+                            />
+                            <Area 
+                              dataKey='linux'
+                              type='natural'
+                              fill='url(#fillLinux)'
+                              stroke='var(--color-linux)'
+                              stackId='a'
+                            />
+                            <Area 
+                              dataKey='windows'
+                              type='natural'
+                              fill='url(#fillWindows)'
+                              stroke='var(--color-windows)'
+                              stackId='a'
+                            />
+                          </AreaChart>
+                        </ChartContainer>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </>
+        </Card>
+      }
+    </>
   )
 }
 

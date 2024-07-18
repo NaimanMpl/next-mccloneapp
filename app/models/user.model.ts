@@ -29,3 +29,9 @@ export interface UserPayload {
   admin: boolean,
   profileIconUrl: string
 }
+
+export interface UsersPagination {
+  total: number,
+  nextPage: string,
+  users: User[]
+}

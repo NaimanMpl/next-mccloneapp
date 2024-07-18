@@ -1,18 +1,34 @@
 import prisma from "@/app/lib/db";
+import { User, UsersPagination } from "@/app/models/user.model";
 import logger from "@/app/utils/logger";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
 
 export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const pageParam = searchParams.get('page');
+  let page = pageParam ? parseInt(pageParam) : 1;
+  page = page > 0 ? page : 1
+
   try {
     const users = await prisma.users.findMany({
+      skip: (page - 1) * 20,
+      take: 20,
       include: {
         role: true,
         skin: true
       }
     });
+    const totalUsers = await prisma.users.count();
+    const nextPageUrl = `/api/users?page=${(totalUsers - page * 20 > 0) ? page + 1 : page}`
+    const usersPagination: UsersPagination = {
+      total: totalUsers,
+      nextPage: nextPageUrl,
+      users: users.map(user => ({ ...user, password: undefined }) as User),
+    }
 
-    return new Response(JSON.stringify(users.map(user => ({ ...user, password: undefined }))), { status: 200 });
+    return new Response(JSON.stringify(usersPagination), { status: 200 });
   } catch (e) {
     logger.error(e)
     return new Response(JSON.stringify([]), { status: 500 });

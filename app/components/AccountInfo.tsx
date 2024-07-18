@@ -40,7 +40,7 @@ const AccountInfo = ({ name, admin, profileIconUrl }: AccountInfoProps) => {
               {
               admin &&
               <li>
-                <Link href='/dashboard/users'>
+                <Link href='/dashboard'>
                   <div className="flex items-center gap-2 px-6 py-2 hover:bg-accent">
                     <LayoutDashboard className='w-5 h-5' />
                     <span className='text-muted-foreground text-sm'>Tableau de bord</span>

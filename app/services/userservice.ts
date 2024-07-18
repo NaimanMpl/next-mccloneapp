@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AddUserFormData, EditEmailFormData, EditPasswordFormData, EditUsernameFormData } from "../models/formsdata.model";
-import { User } from "../models/user.model";
+import { User, UsersPagination } from "../models/user.model";
 
 export const uploadSkin = async (formData: FormData, filename: string) => {
   const res = await fetch(
@@ -17,12 +17,12 @@ export const uploadSkin = async (formData: FormData, filename: string) => {
   return data;
 }
 
-export const getUsers = async (): Promise<User[]> => {
+export const getUsers = async (page: number): Promise<UsersPagination> => {
   try {
-    const { data } = await axios.get<User[]>('/api/users');
+    const { data } = await axios.get<UsersPagination>(`/api/users?page=${page}`);
     return data;
   } catch (e) {
-    return [];
+    return { total: 0, nextPage: '/api/users', users: [] };
   }
 }
 

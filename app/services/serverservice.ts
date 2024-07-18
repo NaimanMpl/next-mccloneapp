@@ -1,5 +1,5 @@
-import { ServerInfo } from "@prisma/client";
 import axios from "axios";
+import { ServerInfo } from "../models/serverinfo.model";
 
 export const getServerInfo = async () => {
   try {

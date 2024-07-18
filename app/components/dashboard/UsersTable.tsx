@@ -3,12 +3,14 @@ import { useUsers } from '@/app/contexts/UsersContext';
 import { RoleEnum } from '@/app/models/role.model';
 import { User } from '@/app/models/user.model';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Frown, ListFilter, Plus, Search } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { FormEventHandler, useEffect, useState } from 'react';
 import UserRow from './UserRow';
 import UserRowSkeleton from './UserRowSkeleton';
@@ -16,7 +18,7 @@ import AddUserDialog from './dialogs/AddUserDialog';
 
 const UsersTable = () => {
 
-  const { users, loading } = useUsers();
+  const { users, loading, currentPage, setCurrentPage } = useUsers();
   const [ searchValue, setSearchValue ] = useState<string>('');
   const [ currentUsers, setCurrentUsers ] = useState<User[]>(users);
 
@@ -120,6 +122,32 @@ const UsersTable = () => {
             </div>
           )}
         </CardContent>
+        {!loading &&
+        <CardFooter>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href={currentPage - 1 > 0 ? `/dashboard/users?page=${currentPage - 1}` : '#'} />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href='#' isActive>{currentPage}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href={`/dashboard/users?page=${currentPage + 1}`}>{currentPage + 1}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href={`/dashboard/users?page=${currentPage + 2}`}>{currentPage + 2}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href='#' />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </CardFooter>
+        }
       </Card>
     </div>
   )
