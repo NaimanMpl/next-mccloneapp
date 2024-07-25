@@ -2,7 +2,10 @@ import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter } from "next/font/google";
+import { Provider } from "react-redux";
+import { store } from "./api/redux/store";
 import NextAuthProvider from "./contexts/NextAuthProvider";
+import { ReduxProvider } from "./contexts/ReduxProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,7 +29,9 @@ export default function RootLayout({
           enableSystem
         >
           <NextAuthProvider>
-            {children}
+            <ReduxProvider>
+              {children}
+            </ReduxProvider>
           </NextAuthProvider>
         </ThemeProvider>
         <Toaster />

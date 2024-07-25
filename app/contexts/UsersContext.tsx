@@ -27,7 +27,7 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const { users, total, nextPage }= await getUsers(currentPage);
+      const { users, total, nextPage } = await getUsers(currentPage);
       setUsers(users);
       setTotalUsers(total);
       setNextPage(nextPage);

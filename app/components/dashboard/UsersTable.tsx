@@ -133,10 +133,10 @@ const UsersTable = () => {
                 <PaginationLink href='#' isActive>{currentPage}</PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href={`/dashboard/users?page=${currentPage + 1}`}>{currentPage + 1}</PaginationLink>
+                <PaginationLink className='cursor-pointer' onClickCapture={() => setCurrentPage(currentPage => currentPage + 1)}>{currentPage + 1}</PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href={`/dashboard/users?page=${currentPage + 2}`}>{currentPage + 2}</PaginationLink>
+                <PaginationLink className='cursor-pointer' onClickCapture={() => setCurrentPage(currentPage => currentPage + 2)}>{currentPage + 2}</PaginationLink>
               </PaginationItem>
               <PaginationItem>
                 <PaginationEllipsis />

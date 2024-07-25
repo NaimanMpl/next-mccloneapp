@@ -1,4 +1,5 @@
 'use client';
+import { useGetServerQuery } from '@/app/api/slice';
 import { useServerInfo } from '@/app/hooks/useServerInfo';
 import { ServerInfo } from '@/app/models/serverinfo.model';
 import { getServerInfo } from '@/app/services/serverservice';
@@ -100,8 +101,10 @@ const chartConfig = {
 const DashboardContent = () => {
 
   const { data: session } = useSession();
-  const { serverInfo, loading } = useServerInfo();
+  const { data: serverInfo } = useGetServerQuery();
   const [ timeRange, setTimeRange ] = useState('90d');
+
+  console.log(serverInfo);
 
   const filteredData = chartData.filter((item) => {
     const date = new Date(item.date)
@@ -118,7 +121,7 @@ const DashboardContent = () => {
 
   return (
     <>
-      {(!session || loading) &&
+      {(!session || !serverInfo) &&
       <>
         <Card className='mt-6 h-[70vh]'>
           <CardHeader>
@@ -146,7 +149,7 @@ const DashboardContent = () => {
         </Card>
       </>
       }
-      {session && !loading &&
+      {session && serverInfo &&
         <Card className='mt-6'>
           <>
             <CardHeader>
@@ -167,7 +170,7 @@ const DashboardContent = () => {
                         <Activity className='w-4 h-4' />
                       </CardHeader>
                       <CardContent>
-                        <div className='text-2xl font-bold'>{serverInfo?.totalPlayers}</div>
+                        <div className='text-2xl font-bold'>{serverInfo.totalPlayers}</div>
                         <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
                       </CardContent>
                     </Card>
@@ -338,7 +341,7 @@ const DashboardContent = () => {
                       </CardHeader>
                       <CardContent>
                         <div className='flex items-center gap-2'>
-                          <div className='text-xl font-bold'>En ligne</div>
+                          <div className='text-xl font-bold'>{serverInfo.status}</div>
                           <Circle fill='green' className='w-2 h-2 text-transparent' />
                         </div>
                         <p className='text-xs text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
