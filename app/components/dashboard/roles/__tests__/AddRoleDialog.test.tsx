@@ -1,7 +1,7 @@
-import mockAxios from "@/__mocks__/axios";
 import { RolesProvider } from "@/app/contexts/RolesContext";
 import { Dialog } from "@/components/ui/dialog";
 import { Toaster } from "@/components/ui/toaster";
+import mockAxios from "@/testing/__mocks__/axios";
 import { render, screen, waitFor } from "@testing-library/react";
 import user from '@testing-library/user-event';
 import AddRoleDialog from "../AddRoleDialog";

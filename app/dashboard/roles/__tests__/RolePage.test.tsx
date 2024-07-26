@@ -1,7 +1,7 @@
-import mockAxios from "@/__mocks__/axios";
 import RolesGrid from "@/app/components/dashboard/roles/RolesGrid";
 import { RolesProvider } from "@/app/contexts/RolesContext";
 import { RoleData } from "@/app/models/role.model";
+import mockAxios from "@/testing/__mocks__/axios";
 import { render, screen, waitFor } from "@testing-library/react";
 
 jest.mock('axios');

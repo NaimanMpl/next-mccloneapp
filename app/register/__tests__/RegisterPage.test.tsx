@@ -1,4 +1,4 @@
-import mockAxios from "@/__mocks__/axios";
+import mockAxios from "@/testing/__mocks__/axios";
 import { render, screen, waitFor } from "@testing-library/react";
 import user from '@testing-library/user-event';
 import { isEmailAvailable, isUsernameAvailable } from '../../services/authservice';

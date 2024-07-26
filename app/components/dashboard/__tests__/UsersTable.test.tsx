@@ -1,6 +1,6 @@
-import { USERS_MOCK } from "@/__mocks__/users";
 import { UsersProvider } from "@/app/contexts/UsersContext";
 import { RoleEnum } from "@/app/models/role.model";
+import { USERS_MOCK } from "@/testing/__mocks__/users";
 import { render, screen, waitFor } from "@testing-library/react";
 import user from '@testing-library/user-event';
 import mockAxios from 'jest-mock-axios';

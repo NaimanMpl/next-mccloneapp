@@ -1,8 +1,8 @@
-import mockAxios from "@/__mocks__/axios";
-import { USERS_MOCK } from "@/__mocks__/users";
 import { UsersProvider } from "@/app/contexts/UsersContext";
 import { Dialog } from "@/components/ui/dialog";
 import { Toaster } from "@/components/ui/toaster";
+import mockAxios from "@/testing/__mocks__/axios";
+import { USERS_MOCK } from "@/testing/__mocks__/users";
 import { render, screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import { addUser, getUsers } from "../../../../services/userservice";

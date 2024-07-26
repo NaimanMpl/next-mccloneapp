@@ -21,3 +21,21 @@ export async function GET() {
     return new Response(JSON.stringify({message: "Le serveur a rencontré un problème."}), { status: 500 });
   }
 }
+
+export async function PATCH(request: Request) {
+  try {
+    const serverInfo: ServerInfo = await request.json();
+    const updatedServerInfo = await prisma.serverInfo.update({
+      where: {
+        id: serverInfo.id,
+      },
+      data: {
+        onlinePlayers: serverInfo.onlinePlayers,
+        status: serverInfo.status
+      }
+    });
+    return new Response(JSON.stringify(updatedServerInfo), { status: 200 });
+  } catch (e) {
+    return new Response(JSON.stringify({message: "Le serveur a rencontré un problème."}), { status: 500 });
+  }
+}

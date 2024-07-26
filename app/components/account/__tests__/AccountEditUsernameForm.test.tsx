@@ -1,7 +1,7 @@
-import mockAxios, { SESSION_MOCK } from "@/__mocks__/axios";
 import NextAuthProvider from "@/app/contexts/NextAuthProvider";
 import { UserPayload } from "@/app/models/user.model";
 import { Toaster } from "@/components/ui/toaster";
+import mockAxios, { SESSION_MOCK } from "@/testing/__mocks__/axios";
 import { render, screen, waitFor } from "@testing-library/react";
 import user from '@testing-library/user-event';
 import { useSession } from "next-auth/react";

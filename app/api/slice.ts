@@ -9,13 +9,6 @@ export const minecraftApi = createApi({
   endpoints: (builder) => ({
     getServer: builder.query<ServerInfo, void>({
       query: () => '/server/',
-      transformErrorResponse: (): ServerInfo => ({
-        id: 1,
-        ip: 'Erreur',
-        onlinePlayers: 0,
-        status: 'OFFLINE',
-        totalPlayers: 0,
-      }),
       providesTags: ['ServerInfo']
     }),
   })
