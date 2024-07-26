@@ -9,8 +9,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from '@/components/ui/input';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Frown, ListFilter, Plus, Search } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
+import { ListFilter, Plus, Search } from 'lucide-react';
 import { FormEventHandler, useEffect, useState } from 'react';
 import UserRow from './UserRow';
 import UserRowSkeleton from './UserRowSkeleton';
