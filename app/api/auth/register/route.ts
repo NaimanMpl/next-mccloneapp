@@ -11,24 +11,34 @@ export async function POST(request: Request) {
   if (error) {
     return error;
   }
-  
+
   try {
-    
     const userController = new UserController();
     const userData = await userController.createUser(user);
 
-    const payload = { id: userData.id, username: userData.name, email: userData.email };
+    const payload = {
+      id: userData.id,
+      username: userData.name,
+      email: userData.email,
+    };
 
-
-    return new Response(JSON.stringify({ user: payload, message: 'Registered' }), { status: 200 });
-
+    return new Response(
+      JSON.stringify({ user: payload, message: 'Registered' }),
+      { status: 200 }
+    );
   } catch (e) {
     logger.error(e);
 
     if (e instanceof PrismaClientKnownRequestError) {
-      return new Response(JSON.stringify({ message: 'Une erreur est survenue.'}), { status: 400 });
+      return new Response(
+        JSON.stringify({ message: 'Une erreur est survenue.' }),
+        { status: 400 }
+      );
     }
 
-    return new Response(JSON.stringify({ message: 'Une erreur est survenue.'}), { status: 500 });
+    return new Response(
+      JSON.stringify({ message: 'Une erreur est survenue.' }),
+      { status: 500 }
+    );
   }
 }

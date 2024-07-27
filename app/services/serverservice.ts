@@ -1,5 +1,5 @@
-import axios from "axios";
-import { ServerInfo } from "../models/serverinfo.model";
+import axios from 'axios';
+import { ServerInfo } from '../models/serverinfo.model';
 
 export const getServerInfo = async () => {
   try {
@@ -8,4 +8,4 @@ export const getServerInfo = async () => {
   } catch (e) {
     return null;
   }
-}
+};

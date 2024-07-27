@@ -1,24 +1,22 @@
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { z } from "zod";
-import { loginUser } from "../services/authservice";
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { z } from 'zod';
+import { loginUser } from '../services/authservice';
 
 export interface LoginFormData {
-  email: string,
-  password: string
+  email: string;
+  password: string;
 }
 
 export const useLoginForm = () => {
-  
   const formSchema = z.object({
     email: z.string(),
-    password: z.string()
+    password: z.string(),
   });
-  const [ error, setError ] = useState('');
-  const [ loading, setLoading ] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-
     try {
       setLoading(true);
       await loginUser(values as LoginFormData);
@@ -32,8 +30,7 @@ export const useLoginForm = () => {
       }
       setLoading(false);
     }
-  }
+  };
 
-  return { formSchema, onSubmit, loading, error }
-
-}
+  return { formSchema, onSubmit, loading, error };
+};

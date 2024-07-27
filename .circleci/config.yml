@@ -1,8 +1,11 @@
 version: 2.1
+executors:
+  docker-node:
+    docker:
+      - image: cimg/node:20.11
 jobs:
   test:
-    docker:
-      - image: cimg/node:20.14.0
+    executor: docker-node
     steps:
       - checkout
       - run:
@@ -11,9 +14,23 @@ jobs:
       - run:
           name: Run tests
           command: npm test
+  lint:
+    executor: docker-node
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Check lint
+          command: npm run lint
+    
 
 workflows:
   version: 2
+  lint:
+    jobs:
+      - lint
   test:
     jobs:
       - test

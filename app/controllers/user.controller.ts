@@ -1,15 +1,12 @@
-import { RegisterFormData } from "@/app/hooks/useRegisterForm";
-import logger from "@/app/utils/logger";
+import { RegisterFormData } from '@/app/hooks/useRegisterForm';
+import logger from '@/app/utils/logger';
 import bcrypt from 'bcrypt';
-import prisma from "../lib/db";
-import { AddUserFormData, EditUserFormData } from "../models/formsdata.model";
-import { RoleEnum, RolesDict } from "../models/role.model";
+import prisma from '../lib/db';
+import { AddUserFormData, EditUserFormData } from '../models/formsdata.model';
+import { RoleEnum, RolesDict } from '../models/role.model';
 export default class UserController {
-  
   public createUser = async (userFormData: RegisterFormData) => {
-
     try {
-      
       const salt = await bcrypt.genSalt();
       const hashedPassword = await bcrypt.hash(userFormData.password, salt);
 
@@ -20,55 +17,55 @@ export default class UserController {
           password: hashedPassword,
           skin: {
             create: {
-                link: process.env.DEFAULT_SKIN_URL!,
-            }
+              link: process.env.DEFAULT_SKIN_URL!,
+            },
           },
           roleId: 1,
-          profileIconUrl: process.env.DEFAULT_PP_URL!
-        }
+          profileIconUrl: process.env.DEFAULT_PP_URL!,
+        },
       });
 
-      logger.trace(`User ${userFormData.username} (${userFormData.email}) has been created successfully`);
+      logger.trace(
+        `User ${userFormData.username} (${userFormData.email}) has been created successfully`
+      );
       return user;
-    } catch(e) {
+    } catch (e) {
       throw e;
     } finally {
       await prisma.$disconnect();
     }
-  }
+  };
 
   public getUsers = async () => {
-
     const users = await prisma.users.findMany();
-    
+
     console.log(users);
-  }
+  };
 
   public updateUser = async (id: string, formData: EditUserFormData) => {
-
     const { email, name, userRole, admin } = formData;
 
     try {
       const user = await prisma.users.update({
         where: {
-          id: id
+          id: id,
         },
         data: {
           admin: admin,
           email: email,
           name: name,
-          roleId: RolesDict[userRole as RoleEnum]
+          roleId: RolesDict[userRole as RoleEnum],
         },
         include: {
           role: true,
-          skin: true
-        }
+          skin: true,
+        },
       });
       return user;
     } catch (err) {
       throw err;
     }
-  }
+  };
 
   public addUser = async (formData: AddUserFormData) => {
     try {
@@ -84,15 +81,15 @@ export default class UserController {
           roleId: RolesDict[formData.role],
           skin: {
             create: {
-                link: process.env.DEFAULT_SKIN_URL!,
-            }
+              link: process.env.DEFAULT_SKIN_URL!,
+            },
           },
-          profileIconUrl: process.env.DEFAULT_PP_URL!
+          profileIconUrl: process.env.DEFAULT_PP_URL!,
         },
         include: {
           role: true,
-          skin: true
-        }
+          skin: true,
+        },
       });
 
       return user;
@@ -100,6 +97,5 @@ export default class UserController {
       logger.error(e);
       throw e;
     }
-  }
-
+  };
 }

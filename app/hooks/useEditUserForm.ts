@@ -8,19 +8,23 @@ import { RoleEnum } from '../models/role.model';
 import { updateUser } from '../services/userservice';
 
 interface EditUserFormProps {
-  userId: string,
+  userId: string;
   defaultValues: {
-    email: string,
-    name: string,
-    userRole: string,
-    admin: boolean
-  }
+    email: string;
+    name: string;
+    userRole: string;
+    admin: boolean;
+  };
 }
 
-export const useEditUserForm = ({ userId, defaultValues }: EditUserFormProps) => {
-  
-  const [ isAdmin, setIsAdmin ] = useState(defaultValues.admin);
-  const [ currentRole, setCurrentRole ] = useState<RoleEnum>(defaultValues.userRole as RoleEnum);
+export const useEditUserForm = ({
+  userId,
+  defaultValues,
+}: EditUserFormProps) => {
+  const [isAdmin, setIsAdmin] = useState(defaultValues.admin);
+  const [currentRole, setCurrentRole] = useState<RoleEnum>(
+    defaultValues.userRole as RoleEnum
+  );
   const { setUsers } = useUsers();
 
   const FormSchema = z.object({
@@ -32,27 +36,49 @@ export const useEditUserForm = ({ userId, defaultValues }: EditUserFormProps) =>
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: defaultValues
+    defaultValues: defaultValues,
   });
 
-  
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     const { admin, email, name, userRole } = values;
-  
+
     setLoading(true);
     try {
-      const updatedUser = await updateUser(userId, email, name, currentRole, admin);
+      const updatedUser = await updateUser(
+        userId,
+        email,
+        name,
+        currentRole,
+        admin
+      );
 
-      setUsers(users => users.map((user) => { return user.id === userId ? updatedUser : user }));
-      toast({ title: 'Succès', description: `L'utilisateur ${updatedUser.name} a été mis à jour`, variant: 'default' });
+      setUsers((users) =>
+        users.map((user) => {
+          return user.id === userId ? updatedUser : user;
+        })
+      );
+      toast({
+        title: 'Succès',
+        description: `L'utilisateur ${updatedUser.name} a été mis à jour`,
+        variant: 'default',
+      });
     } catch (e) {
       const message = (e as Error).message;
       toast({ title: 'Uh-oh', description: message, variant: 'destructive' });
     }
     setLoading(false);
-  }
+  };
 
-  return { form, isAdmin, currentRole, setCurrentRole, setIsAdmin, FormSchema, loading, onSubmit };
-}
+  return {
+    form,
+    isAdmin,
+    currentRole,
+    setCurrentRole,
+    setIsAdmin,
+    FormSchema,
+    loading,
+    onSubmit,
+  };
+};

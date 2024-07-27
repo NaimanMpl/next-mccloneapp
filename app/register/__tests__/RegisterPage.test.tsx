@@ -1,18 +1,18 @@
-import mockAxios from "@/testing/__mocks__/axios";
-import { render, screen, waitFor } from "@testing-library/react";
+import mockAxios from '@/testing/__mocks__/axios';
+import { render, screen, waitFor } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { isEmailAvailable, isUsernameAvailable } from '../../services/authservice';
-import RegisterPage from "../page";
+import {
+  isEmailAvailable,
+  isUsernameAvailable,
+} from '../../services/authservice';
+import RegisterPage from '../page';
 
 jest.mock('axios');
 jest.mock('../../services/authservice');
 
 describe('<RegisterPage />', () => {
-
   it('should render successfully', () => {
-    const registerPage = render(
-      <RegisterPage />
-    );
+    const registerPage = render(<RegisterPage />);
 
     expect(registerPage).toMatchSnapshot();
   });
@@ -50,5 +50,4 @@ describe('<RegisterPage />', () => {
 
   });
   */
-
 });

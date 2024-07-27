@@ -1,6 +1,12 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,20 +18,26 @@ import FormWrapper from '../components/forms/FormWrapper';
 import { useLoginForm } from '../hooks/useLoginForm';
 
 const LoginForm = () => {
-
   const { formSchema, onSubmit, loading, error } = useLoginForm();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: '',
-      password: ''
-    }
-  })
-  
+      password: '',
+    },
+  });
+
   return (
-    <FormWrapper title='Se connecter' description='Entrez votre adresse mail et votre mot de passe pour accéder à votre compte' error={error}>
+    <FormWrapper
+      title='Se connecter'
+      description='Entrez votre adresse mail et votre mot de passe pour accéder à votre compte'
+      error={error}
+    >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className='flex flex-col gap-4'
+        >
           <FormField
             control={form.control}
             name='email'
@@ -33,7 +45,7 @@ const LoginForm = () => {
               <FormItem className='flex flex-col'>
                 <Label htmlFor='email'>Adresse mail</Label>
                 <FormControl>
-                  <Input placeholder="john.doe@domain.com" {...field} />
+                  <Input placeholder='john.doe@domain.com' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -46,7 +58,11 @@ const LoginForm = () => {
               <FormItem className='flex flex-col'>
                 <Label htmlFor='password'>Mot de passe</Label>
                 <FormControl>
-                  <Input type='password' placeholder="•••••••••••••" {...field} />
+                  <Input
+                    type='password'
+                    placeholder='•••••••••••••'
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -58,7 +74,7 @@ const LoginForm = () => {
               Connexion
             </Button>
             <div className='mt-4 text-center text-sm'>
-              Pas encore de compte ? {" "}
+              Pas encore de compte ?{' '}
               <Link href='/register' className='underline'>
                 S'inscrire
               </Link>
@@ -68,6 +84,6 @@ const LoginForm = () => {
       </Form>
     </FormWrapper>
   );
-}
+};
 
 export default LoginForm;
