@@ -6,7 +6,7 @@ import { SESSION_MOCK } from './testing/__mocks__/axios';
 
 jest.mock('next-auth/react');
 jest.mock('next/navigation', () => ({
-  useSearchParams: jest.fn()
+  useSearchParams: jest.fn(),
 }));
 
 beforeAll(() => {
@@ -14,7 +14,10 @@ beforeAll(() => {
     get: (key: string) => {
       if (key === 'page') return '1';
       return null;
-    }
+    },
   });
-  (useSession as jest.Mock).mockReturnValue({ data: SESSION_MOCK, update: jest.fn() });
+  (useSession as jest.Mock).mockReturnValue({
+    data: SESSION_MOCK,
+    update: jest.fn(),
+  });
 });

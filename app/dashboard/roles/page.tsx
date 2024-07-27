@@ -1,12 +1,19 @@
-import DashboardPageWrapper from '@/app/components/dashboard/DashboardPageWrapper'
-import DashboardRolesContainer from '@/app/components/dashboard/roles/DashboardGroupsContainer'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
-import React from 'react'
+import DashboardPageWrapper from '@/app/components/dashboard/DashboardPageWrapper';
+import DashboardRolesContainer from '@/app/components/dashboard/roles/DashboardGroupsContainer';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import React from 'react';
 
 const DashboardGroupPage = () => {
   return (
     <DashboardPageWrapper>
-      <div className="px-20">
+      <div className='px-20'>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -21,7 +28,7 @@ const DashboardGroupPage = () => {
         <DashboardRolesContainer />
       </div>
     </DashboardPageWrapper>
-  )
-}
+  );
+};
 
-export default DashboardGroupPage
+export default DashboardGroupPage;

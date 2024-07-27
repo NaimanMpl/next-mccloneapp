@@ -1,12 +1,19 @@
 import DashboardPageWrapper from '@/app/components/dashboard/DashboardPageWrapper';
 import UsersTableContainer from '@/app/components/dashboard/UsersTableContainer';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import React from 'react';
 
 const UsersPage = () => {
   return (
     <DashboardPageWrapper>
-      <div className="px-20">
+      <div className='px-20'>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -21,7 +28,7 @@ const UsersPage = () => {
         <UsersTableContainer />
       </div>
     </DashboardPageWrapper>
-  )
-}
+  );
+};
 
-export default UsersPage
+export default UsersPage;

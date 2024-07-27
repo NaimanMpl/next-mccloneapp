@@ -1,7 +1,3 @@
 describe('<DescribeContent />', () => {
-  
-  it('should render server info', () => {
-    
-  });
-
+  it('should render server info', () => {});
 });

@@ -13,9 +13,9 @@ const authOptions: NextAuthOptions = {
         email: {
           label: 'Email',
           type: 'email',
-          placeholder: 'johndoe@domain.com'
+          placeholder: 'johndoe@domain.com',
         },
-        password: { label: 'password', type: 'password'}
+        password: { label: 'password', type: 'password' },
       },
 
       async authorize(credentials, req) {
@@ -26,49 +26,48 @@ const authOptions: NextAuthOptions = {
         try {
           const user = await prisma.users.findFirst({
             where: {
-              email: credentials.email
+              email: credentials.email,
             },
             include: {
               skin: true,
-              role: true
-            }
+              role: true,
+            },
           });
-  
+
           if (!user) {
             return null;
           }
 
-          const validPassword = await bcrypt.compare(credentials.password, user.password);
+          const validPassword = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
           if (!validPassword) {
             return null;
           }
-          
+
           const payload = await UserPayloadFactory(user as User);
           return payload;
-
         } catch (e) {
           return null;
         }
-
       },
-
-    })
+    }),
   ],
   callbacks: {
-
     async jwt({ token, user, trigger, session }) {
       if (trigger === 'update') {
-        return { ...token, ...session.user }
+        return { ...token, ...session.user };
       }
 
-      return { ...token, ...user};
+      return { ...token, ...user };
     },
 
     async session({ session, token, user }) {
       session.user = token;
       return session;
     },
-  }
-}
+  },
+};
 
 export default authOptions;

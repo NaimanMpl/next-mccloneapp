@@ -85,7 +85,7 @@ exports[`<LoginForm /> should render successfully 1`] = `
                 <div
                   class="mt-4 text-center text-sm"
                 >
-                  Pas encore de compte ? 
+                  Pas encore de compte ?
                    
                   <a
                     class="underline"
@@ -182,7 +182,7 @@ exports[`<LoginForm /> should render successfully 1`] = `
               <div
                 class="mt-4 text-center text-sm"
               >
-                Pas encore de compte ? 
+                Pas encore de compte ?
                  
                 <a
                   class="underline"

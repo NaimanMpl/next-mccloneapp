@@ -1,45 +1,45 @@
-import { RoleEnum } from "./role.model"
+import { RoleEnum } from './role.model';
 
 export interface EditUserFormData {
-  email?: string,
-  name?: string,
-  userRole?: string,
-  admin?: boolean
+  email?: string;
+  name?: string;
+  userRole?: string;
+  admin?: boolean;
 }
 
 export interface AddUserFormData {
-  email: string,
-  username: string,
-  role: RoleEnum,
-  password: string,
-  confirmPassword: string,
-  admin: boolean
+  email: string;
+  username: string;
+  role: RoleEnum;
+  password: string;
+  confirmPassword: string;
+  admin: boolean;
 }
 
 export interface AddPermissionFormData {
-  name: string,
+  name: string;
   author: {
-    id: string
-  },
+    id: string;
+  };
   role: {
-    id: number
-  }
+    id: number;
+  };
 }
 
 export interface AddRoleFormData {
-  name: string
+  name: string;
 }
 
 export interface EditUsernameFormData {
-  username: string
+  username: string;
 }
 
 export interface EditEmailFormData {
-  email: string
+  email: string;
 }
 
 export interface EditPasswordFormData {
-  oldPassword: string,
-  newPassword: string,
-  confirmNewPassword: string
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
 }
