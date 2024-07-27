@@ -6,7 +6,7 @@ exports[`<RegisterPage /> should render successfully 1`] = `
   "baseElement": <body>
     <div>
       <div
-        class="h-screen flex items-center justify-center"
+        class="flex h-screen items-center justify-center"
       >
         <div
           class="rounded-lg border border-border bg-card text-card-foreground shadow-sm mx-auto max-w-md"
@@ -124,7 +124,7 @@ exports[`<RegisterPage /> should render successfully 1`] = `
                 <div
                   class="mt-4 text-center text-sm"
                 >
-                  Déjà un compte ? 
+                  Déjà un compte ?
                    
                   <a
                     class="underline"
@@ -142,7 +142,7 @@ exports[`<RegisterPage /> should render successfully 1`] = `
   </body>,
   "container": <div>
     <div
-      class="h-screen flex items-center justify-center"
+      class="flex h-screen items-center justify-center"
     >
       <div
         class="rounded-lg border border-border bg-card text-card-foreground shadow-sm mx-auto max-w-md"
@@ -260,7 +260,7 @@ exports[`<RegisterPage /> should render successfully 1`] = `
               <div
                 class="mt-4 text-center text-sm"
               >
-                Déjà un compte ? 
+                Déjà un compte ?
                  
                 <a
                   class="underline"

@@ -11,16 +11,12 @@ export const useEditPasswordForm = () => {
   const FormSchema = z
     .object({
       oldPassword: z.string(),
-      newPassword: z
-        .string()
-        .min(8, {
-          message: 'Le mot de passe doit au moins contenir 8 caractères ',
-        }),
-      confirmNewPassword: z
-        .string()
-        .min(8, {
-          message: 'Le mot de passe doit au moins contenir 8 caractères ',
-        }),
+      newPassword: z.string().min(8, {
+        message: 'Le mot de passe doit au moins contenir 8 caractères ',
+      }),
+      confirmNewPassword: z.string().min(8, {
+        message: 'Le mot de passe doit au moins contenir 8 caractères ',
+      }),
     })
     .refine((data) => data.newPassword === data.confirmNewPassword, {
       message: 'Les mots de passes doivent correspondre.',

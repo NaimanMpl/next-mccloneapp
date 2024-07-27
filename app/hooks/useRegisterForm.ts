@@ -30,16 +30,12 @@ export const useRegisterForm = () => {
       email: z
         .string()
         .email({ message: 'Veuillez renseigner une adresse mail valide ' }),
-      password: z
-        .string()
-        .min(8, {
-          message: 'Le mot de passe doit au moins contenir 8 caractères ',
-        }),
-      confirmPassword: z
-        .string()
-        .min(8, {
-          message: 'Le mot de passe doit au moins contenir 8 caractères ',
-        }),
+      password: z.string().min(8, {
+        message: 'Le mot de passe doit au moins contenir 8 caractères ',
+      }),
+      confirmPassword: z.string().min(8, {
+        message: 'Le mot de passe doit au moins contenir 8 caractères ',
+      }),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: 'Les mots de passes doivent correspondre.',

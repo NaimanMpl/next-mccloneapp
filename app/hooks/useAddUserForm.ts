@@ -26,11 +26,9 @@ export const useAddUserForm = () => {
       email: z
         .string()
         .email({ message: 'Veuillez renseigner une adresse mail valide' }),
-      password: z
-        .string()
-        .min(2, {
-          message: 'Le mot de passe doit au moins contenir 2 caractères',
-        }),
+      password: z.string().min(2, {
+        message: 'Le mot de passe doit au moins contenir 2 caractères',
+      }),
       confirmPassword: z.string(),
       role: z.enum([RoleEnum.Administrateur, RoleEnum.Joueur]),
       admin: z.boolean(),
