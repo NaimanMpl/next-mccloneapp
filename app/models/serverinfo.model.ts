@@ -2,8 +2,9 @@ export type ServerStatus = 'ONLINE' | 'OFFLINE' | 'MAINTENANCE';
 
 export interface ServerInfo {
   id: number;
-  status: ServerStatus;
   ip: string;
+  status: ServerStatus;
   onlinePlayers: number;
-  totalPlayers: number;
+  messagesCount: number;
+  lastUpdate: string;
 }
