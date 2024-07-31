@@ -56,8 +56,8 @@ model ChatMessage {
   id Int @id @default(autoincrement())
   serverId Int
   server Server @relation(fields: [serverId], references: [id])
-  userId String
-  user Users @relation(fields: [userId], references: [id])
+  authorId String
+  author Users @relation(fields: [authorId], references: [id])
   message String
   createdAt DateTime
 }

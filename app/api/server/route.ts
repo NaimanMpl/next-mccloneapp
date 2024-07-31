@@ -1,55 +1,43 @@
 import prisma from '@/app/lib/db';
-import { ServerInfo } from '@/app/models/serverinfo.model';
-
-export async function GET() {
-  try {
-    const data = await prisma.serverInfo.findUnique({
-      where: {
-        id: 1,
-      },
-    });
-
-    if (data == null) {
-      return new Response(
-        JSON.stringify({ message: "Le serveur n'existe pas." }),
-        { status: 404 }
-      );
-    }
-
-    const totalUsers = await prisma.users.count();
-    const serverInfo: ServerInfo = { ...data, totalPlayers: totalUsers };
-
-    return new Response(JSON.stringify(serverInfo), { status: 200 });
-  } catch (e) {
-    return new Response(
-      JSON.stringify({ message: 'Le serveur a rencontré un problème.' }),
-      { status: 500 }
-    );
-  }
-}
-
-export async function PATCH(request: Request) {
-  try {
-    const serverInfo: ServerInfo = await request.json();
-    const updatedServerInfo = await prisma.serverInfo.update({
-      where: {
-        id: serverInfo.id,
-      },
-      data: {
-        onlinePlayers: serverInfo.onlinePlayers,
-        status: serverInfo.status,
-      },
-    });
-    return new Response(JSON.stringify(updatedServerInfo), { status: 200 });
-  } catch (e) {
-    return new Response(
-      JSON.stringify({ message: 'Le serveur a rencontré un problème.' }),
-      { status: 500 }
-    );
-  }
-}
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import crypto from 'crypto';
 
 export async function POST(request: Request) {
-  const ip = (request.headers.get('x-forwarded-for') ?? '127.0.0.1').split(',')[0]
-  return new Response(JSON.stringify({}), { status: 200 });
+  const forwardedFor = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
+  const ip = forwardedFor.split(',')[0].trim();
+  const ipv4MappedRegex = /^::ffff:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/;
+  const match = ipv4MappedRegex.exec(ip);
+  const finalIp = match ? match[1] : ip;
+
+  try {
+    const server = await prisma.server.create({
+      data: {
+        ip: finalIp,
+        onlinePlayers: 0,
+        status: 'ONLINE',
+        authToken: {
+          create: {
+            token: crypto.randomBytes(48).toString('hex'),
+          },
+        },
+      },
+      include: {
+        chatMessages: true,
+      },
+    });
+
+    return new Response(JSON.stringify(server), { status: 200 });
+  } catch (e) {
+    if (e instanceof PrismaClientKnownRequestError) {
+      if (e.code === 'P2002')
+        return new Response(
+          JSON.stringify({ message: 'Le serveur existe déjà.' }),
+          { status: 400 }
+        );
+    }
+    return new Response(
+      JSON.stringify({ message: 'Un problème est survenu.' }),
+      { status: 500 }
+    );
+  }
 }
