@@ -48,3 +48,8 @@ export async function PATCH(request: Request) {
     );
   }
 }
+
+export async function POST(request: Request) {
+  const ip = (request.headers.get('x-forwarded-for') ?? '127.0.0.1').split(',')[0]
+  return new Response(JSON.stringify({}), { status: 200 });
+}

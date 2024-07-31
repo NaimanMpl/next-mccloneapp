@@ -27,6 +27,7 @@ model Users {
   permissions Permission[]
   profileIconUrl String?
   submissions Submission[]
+  chatMessages ChatMessage[]
 }
 
 model Skin {
@@ -42,11 +43,31 @@ enum ServerStatus {
   MAINTENANCE
 }
 
-model ServerInfo {
-  id            Int          @id @default(autoincrement())
-  status        ServerStatus
-  ip            String
+model Server {
+  id Int @id @default(autoincrement())
+  ip String @unique
+  status ServerStatus
   onlinePlayers Int
+  authToken AuthToken?
+  chatMessages ChatMessage[]
+}
+
+model ChatMessage {
+  id Int @id @default(autoincrement())
+  serverId Int
+  server Server @relation(fields: [serverId], references: [id])
+  userId String
+  user Users @relation(fields: [userId], references: [id])
+  message String
+  createdAt DateTime
+}
+
+model AuthToken {
+  id Int @id @default(autoincrement())
+  serverId Int @unique
+  server Server @relation(fields: [serverId], references: [id]) 
+  token String @unique
+  createdAt DateTime @default(now())
 }
 
 model Role {
