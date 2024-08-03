@@ -1,17 +1,12 @@
 'use client';
-import { useGetServerQuery } from '@/app/api/slice';
 import { useServerInfo } from '@/app/contexts/ServerInfoProvider';
-import { ServerInfo } from '@/app/models/serverinfo.model';
-import { getServerInfo } from '@/app/services/serverservice';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { error } from 'console';
-import { Activity, Circle, Eye, Globe, MessageCircle, PartyPopper, Users } from 'lucide-react';
+import { Activity, Circle, Eye, Globe, MessageCircle } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
 const chartData = [
@@ -163,8 +158,24 @@ const ServerDashboard = () => {
                       </CardHeader>
                       <CardContent>
                         <div className='flex items-center gap-2'>
-                          <div className='text-xl font-bold'>{serverInfo.status}</div>
-                          <Circle fill='green' className='w-2 h-2 text-transparent' />
+                          {serverInfo.status === 'ONLINE' && 
+                            <>
+                              <div className='text-xl font-bold'>En ligne</div>
+                              <Circle fill='green' className='w-2 h-2 text-transparent' />
+                            </>
+                          }
+                          {serverInfo.status === 'OFFLINE' && 
+                            <>
+                              <div className='text-xl font-bold'>Hors ligne</div>
+                              <Circle fill='red' className='w-2 h-2 text-transparent' />
+                            </>
+                          }
+                          {serverInfo.status === 'MAINTENANCE' && 
+                            <>
+                              <div className='text-xl font-bold'>Maintenance</div>
+                              <Circle fill='orange' className='w-2 h-2 text-transparent' />
+                            </>
+                          }
                         </div>
                         <p className='text-xs text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
                       </CardContent>

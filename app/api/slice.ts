@@ -1,15 +1,19 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ServerInfo } from '../models/serverinfo.model';
+import { Server } from '../models/server.model';
 
 export const minecraftApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.BASE_API_URL }),
-  tagTypes: ['ServerInfo'],
+  tagTypes: ['Server', 'Servers'],
   endpoints: (builder) => ({
-    getServer: builder.query<ServerInfo, void>({
-      query: () => '/server/',
-      providesTags: ['ServerInfo'],
+    getServer: builder.query<Server, void>({
+      query: (id) => `/api/server/${id}`,
+      providesTags: ['Server'],
+    }),
+    getServers: builder.query<Server[], void>({
+      query: () => '/api/servers/',
+      providesTags: ['Servers'],
     }),
   }),
 });
 
-export const { useGetServerQuery } = minecraftApi;
+export const { useGetServerQuery, useGetServersQuery } = minecraftApi;

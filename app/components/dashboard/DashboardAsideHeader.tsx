@@ -1,9 +1,8 @@
 'use client';
 import { Tooltip, TooltipProvider } from '@/components/ui/tooltip';
 import { TooltipTrigger } from '@radix-ui/react-tooltip';
-import { Ban, Home, Shield, Users } from 'lucide-react';
+import { Ban, Home, Server, Shield, Users } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
 
 const DashboardAsideHeader = () => {
   return (
@@ -37,6 +36,15 @@ const DashboardAsideHeader = () => {
                 <Shield className='w-5 h-5' />
                 <span className='sr-only'>Roles</span>
               </Link> 
+            </TooltipTrigger>
+            <TooltipTrigger asChild>
+              <Link
+                href='/dashboard/servers'
+                className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
+              >
+                <Server className='w-5 h-5' />
+                <span className='sr-only'>Serveurs</span>
+              </Link>
             </TooltipTrigger>
             <TooltipTrigger asChild>
               <Link

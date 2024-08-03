@@ -1,6 +1,9 @@
 import prisma from '@/app/lib/db';
+import { UserPayload } from '@/app/models/user.model';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import crypto from 'crypto';
+import { getToken } from 'next-auth/jwt';
+import { NextRequest } from 'next/server';
 
 export async function POST(request: Request) {
   const forwardedFor = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
@@ -37,6 +40,47 @@ export async function POST(request: Request) {
     }
     return new Response(
       JSON.stringify({ message: 'Un problème est survenu.' }),
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: Request) {
+  const token = (await getToken({
+    req: request as NextRequest,
+    secret: process.env.NEXTAUTH_SECRET,
+  })) as unknown as UserPayload;
+
+  if (!token || !token.admin) {
+    return new Response(JSON.stringify({ message: 'Unauthorized' }), {
+      status: 403,
+    });
+  }
+
+  try {
+    const now = new Date();
+    const servers = await prisma.server.findMany({
+      include: {
+        authToken: true,
+      },
+    });
+    return new Response(
+      JSON.stringify(
+        servers.map((server) => ({
+          ...server,
+          token: server.authToken?.token,
+          authToken: undefined,
+          status:
+            (now.getTime() - new Date(server.lastUpdate).getTime()) / 1000 <= 60
+              ? 'ONLINE'
+              : 'OFFLINE',
+        }))
+      ),
+      { status: 200 }
+    );
+  } catch (e) {
+    return new Response(
+      JSON.stringify({ message: 'Le serveur a rencontré un problème.' }),
       { status: 500 }
     );
   }

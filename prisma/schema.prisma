@@ -50,6 +50,8 @@ model Server {
   onlinePlayers Int
   authToken AuthToken?
   chatMessages ChatMessage[]
+  lastUpdate DateTime @default(now())
+  onlineSince DateTime @default(now())
 }
 
 model ChatMessage {

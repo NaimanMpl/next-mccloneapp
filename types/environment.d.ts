@@ -8,6 +8,7 @@ declare global {
       AUTH_SERVER: string;
       API_ENDPOINT: string;
       NEXT_PUBLIC_WEBSOCKET_ENDPOINT: string;
+      NEXT_PUBLIC_MAIN_SERVER_ID: string;
     }
   }
 }

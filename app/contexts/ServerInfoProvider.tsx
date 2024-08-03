@@ -7,14 +7,13 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useGetServerQuery } from '../api/slice';
-import { ServerInfo } from '../models/serverinfo.model';
+import { Server } from '../models/server.model';
 import { getServerInfo } from '../services/serverservice';
 
 interface IServerInfoContext {
   loading: boolean;
-  serverInfo: ServerInfo | undefined;
-  setServerInfo: Dispatch<SetStateAction<ServerInfo | undefined>>;
+  serverInfo: Server | undefined;
+  setServerInfo: Dispatch<SetStateAction<Server | undefined>>;
 }
 
 const ServerInfoContext = createContext<IServerInfoContext | undefined>(
@@ -22,13 +21,13 @@ const ServerInfoContext = createContext<IServerInfoContext | undefined>(
 );
 
 export const ServerInfoProvider = ({ children }: { children: ReactNode }) => {
-  const [serverInfo, setServerInfo] = useState<ServerInfo>();
+  const [serverInfo, setServerInfo] = useState<Server>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const socket = new WebSocket(process.env.NEXT_PUBLIC_WEBSOCKET_ENDPOINT);
     socket.onmessage = (event) => {
-      const data: ServerInfo = JSON.parse(event.data);
+      const data: Server = JSON.parse(event.data);
       setServerInfo(data);
     };
   }, []);

@@ -1,16 +1,20 @@
 import axios from 'axios';
-import { ServerInfo } from '../models/serverinfo.model';
+import { Server } from '../models/server.model';
 
-export const getServerInfo = async (): Promise<ServerInfo> => {
+export const getServerInfo = async (): Promise<Server> => {
   try {
-    const { data } = await axios.get<ServerInfo>('/api/server/infos');
+    const { data } = await axios.get<Server>(
+      `/api/servers/${process.env.NEXT_PUBLIC_MAIN_SERVER_ID}`
+    );
     return data;
   } catch (e) {
     return {
       id: 1,
       ip: '0.0.0.0',
       lastUpdate: new Date().toString(),
-      messagesCount: 0,
+      onlineSince: new Date().toString(),
+      token: '',
+      chatMessages: [],
       onlinePlayers: 0,
       status: 'OFFLINE',
     };
