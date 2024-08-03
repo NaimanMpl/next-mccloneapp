@@ -78,7 +78,7 @@ const ServersTableContainer = () => {
             <TableBody>
               {isLoading && (
                 Array.from({ length: 10 }).map((item, index) => (
-                  <ServerRowSkeleton />
+                  <ServerRowSkeleton key={index} />
                 ))
               )}
               {data && data.map(server => (
