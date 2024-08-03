@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { AddServerFormData } from '../models/formsdata.model';
 import { Server } from '../models/server.model';
 
 export const minecraftApi = createApi({
@@ -13,7 +14,34 @@ export const minecraftApi = createApi({
       query: () => '/api/servers/',
       providesTags: ['Servers'],
     }),
+    createServer: builder.mutation<Server, AddServerFormData>({
+      query: ({ ip, port, primary }) => ({
+        url: '/api/servers/',
+        method: 'POST',
+        body: {
+          primary: primary,
+          ip: ip,
+          port: port,
+        },
+      }),
+      invalidatesTags: ['Servers'],
+    }),
+    deleteServer: builder.mutation<
+      Server,
+      Partial<Server> & Pick<Server, 'id'>
+    >({
+      query: ({ id }) => ({
+        url: `/api/servers/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Servers'],
+    }),
   }),
 });
 
-export const { useGetServerQuery, useGetServersQuery } = minecraftApi;
+export const {
+  useGetServerQuery,
+  useGetServersQuery,
+  useCreateServerMutation,
+  useDeleteServerMutation,
+} = minecraftApi;

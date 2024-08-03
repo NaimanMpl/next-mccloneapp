@@ -1,4 +1,5 @@
 import prisma from '@/app/lib/db';
+import { AddServerFormData } from '@/app/models/formsdata.model';
 import { UserPayload } from '@/app/models/user.model';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import crypto from 'crypto';
@@ -6,18 +7,40 @@ import { getToken } from 'next-auth/jwt';
 import { NextRequest } from 'next/server';
 
 export async function POST(request: Request) {
-  const forwardedFor = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
-  const ip = forwardedFor.split(',')[0].trim();
-  const ipv4MappedRegex = /^::ffff:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/;
-  const match = ipv4MappedRegex.exec(ip);
-  const finalIp = match ? match[1] : ip;
+  const data: AddServerFormData = await request.json();
+
+  const token = (await getToken({
+    req: request as NextRequest,
+    secret: process.env.NEXTAUTH_SECRET,
+  })) as unknown as UserPayload;
+
+  if (!token || !token.admin) {
+    return new Response(JSON.stringify({ message: 'Non autorisé.' }), {
+      status: 403,
+    });
+  }
 
   try {
+    const primaryServer = await prisma.server.findFirst({
+      where: {
+        primary: true,
+      },
+    });
+
+    if (primaryServer && data.primary) {
+      return new Response(
+        JSON.stringify({ message: 'Un serveur primaire existe déjà' }),
+        { status: 400 }
+      );
+    }
+
     const server = await prisma.server.create({
       data: {
-        ip: finalIp,
+        ip: data.ip,
+        port: data.port,
+        primary: data.primary,
         onlinePlayers: 0,
-        status: 'ONLINE',
+        status: 'OFFLINE',
         authToken: {
           create: {
             token: crypto.randomBytes(48).toString('hex'),
@@ -31,6 +54,7 @@ export async function POST(request: Request) {
 
     return new Response(JSON.stringify(server), { status: 200 });
   } catch (e) {
+    console.log(e);
     if (e instanceof PrismaClientKnownRequestError) {
       if (e.code === 'P2002')
         return new Response(
@@ -46,30 +70,45 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
-  const token = (await getToken({
-    req: request as NextRequest,
-    secret: process.env.NEXTAUTH_SECRET,
-  })) as unknown as UserPayload;
-
-  if (!token || !token.admin) {
-    return new Response(JSON.stringify({ message: 'Unauthorized' }), {
-      status: 403,
-    });
-  }
-
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const primary = searchParams.get('primary');
   try {
+    const token = (await getToken({
+      req: request as NextRequest,
+      secret: process.env.NEXTAUTH_SECRET,
+    })) as unknown as UserPayload;
     const now = new Date();
     const servers = await prisma.server.findMany({
       include: {
         authToken: true,
+        chatMessages: true,
       },
     });
+
+    const primaryServer = await prisma.server.findFirst({
+      where: {
+        primary: true,
+      },
+      include: {
+        chatMessages: true,
+      },
+    });
+
+    if (primary) {
+      if (primaryServer) {
+        return new Response(JSON.stringify(primaryServer), { status: 200 });
+      }
+      return new Response(JSON.stringify({}), { status: 200 });
+    }
+
     return new Response(
       JSON.stringify(
         servers.map((server) => ({
           ...server,
-          token: server.authToken?.token,
+          token: token && token.admin ? server.authToken?.token : undefined,
           authToken: undefined,
+          authTokenId: undefined,
           status:
             (now.getTime() - new Date(server.lastUpdate).getTime()) / 1000 <= 60
               ? 'ONLINE'

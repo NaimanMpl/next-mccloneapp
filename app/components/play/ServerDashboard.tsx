@@ -5,7 +5,6 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Activity, Circle, Eye, Globe, MessageCircle } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 
@@ -96,7 +95,6 @@ const chartConfig = {
 
 const ServerDashboard = () => {
 
-  const { data: session } = useSession();
   const [ timeRange, setTimeRange ] = useState('90d');
   const { serverInfo, loading } = useServerInfo();
 
@@ -115,7 +113,7 @@ const ServerDashboard = () => {
 
   return (
     <>
-      {(!session || loading) &&
+      {loading &&
       <>
         <Card className='mt-6 h-[70vh]'>
           <CardHeader>
@@ -132,7 +130,7 @@ const ServerDashboard = () => {
                   </CardHeader>
                   <CardContent>
                     <Skeleton className='w-10 h-4'/>
-                    <Skeleton className='w-72 h-4 mt-2'/>
+                    <Skeleton className='w-52 h-4 mt-2'/>
                   </CardContent>
                 </Card>
               ))}
@@ -143,75 +141,70 @@ const ServerDashboard = () => {
         </Card>
       </>
       }
-      {session &&
+      {!loading && serverInfo &&
         <Card className='mt-6 border-transparent'>
           <>
             <CardContent>
               <div className='grid grid-cols-4 gap-4 mt-4'>
-                {
-                  serverInfo &&
-                  <>
-                    <Card>
-                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                        <CardTitle className='text-sm font-medium'>État du serveur</CardTitle>
-                        <Activity className='w-4 h-4' />
-                      </CardHeader>
-                      <CardContent>
-                        <div className='flex items-center gap-2'>
-                          {serverInfo.status === 'ONLINE' && 
-                            <>
-                              <div className='text-xl font-bold'>En ligne</div>
-                              <Circle fill='green' className='w-2 h-2 text-transparent' />
-                            </>
-                          }
-                          {serverInfo.status === 'OFFLINE' && 
-                            <>
-                              <div className='text-xl font-bold'>Hors ligne</div>
-                              <Circle fill='red' className='w-2 h-2 text-transparent' />
-                            </>
-                          }
-                          {serverInfo.status === 'MAINTENANCE' && 
-                            <>
-                              <div className='text-xl font-bold'>Maintenance</div>
-                              <Circle fill='orange' className='w-2 h-2 text-transparent' />
-                            </>
-                          }
-                        </div>
-                        <p className='text-xs text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                        <CardTitle className='text-sm font-medium'>Joueurs en ligne</CardTitle>
-                        <Globe className='w-4 h-4' />
-                      </CardHeader>
-                      <CardContent>
-                        <div className='text-2xl font-bold'>{serverInfo?.onlinePlayers}</div>
-                        <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                        <CardTitle className='text-sm font-medium'>IP</CardTitle>
-                        <Eye className='w-4 h-4' />
-                      </CardHeader>
-                      <CardContent>
-                        <div className='text-2xl font-bold'>{serverInfo?.ip}</div>
-                        <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
-                        <CardTitle className='text-sm font-medium'>Messages dans le chat</CardTitle>
-                        <MessageCircle className='w-4 h-4' />
-                      </CardHeader>
-                      <CardContent>
-                        <div className='text-2xl font-bold'>0</div>
-                        <p className='text-xs text-muted-foreground'>+0.0% par rapport au mois dernier</p>
-                      </CardContent>
-                    </Card>
-                  </>
-                }
+                <Card>
+                  <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                    <CardTitle className='text-sm font-medium'>État du serveur</CardTitle>
+                    <Activity className='w-4 h-4' />
+                  </CardHeader>
+                  <CardContent>
+                    <div className='flex items-center gap-2'>
+                      {serverInfo.status === 'ONLINE' && 
+                        <>
+                          <div className='text-xl font-bold'>En ligne</div>
+                          <Circle fill='green' className='w-2 h-2 text-transparent' />
+                        </>
+                      }
+                      {serverInfo.status === 'OFFLINE' && 
+                        <>
+                          <div className='text-xl font-bold'>Hors ligne</div>
+                          <Circle fill='red' className='w-2 h-2 text-transparent' />
+                        </>
+                      }
+                      {serverInfo.status === 'MAINTENANCE' && 
+                        <>
+                          <div className='text-xl font-bold'>Maintenance</div>
+                          <Circle fill='orange' className='w-2 h-2 text-transparent' />
+                        </>
+                      }
+                    </div>
+                    <p className='text-xs text-muted-foreground'>Lorem ipsum dolor sit amet.</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                    <CardTitle className='text-sm font-medium'>Joueurs en ligne</CardTitle>
+                    <Globe className='w-4 h-4' />
+                  </CardHeader>
+                  <CardContent>
+                    <div className='text-2xl font-bold'>{serverInfo?.onlinePlayers}</div>
+                    <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                    <CardTitle className='text-sm font-medium'>IP</CardTitle>
+                    <Eye className='w-4 h-4' />
+                  </CardHeader>
+                  <CardContent>
+                    <div className='text-2xl font-bold'>{serverInfo?.ip}</div>
+                    <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
+                    <CardTitle className='text-sm font-medium'>Messages dans le chat</CardTitle>
+                    <MessageCircle className='w-4 h-4' />
+                  </CardHeader>
+                  <CardContent>
+                    <div className='text-2xl font-bold'>0</div>
+                    <p className='text-xs text-muted-foreground'>+0.0% par rapport au mois dernier</p>
+                  </CardContent>
+                </Card>
               </div>
               <div className='mt-4'>
                 <Card className='border-transparent shadow-none'>

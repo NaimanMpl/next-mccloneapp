@@ -1,5 +1,8 @@
+import { UserPayload } from '@/app/models/user.model';
 import { ServerStatus } from '@prisma/client';
+import { getToken } from 'next-auth/jwt';
 import { headers } from 'next/headers';
+import { NextRequest } from 'next/server';
 import prisma from '../../../lib/db';
 
 export async function GET(
@@ -68,28 +71,15 @@ export async function PUT(
     const authTokenValue = authorizationValueList[1];
     const id = parseInt(params.id);
 
-    const authToken = await prisma.authToken.findUnique({
-      where: {
-        token: authTokenValue,
-        serverId: id,
-      },
-      include: {
-        server: true,
-      },
-    });
-
-    if (!authToken) {
-      return new Response(JSON.stringify({ message: 'Non autorisé' }), {
-        status: 403,
-      });
-    }
-
     const data: { onlinePlayers?: number; status?: ServerStatus } =
       await request.json();
 
     const server = await prisma.server.update({
       where: {
         id: id,
+        authToken: {
+          token: authTokenValue,
+        },
       },
       data: {
         onlinePlayers: data.onlinePlayers,
@@ -101,7 +91,46 @@ export async function PUT(
       },
     });
 
+    if (!server) {
+      return new Response(JSON.stringify({ message: 'Non autorisé.' }), {
+        status: 403,
+      });
+    }
+
     return new Response(JSON.stringify(server), { status: 200 });
+  } catch (e) {
+    console.log(e);
+    return new Response(
+      JSON.stringify({ message: 'Le serveur a rencontré un problème.' }),
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = parseInt(params.id);
+  const token = (await getToken({
+    req: request as NextRequest,
+    secret: process.env.NEXTAUTH_SECRET,
+  })) as unknown as UserPayload;
+
+  if (!token || !token.admin) {
+    return new Response(JSON.stringify({ message: 'Non autorisé.' }), {
+      status: 403,
+    });
+  }
+
+  try {
+    const server = await prisma.server.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return new Response(JSON.stringify(server));
   } catch (e) {
     console.log(e);
     return new Response(

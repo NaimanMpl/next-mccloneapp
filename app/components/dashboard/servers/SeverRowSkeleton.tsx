@@ -26,6 +26,9 @@ const ServerRowSkeleton = () => {
       <TableCell>
         <Skeleton className='w-10 h-4' />
       </TableCell>
+      <TableCell>
+        <Skeleton className='w-10 h-4' />
+      </TableCell>
     </TableRow>
   )
 }

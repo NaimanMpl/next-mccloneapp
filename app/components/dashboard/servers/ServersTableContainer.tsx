@@ -8,6 +8,7 @@ import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMe
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ListFilter, Plus, Search } from "lucide-react";
+import AddServerDialog from "../dialogs/AddServerDialog";
 import ServerRow from "./ServerRow";
 import ServerRowSkeleton from "./SeverRowSkeleton";
 
@@ -33,6 +34,7 @@ const ServersTableContainer = () => {
                   Ajouter un serveur
                 </Button>
               </DialogTrigger>
+              <AddServerDialog />
             </Dialog>
             <div className="relative lg:w-96">
               <Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
@@ -73,6 +75,7 @@ const ServersTableContainer = () => {
                 <TableHead>Joueurs connectés</TableHead>
                 <TableHead>Dernière mis à jour</TableHead>
                 <TableHead>En ligne depuis</TableHead>
+                <TableHead>Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

@@ -5,6 +5,8 @@ export interface ChatMessage {}
 export interface Server {
   id: number;
   ip: string;
+  port: number;
+  primary: boolean;
   status: ServerStatus;
   onlinePlayers: number;
   lastUpdate: string;

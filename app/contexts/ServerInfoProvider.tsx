@@ -35,6 +35,7 @@ export const ServerInfoProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchServerInfo = async () => {
       const serverInfo = await getServerInfo();
+      console.log(serverInfo);
       setServerInfo(serverInfo);
       setLoading(false);
     };
