@@ -1,10 +1,10 @@
 import prisma from '@/app/lib/db';
+import logger from '@/app/utils/logger';
 import { headers } from 'next/headers';
 
 export async function POST(request: Request) {
   const headersList = headers();
   const authorization = headersList.get('Authorization');
-  const data: { serverId: number } = await request.json();
 
   if (!authorization) {
     return new Response(JSON.stringify({ message: 'Non authentifié' }), {
@@ -21,12 +21,21 @@ export async function POST(request: Request) {
   const authToken = authorizationValueList[1];
 
   try {
+    const authTokenRecord = await prisma.authToken.findUnique({
+      where: {
+        token: authToken
+      }
+    });
+
+    if (!authTokenRecord) {
+      return new Response(JSON.stringify({ message: 'Token invalide' }), {
+        status: 403,
+      });
+    }
+
     const server = await prisma.server.findUnique({
       where: {
-        id: data.serverId,
-        authToken: {
-          token: authToken,
-        },
+        authTokenId: authTokenRecord.id,
       },
       include: {
         chatMessages: true,
@@ -41,6 +50,7 @@ export async function POST(request: Request) {
 
     return new Response(JSON.stringify(server), { status: 200 });
   } catch (e) {
+    logger.error(e);
     return new Response(
       JSON.stringify({ message: 'Le serveur a rencontré un problème' }),
       { status: 500 }
