@@ -1,6 +1,7 @@
 import prisma from '@/app/lib/db';
 import { AddServerFormData } from '@/app/models/formsdata.model';
 import { UserPayload } from '@/app/models/user.model';
+import logger from '@/app/utils/logger';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import crypto from 'crypto';
 import { getToken } from 'next-auth/jwt';
@@ -54,7 +55,7 @@ export async function POST(request: Request) {
 
     return new Response(JSON.stringify(server), { status: 200 });
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     if (e instanceof PrismaClientKnownRequestError) {
       if (e.code === 'P2002')
         return new Response(

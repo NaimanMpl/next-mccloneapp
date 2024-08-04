@@ -36,12 +36,6 @@ export default class UserController {
     }
   };
 
-  public getUsers = async () => {
-    const users = await prisma.users.findMany();
-
-    console.log(users);
-  };
-
   public updateUser = async (id: string, formData: EditUserFormData) => {
     const { email, name, userRole, admin } = formData;
 
