@@ -43,3 +43,9 @@ export interface EditPasswordFormData {
   newPassword: string;
   confirmNewPassword: string;
 }
+
+export interface AddServerFormData {
+  ip: string;
+  port: number;
+  primary: boolean;
+}

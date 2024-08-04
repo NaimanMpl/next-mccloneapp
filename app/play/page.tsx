@@ -6,10 +6,13 @@ import { cn } from '@/lib/utils';
 import { ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import DashboardContent from '../components/dashboard/DashboardContent';
 import Header from '../components/Header';
 import Curve from '../components/layout/Curve';
 import AnimatedShinyDiamondsText from '../components/play/AnimatedShinyDiamondsText';
 import DownloadButton from '../components/play/DownloadButton';
+import ServerDashboard from '../components/play/ServerDashboard';
+import ServerDashboardContainer from '../components/play/ServerDashboardContainer';
 import GradientTitle from '../components/ui/GradientTitle';
 
 const PlayPage = () => {
@@ -57,6 +60,9 @@ const PlayPage = () => {
             </Button>
           </div>
         </div>
+      </section>
+      <section className='mt-24 px-20'>
+        <ServerDashboardContainer />
       </section>
     </div>
   );

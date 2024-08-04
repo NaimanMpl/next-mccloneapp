@@ -28,7 +28,6 @@ export const useAddPermissionForm = ({
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     const { permissionName } = values;
-    console.log('Hello !');
     setLoading(true);
     try {
       const permission = await addPermission({

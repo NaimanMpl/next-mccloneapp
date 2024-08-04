@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ServerInfo } from '../models/serverinfo.model';
+import { Server } from '../models/server.model';
 import { getServerInfo } from '../services/serverservice';
 
 export const useServerInfo = () => {
-  const [serverInfo, setServerInfo] = useState<ServerInfo | null>(null);
+  const [serverInfo, setServerInfo] = useState<Server | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

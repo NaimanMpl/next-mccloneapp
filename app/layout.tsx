@@ -2,9 +2,8 @@ import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
 import { Inter } from 'next/font/google';
-import { Provider } from 'react-redux';
-import { store } from './api/redux/store';
 import NextAuthProvider from './contexts/NextAuthProvider';
+import ReactIntlProvider from './contexts/ReactIntlProvider';
 import { ReduxProvider } from './contexts/ReduxProvider';
 import './globals.css';
 
@@ -23,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ThemeProvider attribute='class' defaultTheme='light' enableSystem>
-          <NextAuthProvider>
-            <ReduxProvider>{children}</ReduxProvider>
-          </NextAuthProvider>
-        </ThemeProvider>
+        <ReactIntlProvider>
+          <ThemeProvider attribute='class' defaultTheme='light' enableSystem>
+            <NextAuthProvider>
+              <ReduxProvider>{children}</ReduxProvider>
+            </NextAuthProvider>
+          </ThemeProvider>
+        </ReactIntlProvider>
         <Toaster />
       </body>
     </html>
