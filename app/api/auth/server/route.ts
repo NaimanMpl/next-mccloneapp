@@ -1,5 +1,4 @@
 import prisma from '@/app/lib/db';
-import logger from '@/app/utils/logger';
 import { headers } from 'next/headers';
 
 export async function POST(request: Request) {
@@ -35,7 +34,7 @@ export async function POST(request: Request) {
 
     const server = await prisma.server.findUnique({
       where: {
-        authTokenId: authTokenRecord.id,
+        id: authTokenRecord.id,
       },
       include: {
         chatMessages: true,
@@ -50,7 +49,6 @@ export async function POST(request: Request) {
 
     return new Response(JSON.stringify(server), { status: 200 });
   } catch (e) {
-    logger.error(e);
     return new Response(
       JSON.stringify({ message: 'Le serveur a rencontré un problème' }),
       { status: 500 }

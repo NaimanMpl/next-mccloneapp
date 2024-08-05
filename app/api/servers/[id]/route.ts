@@ -1,4 +1,5 @@
 import { UserPayload } from '@/app/models/user.model';
+import logger from '@/app/utils/logger';
 import { ServerStatus } from '@prisma/client';
 import { getToken } from 'next-auth/jwt';
 import { headers } from 'next/headers';
@@ -99,7 +100,7 @@ export async function PUT(
 
     return new Response(JSON.stringify(server), { status: 200 });
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     return new Response(
       JSON.stringify({ message: 'Le serveur a rencontré un problème.' }),
       { status: 500 }
@@ -132,7 +133,7 @@ export async function DELETE(
 
     return new Response(JSON.stringify(server));
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     return new Response(
       JSON.stringify({ message: 'Le serveur a rencontré un problème.' }),
       { status: 500 }
