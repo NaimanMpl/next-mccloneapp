@@ -1,12 +1,17 @@
 'use client';
-import { useServerInfo } from '@/app/contexts/ServerInfoProvider';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useServerInfo } from '@/app/hooks/useServerInfo';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Activity, Circle, Eye, Globe, MessageCircle } from 'lucide-react';
+import { Activity, Circle, Eye, Globe, MessageCircle, Send } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import ChatMessageLine from './ChatMessageLine';
 
 const chartData = [
   { date: "2024-04-01", windows: 222, macos: 150, linux: 100 },
@@ -96,7 +101,11 @@ const chartConfig = {
 const ServerDashboard = () => {
 
   const [ timeRange, setTimeRange ] = useState('90d');
-  const { serverInfo, loading } = useServerInfo();
+  const { state, loading } = useServerInfo();
+  const { data: session } = useSession();
+
+  const serverInfo = state.serverInfo;
+  const chatMessages = state.chatMessages;
 
   const filteredData = chartData.filter((item) => {
     const date = new Date(item.date)
@@ -142,9 +151,9 @@ const ServerDashboard = () => {
       </>
       }
       {!loading && serverInfo &&
-        <Card className='mt-6 border-transparent'>
-          <>
-            <CardContent>
+        <>
+          <Card className='mt-6 border-transparent shadow-none'>
+            <CardContent className='px-0'>
               <div className='grid grid-cols-4 gap-4 mt-4'>
                 <Card>
                   <CardHeader className='flex flex-row justify-between space-y-0 items-center pb-2'>
@@ -181,7 +190,7 @@ const ServerDashboard = () => {
                     <Globe className='w-4 h-4' />
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold'>{serverInfo?.onlinePlayers}</div>
+                    <div className='text-2xl font-bold'>{serverInfo.onlinePlayers}</div>
                     <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
                   </CardContent>
                 </Card>
@@ -191,7 +200,7 @@ const ServerDashboard = () => {
                     <Eye className='w-4 h-4' />
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold'>{serverInfo?.ip}</div>
+                    <div className='text-2xl font-bold'>{serverInfo.ip}</div>
                     <p className='text-xs text-muted-foreground'>+20.1% par rapport au mois dernier</p>
                   </CardContent>
                 </Card>
@@ -333,8 +342,57 @@ const ServerDashboard = () => {
                 </Card>
               </div>
             </CardContent>
-          </>
-        </Card>
+          </Card>
+          {
+          session &&
+          <div className='flex h-screen'>
+            <Card className='shadow-none border-transparent flex-[2] h-full'>
+              <CardHeader className='px-0'>
+                <CardTitle>Un petit mot de votre part, {session.user.name} ?</CardTitle>
+                <CardDescription>Laissez aux autres joueurs un petit message de votre part</CardDescription>
+              </CardHeader>
+              <CardContent className='px-0 flex flex-col gap-4 h-[80%] overflow-y-scroll justify-end'>
+                {chatMessages.map(chatMessage => (
+                  <ChatMessageLine
+                    key={chatMessage.id}
+                    chatMessage={chatMessage}
+                  />
+                ))}
+              </CardContent>
+              <CardFooter className='px-0 gap-4'>
+                <Input placeholder='Entrez votre message ici' />
+                <Button>
+                  <Send className='mr-2 w-5 h-5'/>
+                  Envoyer
+                </Button>
+              </CardFooter>
+            </Card>
+            <Card className='border-transparent shadow-none flex-1'>
+              <CardHeader>
+                <CardTitle>Joueurs en ligne - 4</CardTitle>
+                <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, maxime.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className='flex items-center gap-3'>
+                  <div className='relative'>
+                    <Avatar>
+                      <AvatarImage src={session.user.profileIconUrl} />
+                      <AvatarFallback>{session.user.name.charAt(0).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <Circle fill='green' className='absolute right-0 bottom-1 w-3 h-3 text-transparent' />
+                  </div>
+                  <div className='flex flex-col'>
+                    <div className='flex items-center gap-1'>
+                      <span className='text-sm'>ZelphiX</span>
+                    </div>
+                    <span className='text-sm text-muted-foreground'>En jeu depuis 10 minutes</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          }
+        </>
       }
     </>
   )

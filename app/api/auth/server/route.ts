@@ -23,8 +23,8 @@ export async function POST(request: Request) {
   try {
     const authTokenRecord = await prisma.authToken.findUnique({
       where: {
-        token: authToken
-      }
+        token: authToken,
+      },
     });
 
     if (!authTokenRecord) {

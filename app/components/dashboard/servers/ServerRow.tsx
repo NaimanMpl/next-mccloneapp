@@ -1,6 +1,5 @@
-import { useDeleteServerMutation } from "@/app/api/slice";
 import { Server } from "@/app/models/server.model";
-import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { AlertDialog } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -54,7 +53,7 @@ const ServerRow = ({ server }: ServerRowProps) => {
         {server.onlinePlayers}
       </TableCell>
       <TableCell>
-      <FormattedRelativeTime 
+        <FormattedRelativeTime 
           value={-lastUpdate}
           updateIntervalInSeconds={1}
         />

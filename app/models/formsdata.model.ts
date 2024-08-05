@@ -49,3 +49,9 @@ export interface AddServerFormData {
   port: number;
   primary: boolean;
 }
+
+export interface AddChatMessageFormData {
+  authorId: string;
+  message: string;
+  serverId: number;
+}

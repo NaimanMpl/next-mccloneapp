@@ -99,7 +99,10 @@ export async function GET(request: Request) {
       if (primaryServer) {
         return new Response(JSON.stringify(primaryServer), { status: 200 });
       }
-      return new Response(JSON.stringify({}), { status: 200 });
+      return new Response(
+        JSON.stringify({ message: 'Aucun serveur primaire trouvé.' }),
+        { status: 404 }
+      );
     }
 
     return new Response(

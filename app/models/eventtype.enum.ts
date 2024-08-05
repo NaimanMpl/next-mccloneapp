@@ -1,0 +1,4 @@
+export enum EventTypes {
+  CHAT_MESSAGE = 'CHAT_MESSAGE',
+  SERVER_STATUS = 'SERVER_STATUS',
+}

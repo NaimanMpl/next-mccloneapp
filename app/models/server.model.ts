@@ -1,6 +1,6 @@
-export type ServerStatus = 'ONLINE' | 'OFFLINE' | 'MAINTENANCE';
+import { ChatMessage } from './chatmessage.model';
 
-export interface ChatMessage {}
+export type ServerStatus = 'ONLINE' | 'OFFLINE' | 'MAINTENANCE';
 
 export interface Server {
   id: number;
