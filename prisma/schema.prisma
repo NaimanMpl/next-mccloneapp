@@ -73,7 +73,7 @@ model ChatMessage {
   authorId String
   author Users @relation(fields: [authorId], references: [id])
   message String
-  createdAt DateTime
+  createdAt DateTime @default(now())
 }
 
 

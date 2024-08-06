@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
     const server = await prisma.server.findUnique({
       where: {
-        id: authTokenRecord.id,
+        authTokenId: authTokenRecord.id,
       },
       include: {
         chatMessages: true,
@@ -42,8 +42,8 @@ export async function POST(request: Request) {
     });
 
     if (!server) {
-      return new Response(JSON.stringify({ message: 'Non autorisé' }), {
-        status: 403,
+      return new Response(JSON.stringify({ message: 'Aucun serveur lié à ce token' }), {
+        status: 404,
       });
     }
 

@@ -1,5 +1,5 @@
 import { ChatMessage } from '@/app/models/chatmessage.model';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { FormattedRelativeTime } from 'react-intl';
 
 interface ChatMessageLineProps {
@@ -14,6 +14,7 @@ const ChatMessageLine = ({ chatMessage }: ChatMessageLineProps) => {
   return (
     <div className='flex items-center gap-3'>
       <Avatar>
+        <AvatarImage>{chatMessage.author.profileIconUrl}</AvatarImage>
         <AvatarFallback>{chatMessage.author.name.charAt(0).toUpperCase()}</AvatarFallback>
       </Avatar>
       <div className='flex flex-col'>
