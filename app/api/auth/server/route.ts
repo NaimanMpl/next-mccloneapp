@@ -42,9 +42,12 @@ export async function POST(request: Request) {
     });
 
     if (!server) {
-      return new Response(JSON.stringify({ message: 'Aucun serveur lié à ce token' }), {
-        status: 404,
-      });
+      return new Response(
+        JSON.stringify({ message: 'Aucun serveur lié à ce token' }),
+        {
+          status: 404,
+        }
+      );
     }
 
     return new Response(JSON.stringify(server), { status: 200 });

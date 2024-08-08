@@ -8,7 +8,6 @@ export async function POST(request: Request) {
   const headersList = headers();
   const authorization = headersList.get('Authorization');
   try {
-
     if (!authorization) {
       return new Response(
         JSON.stringify({ message: "Aucun jeton d'authentification trouvé." }),
@@ -28,11 +27,11 @@ export async function POST(request: Request) {
     const authTokenValue = authorizationValueList[1];
     const authToken = await prisma.authToken.findFirst({
       where: {
-        token: authTokenValue
+        token: authTokenValue,
       },
       include: {
-        server: true
-      }
+        server: true,
+      },
     });
 
     if (!authToken) {
@@ -56,22 +55,25 @@ export async function POST(request: Request) {
         serverId: authToken.server.id,
       },
       include: {
-        author: true
-      }
+        author: true,
+      },
     });
-    
-    return new Response(JSON.stringify(
-      {
+
+    return new Response(
+      JSON.stringify({
         ...chatMessage,
         author: {
           ...chatMessage.author,
-          password: undefined
-        }
-      }), 
+          password: undefined,
+        },
+      }),
       { status: 200 }
     );
   } catch (e) {
     logger.error(e);
-    return new Response(JSON.stringify({ message: 'Le serveur a rencontré un problème.'}), { status: 500 });
+    return new Response(
+      JSON.stringify({ message: 'Le serveur a rencontré un problème.' }),
+      { status: 500 }
+    );
   }
 }
